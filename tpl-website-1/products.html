@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="查看我们的全部产品系列">
+  <title data-i18n="nav.products">产品中心 - ManufacturePro</title>
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+  <!-- 导航栏 -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="logo">ManufacturePro</a>
+      <button class="mobile-menu-toggle">☰</button>
+      <ul class="nav-menu">
+        <li><a href="index.html" class="nav-link" data-i18n="nav.home">首页</a></li>
+        <li><a href="products.html" class="nav-link" data-i18n="nav.products">产品中心</a></li>
+        <li><a href="about.html" class="nav-link" data-i18n="nav.about">关于我们</a></li>
+        <li><a href="news.html" class="nav-link" data-i18n="nav.news">新闻资讯</a></li>
+        <li><a href="cases.html" class="nav-link" data-i18n="nav.cases">客户案例</a></li>
+        <li><a href="index.html#contact" class="nav-link" data-i18n="nav.contact">联系我们</a></li>
+        <li class="lang-switcher">
+          <button class="lang-btn active" data-lang="zh">中文</button>
+          <button class="lang-btn" data-lang="en">EN</button>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- 页面标题 -->
+  <section class="hero" style="height: 300px; min-height: 300px;">
+    <div class="hero-content">
+      <h1 data-i18n="products.title">我们的产品</h1>
+      <p data-i18n="products.subtitle">为您提供优质的产品和服务</p>
+    </div>
+  </section>
+
+  <!-- 产品列表 -->
+  <section class="container">
+    <!-- 产品分类筛选 -->
+    <div style="margin-bottom: 2rem; text-align: center;">
+      <div style="display: inline-flex; gap: 1rem; flex-wrap: wrap; justify-content: center;">
+        <button class="btn" onclick="filterProducts('all')" style="padding: 0.6rem 1.5rem;">全部产品</button>
+        <button class="btn btn-outline" onclick="filterProducts('smart')" style="padding: 0.6rem 1.5rem;">智能设备</button>
+        <button class="btn btn-outline" onclick="filterProducts('portable')" style="padding: 0.6rem 1.5rem;">便携设备</button>
+        <button class="btn btn-outline" onclick="filterProducts('professional')" style="padding: 0.6rem 1.5rem;">专业设备</button>
+      </div>
+    </div>
+
+    <div class="products-grid" id="products-container">
+      <!-- 智能设备系列 -->
+      <div class="product-card" data-product-id="1" data-category="smart">
+        <div class="product-image">
+          <span>📱</span>
+        </div>
+        <div class="product-info">
+          <h3 class="product-title">智能设备 Pro</h3>
+          <p class="product-description">高性能智能设备，集成最新AI技术，为您带来卓越体验</p>
+          <div class="product-price">$299</div>
+          <a href="product-detail.html?id=1" class="btn btn-outline" data-i18n="products.viewDetails">查看详情</a>
+        </div>
+      </div>
+
+      <div class="product-card" data-product-id="7" data-category="smart">
+        <div class="product-image" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+          <span>🤖</span>
+        </div>
+        <div class="product-info">
+          <h3 class="product-title">AI 智能助手</h3>
+          <p class="product-description">语音控制，智能学习，让生活更便捷</p>
+          <div class="product-price">$179</div>
+          <a href="product-detail.html?id=7" class="btn btn-outline" data-i18n="products.viewDetails">查看详情</a>
+        </div>
+      </div>
+
+      <div class="product-card" data-product-id="6" data-category="smart">
+        <div class="product-image" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);">
+          <span>🏠</span>
+        </div>
+        <div class="product-info">
+          <h3 class="product-title">智能家居套装</h3>
+          <p class="product-description">打造智能生活，一键掌控全家电器</p>
+          <div class="product-price">$399</div>
+          <a href="product-detail.html?id=6" class="btn btn-outline" data-i18n="products.viewDetails">查看详情</a>
+        </div>
+      </div>
+
+      <!-- 便携设备系列 -->
+      <div class="product-card" data-product-id="2" data-category="portable">
+        <div class="product-image" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+          <span>⌚</span>
+        </div>
+        <div class="product-info">
+          <h3 class="product-title">便携设备 Mini</h3>
+          <p class="product-description">小巧便携，功能强大，随时随地使用</p>
+          <div class="product-price">$199</div>
+          <a href="product-detail.html?id=2" class="btn btn-outline" data-i18n="products.viewDetails">查看详情</a>
+        </div>
+      </div>
+
+      <div class="product-card" data-product-id="4" data-category="portable">
+        <div class="product-image" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+          <span>🎧</span>
+        </div>
+        <div class="product-info">
+          <h3 class="product-title">无线耳机 AirPro</h3>
+          <p class="product-description">沉浸式音质，舒适佩戴，长续航体验</p>
+          <div class="product-price">$149</div>
+          <a href="product-detail.html?id=4" class="btn btn-outline" data-i18n="products.viewDetails">查看详情</a>
+        </div>
+      </div>
+
+      <div class="product-card" data-product-id="8" data-category="portable">
+        <div class="product-image" style="background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);">
+          <span>🎒</span>
+        </div>
+        <div class="product-info">
+          <h3 class="product-title">智能背包</h3>
+          <p class="product-description">防盗设计，USB充电，商务出行必备</p>
+          <div class="product-price">$89</div>
+          <a href="product-detail.html?id=8" class="btn btn-outline" data-i18n="products.viewDetails">查看详情</a>
+        </div>
+      </div>
+
+      <!-- 专业设备系列 -->
+      <div class="product-card" data-product-id="3" data-category="professional">
+        <div class="product-image" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+          <span>💻</span>
+        </div>
+        <div class="product-info">
+          <h3 class="product-title">专业设备 Ultra</h3>
+          <p class="product-description">旗舰级性能，满足专业用户所有需求</p>
+          <div class="product-price">$499</div>
+          <a href="product-detail.html?id=3" class="btn btn-outline" data-i18n="products.viewDetails">查看详情</a>
+        </div>
+      </div>
+
+      <div class="product-card" data-product-id="5" data-category="professional">
+        <div class="product-image" style="background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);">
+          <span>📷</span>
+        </div>
+        <div class="product-info">
+          <h3 class="product-title">智能相机 Vision</h3>
+          <p class="product-description">4K录制，专业影像，记录美好瞬间</p>
+          <div class="product-price">$599</div>
+          <a href="product-detail.html?id=5" class="btn btn-outline" data-i18n="products.viewDetails">查看详情</a>
+        </div>
+      </div>
+
+      <div class="product-card" data-product-id="9" data-category="professional">
+        <div class="product-image" style="background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);">
+          <span>🖥️</span>
+        </div>
+        <div class="product-info">
+          <h3 class="product-title">专业显示器 4K</h3>
+          <p class="product-description">色彩精准，广色域，设计师首选</p>
+          <div class="product-price">$799</div>
+          <a href="product-detail.html?id=9" class="btn btn-outline" data-i18n="products.viewDetails">查看详情</a>
+        </div>
+      </div>
+
+      <!-- 更多产品 -->
+      <div class="product-card" data-product-id="10" data-category="smart">
+        <div class="product-image" style="background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);">
+          <span>🌡️</span>
+        </div>
+        <div class="product-info">
+          <h3 class="product-title">智能温控器</h3>
+          <p class="product-description">节能环保，远程控制，舒适生活</p>
+          <div class="product-price">$129</div>
+          <a href="product-detail.html?id=10" class="btn btn-outline" data-i18n="products.viewDetails">查看详情</a>
+        </div>
+      </div>
+
+      <div class="product-card" data-product-id="11" data-category="portable">
+        <div class="product-image" style="background: linear-gradient(135deg, #d299c2 0%, #fef9d7 100%);">
+          <span>🔋</span>
+        </div>
+        <div class="product-info">
+          <h3 class="product-title">超级充电宝</h3>
+          <p class="product-description">20000mAh大容量，快充技术</p>
+          <div class="product-price">$59</div>
+          <a href="product-detail.html?id=11" class="btn btn-outline" data-i18n="products.viewDetails">查看详情</a>
+        </div>
+      </div>
+
+      <div class="product-card" data-product-id="12" data-category="professional">
+        <div class="product-image" style="background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);">
+          <span>⌨️</span>
+        </div>
+        <div class="product-info">
+          <h3 class="product-title">机械键盘 Pro</h3>
+          <p class="product-description">Cherry轴，RGB背光，游戏办公两用</p>
+          <div class="product-price">$159</div>
+          <a href="product-detail.html?id=12" class="btn btn-outline" data-i18n="products.viewDetails">查看详情</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 页脚 -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>ManufacturePro</h3>
+        <p data-i18n="about.description">我们是一家专注于创新产品研发和制造的企业，致力于为全球客户提供高品质的产品和服务。</p>
+      </div>
+
+      <div class="footer-section">
+        <h3 data-i18n="nav.products">产品中心</h3>
+        <a href="products.html">智能设备</a>
+        <a href="products.html">便携设备</a>
+        <a href="products.html">专业设备</a>
+      </div>
+
+      <div class="footer-section">
+        <h3 data-i18n="contact.title">联系我们</h3>
+        <p>📍 中国 深圳市</p>
+        <p>📞 +86 400-123-4567</p>
+        <p>✉️ info@techpro.com</p>
+      </div>
+
+      <div class="footer-section">
+        <h3>关注我们</h3>
+        <p>🔗 微信公众号</p>
+        <p>🔗 微博</p>
+        <p>🔗 LinkedIn</p>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; 2026 ManufacturePro. <span data-i18n="footer.allRightsReserved">保留所有权利</span></p>
+    </div>
+  </footer>
+
+  <!-- 返回顶部按钮 -->
+  <div class="back-to-top">↑</div>
+
+  <!-- 脚本 -->
+  <script src="./js/i18n.js"></script>
+  <script src="./js/main.js"></script>
+  <script>
+    // 产品筛选功能
+    function filterProducts(category) {
+      const products = document.querySelectorAll('.product-card');
+      const buttons = document.querySelectorAll('[onclick^="filterProducts"]');
+
+      // 更新按钮样式
+      buttons.forEach((btn, index) => {
+        if (index === 0 && category === 'all') {
+          btn.className = 'btn';
+        } else if (btn.textContent.toLowerCase().includes(category)) {
+          btn.className = 'btn';
+        } else {
+          btn.className = 'btn btn-outline';
+        }
+      });
+
+      // 如果是 'all'，重置所有按钮
+      if (category === 'all') {
+        buttons[0].className = 'btn';
+        for (let i = 1; i < buttons.length; i++) {
+          buttons[i].className = 'btn btn-outline';
+        }
+      }
+
+      // 筛选产品
+      products.forEach(product => {
+        if (category === 'all' || product.dataset.category === category) {
+          product.style.display = 'block';
+          setTimeout(() => {
+            product.style.opacity = '1';
+            product.style.transform = 'scale(1)';
+          }, 10);
+        } else {
+          product.style.opacity = '0';
+          product.style.transform = 'scale(0.9)';
+          setTimeout(() => {
+            product.style.display = 'none';
+          }, 300);
+        }
+      });
+    }
+
+    // 添加过渡效果
+    document.querySelectorAll('.product-card').forEach(card => {
+      card.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+    });
+  </script>
+</body>
+</html>

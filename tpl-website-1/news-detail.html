@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="新闻详情">
+  <title>新闻详情 - ManufacturePro</title>
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+  <!-- 导航栏 -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="logo">ManufacturePro</a>
+      <button class="mobile-menu-toggle">☰</button>
+      <ul class="nav-menu">
+        <li><a href="index.html" class="nav-link" data-i18n="nav.home">首页</a></li>
+        <li><a href="products.html" class="nav-link" data-i18n="nav.products">产品中心</a></li>
+        <li><a href="about.html" class="nav-link" data-i18n="nav.about">关于我们</a></li>
+        <li><a href="news.html" class="nav-link" data-i18n="nav.news">新闻资讯</a></li>
+        <li><a href="cases.html" class="nav-link" data-i18n="nav.cases">客户案例</a></li>
+        <li><a href="index.html#contact" class="nav-link" data-i18n="nav.contact">联系我们</a></li>
+        <li class="lang-switcher">
+          <button class="lang-btn active" data-lang="zh">中文</button>
+          <button class="lang-btn" data-lang="en">EN</button>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- 新闻详情 -->
+  <section class="news-detail">
+    <div class="container">
+      <!-- 返回按钮 -->
+      <div style="margin-bottom: 2rem;">
+        <a href="news.html" class="btn btn-outline">← 返回新闻列表</a>
+      </div>
+
+      <!-- 新闻标题和元信息 -->
+      <div class="news-detail-header">
+        <h1 class="news-detail-title">公司成功通过ISO 9001:2015质量管理体系认证</h1>
+        <div class="news-detail-meta">
+          <span>📁 <span data-i18n="news.companyNews">公司新闻</span></span>
+          <span>📅 <span data-i18n="news.publishDate">发布时间</span>: 2026-01-10</span>
+          <span>👁️ 阅读量: 1258</span>
+        </div>
+      </div>
+
+      <!-- 新闻内容 -->
+      <div class="news-detail-content">
+        <div class="news-detail-image">
+          <span>📜</span>
+        </div>
+
+        <p>
+          近日，我司顺利通过ISO 9001:2015质量管理体系认证审核，获得由权威认证机构颁发的认证证书。
+          这标志着公司在质量管理方面达到国际先进水平，为客户提供更优质的产品和服务奠定了坚实基础。
+        </p>
+
+        <h2>认证过程</h2>
+        <p>
+          本次ISO 9001:2015质量管理体系认证审核历时两个月，审核组对公司的质量管理体系进行了全面、
+          系统的审核，涵盖了研发设计、采购管理、生产制造、质量控制、售后服务等各个环节。
+        </p>
+
+        <p>
+          审核过程中，审核组对公司质量管理体系的完整性、有效性和符合性给予了高度评价，
+          认为公司建立了完善的质量管理体系，各项质量管理制度健全，执行有力，质量记录完整规范。
+        </p>
+
+        <h2>认证意义</h2>
+        <p>
+          ISO 9001质量管理体系认证是国际上公认的质量管理标准，通过认证表明企业能够持续稳定地
+          提供满足顾客要求和适用法律法规要求的产品和服务。此次通过认证，对公司具有重要意义：
+        </p>
+
+        <ul>
+          <li><strong>提升管理水平</strong>：通过建立和实施ISO 9001质量管理体系，进一步规范了公司的管理流程，
+          提高了管理效率和管理水平。</li>
+          <li><strong>增强客户信心</strong>：ISO 9001认证是国际通行的"质量护照"，有助于提升客户对公司产品和
+          服务质量的信心。</li>
+          <li><strong>拓展市场空间</strong>：ISO 9001认证是许多客户和项目的准入门槛，通过认证有助于公司开拓
+          新市场、争取新客户。</li>
+          <li><strong>持续改进机制</strong>：ISO 9001体系强调持续改进，将推动公司不断优化流程，提升产品和
+          服务质量。</li>
+        </ul>
+
+        <h2>下一步计划</h2>
+        <p>
+          公司将以此次通过ISO 9001:2015质量管理体系认证为新起点，继续深化质量管理工作，
+          持续改进和完善质量管理体系，不断提升产品质量和服务水平，为客户创造更大价值。
+        </p>
+
+        <h3>质量方针</h3>
+        <p>
+          公司将继续秉承"质量第一、客户至上、持续改进、追求卓越"的质量方针，
+          严格按照ISO 9001:2015标准要求运作，确保质量管理体系的有效性和持续改进。
+        </p>
+
+        <p>
+          我们相信，通过全体员工的共同努力，公司的质量管理水平将不断提升，
+          为客户提供更加优质的产品和服务，实现公司与客户的共同发展。
+        </p>
+      </div>
+
+      <!-- 相关新闻 -->
+      <div style="margin-top: 4rem;">
+        <h2 class="section-title" data-i18n="news.relatedNews">相关新闻</h2>
+        <div class="products-grid" style="margin-top: 2rem;">
+          <div class="news-card" onclick="window.location.href='news-detail.html?id=2'">
+            <div class="news-image" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); height: 180px;">
+              <span style="font-size: 2.5rem;">🌐</span>
+            </div>
+            <div class="news-info">
+              <h3 class="news-title" style="font-size: 1.1rem;">2026年制造业智能化升级趋势分析</h3>
+              <p class="news-excerpt" style="font-size: 0.9rem;">随着工业4.0时代的到来...</p>
+              <div class="news-meta">
+                <span class="news-date" style="font-size: 0.85rem;">📅 2026-01-08</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="news-card" onclick="window.location.href='news-detail.html?id=4'">
+            <div class="news-image" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); height: 180px;">
+              <span style="font-size: 2.5rem;">🏆</span>
+            </div>
+            <div class="news-info">
+              <h3 class="news-title" style="font-size: 1.1rem;">公司荣获"优秀供应商"称号</h3>
+              <p class="news-excerpt" style="font-size: 0.9rem;">在2025年度供应商评选中...</p>
+              <div class="news-meta">
+                <span class="news-date" style="font-size: 0.85rem;">📅 2026-01-03</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="news-card" onclick="window.location.href='news-detail.html?id=3'">
+            <div class="news-image" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); height: 180px;">
+              <span style="font-size: 2.5rem;">⚙️</span>
+            </div>
+            <div class="news-info">
+              <h3 class="news-title" style="font-size: 1.1rem;">CNC精密加工中的质量控制要点</h3>
+              <p class="news-excerpt" style="font-size: 0.9rem;">CNC精密加工是现代制造业...</p>
+              <div class="news-meta">
+                <span class="news-date" style="font-size: 0.85rem;">📅 2026-01-05</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 页脚 -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>ManufacturePro</h3>
+        <p data-i18n="about.description">我们是一家专业的制造企业，拥有完善的生产设施和质量管理体系，致力于为全球客户提供高品质的产品和定制化服务。</p>
+      </div>
+
+      <div class="footer-section">
+        <h3 data-i18n="products.title">产品中心</h3>
+        <a href="products.html">精密机械零件</a>
+        <a href="products.html">电子元器件</a>
+        <a href="products.html">塑料注塑件</a>
+        <a href="products.html">五金冲压件</a>
+      </div>
+
+      <div class="footer-section">
+        <h3 data-i18n="footer.quickLinks">快速链接</h3>
+        <a href="about.html">关于我们</a>
+        <a href="cases.html">客户案例</a>
+        <a href="index.html#contact">联系我们</a>
+        <a href="news.html">新闻资讯</a>
+      </div>
+
+      <div class="footer-section">
+        <h3 data-i18n="contact.title">联系我们</h3>
+        <p>📍 中国广东省深圳市</p>
+        <p>📞 +86 755-1234-5678</p>
+        <p>✉️ sales@manufacturepro.com</p>
+        <p>⏰ 周一至周六 8:00-18:00</p>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; 2026 ManufacturePro. <span data-i18n="footer.allRightsReserved">保留所有权利</span></p>
+    </div>
+  </footer>
+
+  <!-- 返回顶部按钮 -->
+  <div class="back-to-top">↑</div>
+
+  <!-- 脚本 -->
+  <script src="./js/i18n.js"></script>
+  <script src="./js/main.js"></script>
+</body>
+</html>

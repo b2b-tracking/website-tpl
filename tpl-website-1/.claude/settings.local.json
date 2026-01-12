@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:smoant.com)",
+      "WebFetch(domain:cloupor.com)",
+      "WebFetch(domain:www.ulike.com)",
+      "WebFetch(domain:www.sxg-express.com)",
+      "Bash(tree:*)",
+      "Bash(grep:*)",
+      "Bash(for file in *.html)",
+      "Bash(do sed -i 's/TechPro/ManufacturePro/g' \"$file\")",
+      "Bash(done)",
+      "Bash(ls:*)"
+    ]
+  }
+}
