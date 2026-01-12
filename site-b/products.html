@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${site.name} + ' - 产品列表'">Site B - 产品列表</title>
+</head>
+<body>
+    <header>
+        <h1 th:text="${site.name}">Site B</h1>
+        <nav>
+            <a th:href="@{'/' + ${lang} + '/'}">首页</a>
+            <a th:href="@{'/' + ${lang} + '/products'}">产品</a>
+        </nav>
+    </header>
+    <main>
+        <h2>产品列表</h2>
+        <div th:if="${products.isEmpty()}">
+            <p>暂无产品。</p>
+        </div>
+        <div th:unless="${products.isEmpty()}">
+            <ul>
+                <li th:each="product : ${products}">
+                    <a th:href="@{'/' + ${lang} + '/products/' + ${product.id}}">
+                        <h3 th:text="${product.name}">产品名称</h3>
+                    </a>
+                    <p th:text="${product.sku}">SKU</p>
+                    <img th:if="${product.image}" th:src="${product.image}" th:alt="${product.name}" style="max-width: 200px;">
+                </li>
+            </ul>
+        </div>
+    </main>
+</body>
+</html>

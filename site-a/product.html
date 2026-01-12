@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${site.name} + ' - ' + ${product.name}">Site A - Product</title>
+</head>
+<body>
+    <header>
+        <h1 th:text="${site.name}">Site A</h1>
+        <nav>
+            <a th:href="@{'/' + ${lang} + '/'}">Home</a>
+            <a th:href="@{'/' + ${lang} + '/products'}">Products</a>
+        </nav>
+    </header>
+    <main>
+        <h2 th:text="${product.name}">Product Name</h2>
+        <p><strong>SKU:</strong> <span th:text="${product.sku}">SKU</span></p>
+        <img th:if="${product.image}" th:src="${product.image}" th:alt="${product.name}" style="max-width: 400px;">
+        <div>
+            <h3>Description</h3>
+            <p th:text="${product.description}">Product description</p>
+        </div>
+        <a th:href="@{'/' + ${lang} + '/products'}">Back to Products</a>
+    </main>
+</body>
+</html>

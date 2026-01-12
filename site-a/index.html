@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${site.name} + ' - Home'">Site A - Home</title>
+</head>
+<body>
+    <header>
+        <h1 th:text="${site.name}">Site A</h1>
+        <nav>
+            <a th:href="@{'/' + ${lang} + '/'}">Home</a>
+            <a th:href="@{'/' + ${lang} + '/products'}">Products</a>
+        </nav>
+    </header>
+    <main>
+        <h2>Welcome to Site A</h2>
+        <p>This is the homepage for Site A.</p>
+    </main>
+</body>
+</html>

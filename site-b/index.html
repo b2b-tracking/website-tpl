@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${site.name} + ' - 首页'">Site B - 首页</title>
+</head>
+<body>
+    <header>
+        <h1 th:text="${site.name}">Site B</h1>
+        <nav>
+            <a th:href="@{'/' + ${lang} + '/'}">首页</a>
+            <a th:href="@{'/' + ${lang} + '/products'}">产品</a>
+        </nav>
+    </header>
+    <main>
+        <h2>欢迎来到 Site B</h2>
+        <p>这是 Site B 的主页。</p>
+    </main>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${site.name} + ' - Products'">Site A - Products</title>
+</head>
+<body>
+    <header>
+        <h1 th:text="${site.name}">Site A</h1>
+        <nav>
+            <a th:href="@{'/' + ${lang} + '/'}">Home</a>
+            <a th:href="@{'/' + ${lang} + '/products'}">Products</a>
+        </nav>
+    </header>
+    <main>
+        <h2>Products</h2>
+        <div th:if="${products.isEmpty()}">
+            <p>No products available.</p>
+        </div>
+        <div th:unless="${products.isEmpty()}">
+            <ul>
+                <li th:each="product : ${products}">
+                    <a th:href="@{'/' + ${lang} + '/products/' + ${product.id}}">
+                        <h3 th:text="${product.name}">Product Name</h3>
+                    </a>
+                    <p th:text="${product.sku}">SKU</p>
+                    <img th:if="${product.image}" th:src="${product.image}" th:alt="${product.name}" style="max-width: 200px;">
+                </li>
+            </ul>
+        </div>
+    </main>
+</body>
+</html>

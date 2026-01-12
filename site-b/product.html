@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${site.name} + ' - ' + ${product.name}">Site B - 产品详情</title>
+</head>
+<body>
+    <header>
+        <h1 th:text="${site.name}">Site B</h1>
+        <nav>
+            <a th:href="@{'/' + ${lang} + '/'}">首页</a>
+            <a th:href="@{'/' + ${lang} + '/products'}">产品</a>
+        </nav>
+    </header>
+    <main>
+        <h2 th:text="${product.name}">产品名称</h2>
+        <p><strong>SKU:</strong> <span th:text="${product.sku}">SKU</span></p>
+        <img th:if="${product.image}" th:src="${product.image}" th:alt="${product.name}" style="max-width: 400px;">
+        <div>
+            <h3>产品描述</h3>
+            <p th:text="${product.description}">产品描述内容</p>
+        </div>
+        <a th:href="@{'/' + ${lang} + '/products'}">返回产品列表</a>
+    </main>
+</body>
+</html>
