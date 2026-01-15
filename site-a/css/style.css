@@ -163,6 +163,8 @@ body {
   transition: all 0.3s ease;
   animation: fadeInUp 0.8s ease 0.4s backwards;
   box-shadow: var(--shadow-lg);
+  white-space: nowrap;
+  text-align: center;
 }
 
 .btn:hover {
@@ -180,6 +182,12 @@ body {
 .btn-outline:hover {
   background: white;
   color: var(--primary-color);
+}
+
+.product-card .btn,
+.product-card .btn-outline {
+  padding: 0.6rem 0.8rem;
+  font-size: 0.9rem;
 }
 
 /* 内容区域通用样式 */

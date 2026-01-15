@@ -7,7 +7,8 @@ class I18n {
 
   async init() {
     try {
-      const response = await fetch('./data/translations.json');
+      const lang = window.location.pathname.split('/')[1] || 'zh';
+      const response = await fetch(`/${lang}/data/translations.json`);
       this.translations = await response.json();
       this.setLanguage(this.currentLang);
     } catch (error) {

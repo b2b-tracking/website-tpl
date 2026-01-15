@@ -68,8 +68,8 @@
           <h3 class="product-title" th:text="${product.name}">产品名称</h3>
           <p class="product-description" th:text="${product.shortDescription}">产品简介</p>
           <div style="display: flex; gap: 0.5rem; margin-top: 1rem;">
-            <a th:href="@{'/' + ${lang} + '/products/' + ${product.id}}" class="btn btn-outline" style="flex: 1; padding: 0.8rem 1rem; white-space: nowrap;" data-i18n="products.viewDetails" onclick="event.stopPropagation()">查看详情</a>
-            <a th:href="@{'/' + ${lang} + '/#contact'}" class="btn" style="flex: 1; padding: 0.8rem 1rem; white-space: nowrap;" data-i18n="products.getQuote" onclick="event.stopPropagation()">获取报价</a>
+            <a th:href="@{'/' + ${lang} + '/products/' + ${product.id}}" class="btn btn-outline" style="flex: 1;" data-i18n="products.viewDetails" onclick="event.stopPropagation()">查看详情</a>
+            <a th:href="@{'/' + ${lang} + '/#contact'}" class="btn" style="flex: 1;" data-i18n="products.getQuote" onclick="event.stopPropagation()">获取报价</a>
           </div>
         </div>
       </div>

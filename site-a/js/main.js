@@ -87,12 +87,17 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
-  // 产品卡片点击
+  // 产品卡片点击 - 只在点击卡片空白区域时跳转
   document.querySelectorAll('.product-card').forEach(card => {
-    card.addEventListener('click', function() {
+    card.addEventListener('click', function(e) {
+      if (e.target.tagName === 'A' || e.target.closest('a')) {
+        return;
+      }
+
       const productId = this.dataset.productId;
+      const lang = window.location.pathname.split('/')[1] || 'zh';
       if (productId) {
-        window.location.href = `product-detail.html?id=${productId}`;
+        window.location.href = `/${lang}/products/${productId}`;
       }
     });
   });
@@ -124,11 +129,13 @@ document.addEventListener('DOMContentLoaded', function() {
       e.preventDefault();
 
       const name = this.querySelector('[name="name"]').value;
+      const company = this.querySelector('[name="company"]').value;
       const email = this.querySelector('[name="email"]').value;
+      const phone = this.querySelector('[name="phone"]').value;
       const message = this.querySelector('[name="message"]').value;
 
-      if (!name || !email || !message) {
-        alert(i18n.currentLang === 'zh' ? '请填写所有字段' : 'Please fill in all fields');
+      if (!name || !company || !email || !phone || !message) {
+        alert(i18n.currentLang === 'zh' ? '请填写所有必填字段' : 'Please fill in all required fields');
         return;
       }
 
@@ -137,9 +144,26 @@ document.addEventListener('DOMContentLoaded', function() {
         return;
       }
 
-      // 这里可以添加实际的表单提交逻辑
-      alert(i18n.currentLang === 'zh' ? '消息已发送！' : 'Message sent!');
-      this.reset();
+      // 提交表单数据
+      const formData = new FormData(this);
+
+      fetch(this.action, {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          alert(i18n.currentLang === 'zh' ? '询价已提交，我们会尽快联系您！' : 'Inquiry submitted! We will contact you soon!');
+          this.reset();
+        } else {
+          alert(i18n.currentLang === 'zh' ? '提交失败，请稍后重试' : 'Submission failed, please try again later');
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert(i18n.currentLang === 'zh' ? '提交失败，请稍后重试' : 'Submission failed, please try again later');
+      });
     });
   }
 

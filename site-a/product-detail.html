@@ -60,7 +60,7 @@
           </div>
 
           <div class="action-buttons">
-            <a href="#contact" class="btn" data-i18n="productDetail.inquire">立即咨询</a>
+            <a th:href="@{'/' + ${lang} + '/#contact'}" class="btn" data-i18n="productDetail.inquire">立即咨询</a>
             <a th:href="@{'/' + ${lang} + '/products'}" class="btn btn-outline" data-i18n="productDetail.viewMore">查看更多产品</a>
           </div>
         </div>
