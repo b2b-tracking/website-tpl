@@ -1,34 +1,195 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title th:text="${site.name} + ' - Products'">Site A - Products</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" th:content="${siteSeo != null ? siteSeo.description : ''}" content="查看我们的全部产品系列">
+  <meta name="keywords" th:content="${siteSeo != null ? siteSeo.keywords : ''}" content="">
+  <title th:text="${siteSeo != null ? siteSeo.title : site.name}">产品中心 - ManufacturePro</title>
+  <link rel="stylesheet" th:href="@{'/' + ${lang} + '/css/style.css'}">
 </head>
 <body>
-    <header>
-        <h1 th:text="${site.name}">Site A</h1>
-        <nav>
-            <a th:href="@{'/' + ${lang} + '/'}">Home</a>
-            <a th:href="@{'/' + ${lang} + '/products'}">Products</a>
-        </nav>
-    </header>
-    <main>
-        <h2>Products</h2>
-        <div th:if="${products.isEmpty()}">
-            <p>No products available.</p>
+  <!-- 导航栏 -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a th:href="@{'/' + ${lang} + '/'}" class="logo">
+        <img th:if="${site.logo}" th:src="@{'/static/' + ${site.logo}}" th:alt="${site.name}" style="height: 40px; vertical-align: middle;">
+        <span th:unless="${site.logo}" th:text="${site.name}">ManufacturePro</span>
+      </a>
+      <button class="mobile-menu-toggle">☰</button>
+      <ul class="nav-menu">
+        <li th:each="menu : ${menus}">
+          <a th:href="@{'/' + ${lang} + '/' + ${menu.target_url}}" class="nav-link"
+             th:text="${menu.menu_name}">菜单</a>
+        </li>
+        <li class="lang-switcher">
+          <button class="lang-btn" th:classappend="${lang == 'zh'} ? 'active'" data-lang="zh"
+                  th:onclick="'window.location.href=\'' + @{'/zh/products'} + '\''">中文</button>
+          <button class="lang-btn" th:classappend="${lang == 'en'} ? 'active'" data-lang="en"
+                  th:onclick="'window.location.href=\'' + @{'/en/products'} + '\''">EN</button>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- 产品列表 -->
+  <section class="container" style="margin-top: 6rem;">
+    <h2 class="section-title" data-i18n="products.title">我们的产品</h2>
+    <p class="section-subtitle" data-i18n="products.subtitle">为您提供优质的产品和服务</p>
+
+    <!-- 分类筛选 -->
+    <div style="margin: 2rem 0; display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;">
+      <a th:href="@{'/' + ${lang} + '/products'}"
+         th:classappend="${selectedCategory == null} ? 'active'"
+         class="category-filter-btn"
+         data-i18n="products.allProducts">
+        全部产品
+      </a>
+      <a th:each="cat : ${categories}"
+         th:href="@{'/' + ${lang} + '/products?category=' + ${cat.id}}"
+         th:classappend="${selectedCategory != null && selectedCategory == cat.id} ? 'active'"
+         class="category-filter-btn"
+         th:text="${cat.name}">
+        分类
+      </a>
+    </div>
+
+    <div class="products-grid" id="products-container" style="margin-top: 3rem;">
+      <div th:each="product, iterStat : ${products}" class="product-card"
+           th:onclick="'window.location.href=\'' + @{'/' + ${lang} + '/products/' + ${product.id}} + '\''">
+        <div class="product-image" th:if="${product.mainImage}"
+             th:style="'background-image: url(' + ${product.mainImage} + '); background-size: cover; background-position: center;'">
         </div>
-        <div th:unless="${products.isEmpty()}">
-            <ul>
-                <li th:each="product : ${products}">
-                    <a th:href="@{'/' + ${lang} + '/products/' + ${product.id}}">
-                        <h3 th:text="${product.name}">Product Name</h3>
-                    </a>
-                    <p th:text="${product.sku}">SKU</p>
-                    <img th:if="${product.image}" th:src="${product.image}" th:alt="${product.name}" style="max-width: 200px;">
-                </li>
-            </ul>
+        <div class="product-image" th:unless="${product.mainImage}"
+             th:style="'background: linear-gradient(135deg, hsl(' + ${(iterStat.index * 60) % 360} + ', 70%, 60%) 0%, hsl(' + ${((iterStat.index * 60) + 30) % 360} + ', 70%, 50%) 100%);'">
+          <span>📦</span>
         </div>
-    </main>
+        <div class="product-info">
+          <h3 class="product-title" th:text="${product.name}">产品名称</h3>
+          <p class="product-description" th:text="${product.shortDescription}">产品简介</p>
+          <div style="display: flex; gap: 0.5rem; margin-top: 1rem;">
+            <a th:href="@{'/' + ${lang} + '/products/' + ${product.id}}" class="btn btn-outline" style="flex: 1; padding: 0.8rem 1rem; white-space: nowrap;" data-i18n="products.viewDetails" onclick="event.stopPropagation()">查看详情</a>
+            <a th:href="@{'/' + ${lang} + '/#contact'}" class="btn" style="flex: 1; padding: 0.8rem 1rem; white-space: nowrap;" data-i18n="products.getQuote" onclick="event.stopPropagation()">获取报价</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 空状态 -->
+    <div th:if="${products == null || products.isEmpty()}" style="text-align: center; padding: 4rem 0;">
+      <p style="color: var(--text-light); font-size: 1.2rem;" data-i18n="products.noProducts">暂无产品</p>
+    </div>
+
+    <!-- 分页 -->
+    <div th:if="${totalPages > 1}" style="display: flex; justify-content: center; align-items: center; gap: 0.5rem; margin-top: 3rem;">
+      <a th:if="${currentPage > 1}"
+         th:href="${selectedCategory != null} ? @{/} + ${lang} + '/products?page=' + ${currentPage - 1} + '&category=' + ${selectedCategory} : @{/} + ${lang} + '/products?page=' + ${currentPage - 1}"
+         class="pagination-btn">&lt;</a>
+
+      <span th:each="i : ${#numbers.sequence(1, totalPages)}"
+            th:if="${i == 1 || i == totalPages || (i >= currentPage - 2 && i <= currentPage + 2)}">
+        <a th:if="${i != currentPage}"
+           th:href="${selectedCategory != null} ? @{/} + ${lang} + '/products?page=' + ${i} + '&category=' + ${selectedCategory} : @{/} + ${lang} + '/products?page=' + ${i}"
+           class="pagination-btn"
+           th:text="${i}">1</a>
+        <span th:if="${i == currentPage}"
+              class="pagination-btn active"
+              th:text="${i}">1</span>
+      </span>
+
+      <a th:if="${currentPage < totalPages}"
+         th:href="${selectedCategory != null} ? @{/} + ${lang} + '/products?page=' + ${currentPage + 1} + '&category=' + ${selectedCategory} : @{/} + ${lang} + '/products?page=' + ${currentPage + 1}"
+         class="pagination-btn">&gt;</a>
+    </div>
+  </section>
+
+  <!-- 页脚 -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3 th:text="${siteI18n != null ? siteI18n.site_name : site.name}">ManufacturePro</h3>
+        <p th:text="${siteI18n != null ? siteI18n.description : ''}">我们是一家专注于创新产品研发和制造的企业，致力于为全球客户提供高品质的产品和服务。</p>
+      </div>
+
+      <div class="footer-section">
+        <h3 data-i18n="products.title">产品中心</h3>
+        <a th:each="category : ${categories}"
+           th:href="@{'/' + ${lang} + '/products?category=' + ${category.id}}"
+           th:text="${category.name}">产品分类</a>
+      </div>
+
+      <div class="footer-section">
+        <h3 data-i18n="footer.quickLinks">快速链接</h3>
+        <a th:href="@{'/' + ${lang} + '/about'}"><span data-i18n="nav.about">关于我们</span></a>
+        <a th:href="@{'/' + ${lang} + '/news'}"><span data-i18n="nav.news">新闻资讯</span></a>
+        <a href="#contact"><span data-i18n="nav.contact">联系我们</span></a>
+      </div>
+
+      <div class="footer-section" th:if="${contact}">
+        <h3 data-i18n="contact.title">联系我们</h3>
+        <p th:if="${contact.address}">📍 <span th:text="${contact.address}">中国广东省深圳市</span></p>
+        <p th:if="${contact.phone}">📞 <span th:text="${contact.phone}">+86 755-1234-5678</span></p>
+        <p th:if="${contact.email}">✉️ <span th:text="${contact.email}">sales@manufacturepro.com</span></p>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; 2026 <span th:text="${site.name}">ManufacturePro</span>. <span data-i18n="footer.allRightsReserved">保留所有权利</span></p>
+      <p th:if="${site.icpNumber}" th:text="${site.icpNumber}"></p>
+    </div>
+  </footer>
+
+  <!-- 返回顶部按钮 -->
+  <div class="back-to-top">↑</div>
+
+  <style>
+    .category-filter-btn {
+      padding: 0.5rem 1.5rem;
+      border: 2px solid var(--primary-color);
+      border-radius: 25px;
+      text-decoration: none;
+      color: var(--primary-color);
+      transition: all 0.3s;
+      background: white;
+      font-weight: 500;
+      display: inline-block;
+    }
+    .category-filter-btn:hover {
+      background: var(--primary-color);
+      color: white !important;
+    }
+    .category-filter-btn.active {
+      background: var(--primary-color);
+      color: white !important;
+    }
+
+    .pagination-btn {
+      padding: 0.5rem 1rem;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      text-decoration: none;
+      color: var(--text-color);
+      background: white;
+      transition: all 0.3s;
+      min-width: 40px;
+      text-align: center;
+      display: inline-block;
+    }
+    .pagination-btn:hover {
+      background: var(--primary-color);
+      color: white;
+      border-color: var(--primary-color);
+    }
+    .pagination-btn.active {
+      background: var(--primary-color);
+      color: white;
+      border-color: var(--primary-color);
+      font-weight: bold;
+    }
+  </style>
+
+  <!-- 脚本 -->
+  <script th:src="@{'/' + ${lang} + '/js/i18n.js'}"></script>
+  <script th:src="@{'/' + ${lang} + '/js/main.js'}"></script>
 </body>
 </html>

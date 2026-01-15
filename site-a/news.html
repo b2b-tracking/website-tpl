@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" th:content="${siteSeo != null ? siteSeo.description : ''}" content="公司新闻和行业资讯">
+  <meta name="keywords" th:content="${siteSeo != null ? siteSeo.keywords : ''}" content="">
+  <title th:text="${siteSeo != null ? siteSeo.title : site.name}">新闻资讯 - ManufacturePro</title>
+  <link rel="stylesheet" th:href="@{'/' + ${lang} + '/css/style.css'}">
+</head>
+<body>
+  <!-- 导航栏 -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a th:href="@{'/' + ${lang} + '/'}" class="logo">
+        <img th:if="${site.logo}" th:src="@{'/static/' + ${site.logo}}" th:alt="${site.name}" style="height: 40px; vertical-align: middle;">
+        <span th:unless="${site.logo}" th:text="${site.name}">ManufacturePro</span>
+      </a>
+      <button class="mobile-menu-toggle">☰</button>
+      <ul class="nav-menu">
+        <li th:each="menu : ${menus}">
+          <a th:href="@{'/' + ${lang} + '/' + ${menu.target_url}}" class="nav-link"
+             th:text="${menu.menu_name}">菜单</a>
+        </li>
+        <li class="lang-switcher">
+          <button class="lang-btn" th:classappend="${lang == 'zh'} ? 'active'" data-lang="zh"
+                  th:onclick="'window.location.href=\'' + @{'/zh/news'} + '\''">中文</button>
+          <button class="lang-btn" th:classappend="${lang == 'en'} ? 'active'" data-lang="en"
+                  th:onclick="'window.location.href=\'' + @{'/en/news'} + '\''">EN</button>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- 新闻列表 -->
+  <section class="container" style="margin-top: 6rem;">
+    <h2 class="section-title" data-i18n="news.title">新闻资讯</h2>
+    <p class="section-subtitle" data-i18n="news.subtitle">了解公司动态和行业资讯</p>
+
+    <!-- 新闻网格 -->
+    <div class="news-grid" style="margin-top: 3rem;">
+      <div th:each="newsItem : ${newsList}" class="news-card"
+           th:onclick="'window.location.href=\'' + @{'/' + ${lang} + '/news/' + ${newsItem.id}} + '\''">
+        <div class="news-image" th:if="${newsItem.cover_image}">
+          <img th:src="@{'/static/' + ${newsItem.cover_image}}" alt="News Cover" style="width: 100%; height: 200px; object-fit: cover;">
+        </div>
+        <div class="news-image" th:unless="${newsItem.cover_image}"
+             style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); height: 200px; display: flex; align-items: center; justify-content: center; font-size: 3rem;">
+          <span>📰</span>
+        </div>
+        <div class="news-info">
+          <h3 class="news-title" th:text="${newsItem.title}">新闻标题</h3>
+          <p class="news-excerpt" th:text="${newsItem.summary}">
+            新闻摘要...
+          </p>
+          <div class="news-meta">
+            <span class="news-date" th:text="'📅 ' + ${#temporals.format(newsItem.publish_time, 'yyyy-MM-dd')}">📅 2026-01-10</span>
+            <span class="news-views" th:if="${newsItem.view_count != null}" th:text="'👁 ' + ${newsItem.view_count}">👁 1258</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 空状态 -->
+    <div th:if="${newsList == null || newsList.isEmpty()}" style="text-align: center; padding: 4rem 0;">
+      <p style="color: var(--text-light); font-size: 1.2rem;">暂无新闻</p>
+    </div>
+  </section>
+
+  <!-- 页脚 -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3 th:text="${siteI18n != null ? siteI18n.site_name : site.name}">ManufacturePro</h3>
+        <p th:text="${siteI18n != null ? siteI18n.description : ''}">我们是一家专注于创新产品研发和制造的企业，致力于为全球客户提供高品质的产品和服务。</p>
+      </div>
+
+      <div class="footer-section">
+        <h3 data-i18n="products.title">产品中心</h3>
+        <a th:each="category : ${categories}"
+           th:href="@{'/' + ${lang} + '/products?category=' + ${category.id}}"
+           th:text="${category.name}">产品分类</a>
+      </div>
+
+      <div class="footer-section">
+        <h3 data-i18n="footer.quickLinks">快速链接</h3>
+        <a th:href="@{'/' + ${lang} + '/about'}"><span data-i18n="nav.about">关于我们</span></a>
+        <a th:href="@{'/' + ${lang} + '/news'}"><span data-i18n="nav.news">新闻资讯</span></a>
+        <a href="#contact"><span data-i18n="nav.contact">联系我们</span></a>
+      </div>
+
+      <div class="footer-section" th:if="${contact}">
+        <h3 data-i18n="contact.title">联系我们</h3>
+        <p th:if="${contact.address}">📍 <span th:text="${contact.address}">中国广东省深圳市</span></p>
+        <p th:if="${contact.phone}">📞 <span th:text="${contact.phone}">+86 755-1234-5678</span></p>
+        <p th:if="${contact.email}">✉️ <span th:text="${contact.email}">sales@manufacturepro.com</span></p>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; 2026 <span th:text="${site.name}">ManufacturePro</span>. <span data-i18n="footer.allRightsReserved">保留所有权利</span></p>
+      <p th:if="${site.icpNumber}" th:text="${site.icpNumber}"></p>
+    </div>
+  </footer>
+
+  <!-- 返回顶部按钮 -->
+  <div class="back-to-top">↑</div>
+
+  <!-- 脚本 -->
+  <script th:src="@{'/' + ${lang} + '/js/i18n.js'}"></script>
+  <script th:src="@{'/' + ${lang} + '/js/main.js'}"></script>
+</body>
+</html>
