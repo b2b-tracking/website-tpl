@@ -645,6 +645,7 @@ body {
 
 .back-to-top:hover {
   background: white;
+  color: var(--primary-blue);
 }
 
 /* 动画 */
