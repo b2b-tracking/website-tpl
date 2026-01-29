@@ -92,12 +92,10 @@
     /* 内容区域 */
     .content-section {
       padding: 4rem 2rem;
-      max-width: 900px;
+      max-width: 1400px;
       margin: 0 auto;
-      background: white;
-      border-radius: 8px;
-      margin-top: 1rem;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+      margin-top: 2rem;
+      margin-bottom: 3rem;
     }
 
     .contact-title {
@@ -110,16 +108,17 @@
 
     .contact-container {
       display: grid;
-      grid-template-columns: 1fr;
+      grid-template-columns: 2fr 3fr;
       gap: 3rem;
+      background: white;
+      border-radius: 8px;
+      padding: 3rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
     }
 
     /* 联系信息卡片 */
     .contact-info-card {
-      background: #f9f9f9;
-      padding: 2rem;
-      border-radius: 8px;
-      border-left: 4px solid var(--primary-blue);
+      padding: 0;
     }
 
     .contact-info-card h3 {
@@ -160,10 +159,7 @@
 
     /* 询价表单 */
     .inquiry-form-container {
-      background: #f9f9f9;
-      padding: 2rem;
-      border-radius: 8px;
-      border-left: 4px solid var(--primary-blue);
+      padding: 0;
     }
 
     .inquiry-form-container h3 {
@@ -262,6 +258,10 @@
       .contact-banner::before {
         font-size: 12rem;
       }
+
+      .contact-container {
+        grid-template-columns: 1fr;
+      }
     }
 
     @media (max-width: 768px) {
@@ -300,11 +300,7 @@
 
       .contact-container {
         gap: 2rem;
-      }
-
-      .contact-info-card,
-      .inquiry-form-container {
-        padding: 1.5rem;
+        padding: 2rem 1.5rem;
       }
 
       .form-row {
@@ -348,75 +344,77 @@
 
   <!-- 联系内容区域 -->
   <section class="content-section">
-    <!-- 联系信息卡片 -->
-    <div th:if="${contact}" class="contact-info-card slide-up">
-      <h3 data-i18n="contact.contactInfo">联系方式</h3>
+    <div class="contact-container">
+      <!-- 左侧：联系信息 -->
+      <div th:if="${contact}" class="contact-info-card slide-up">
+        <h3 data-i18n="contact.contactInfo">联系方式</h3>
 
-      <div class="contact-info-item" th:if="${contact.address}">
-        <div class="contact-info-icon">📍</div>
-        <div class="contact-info-text">
-          <strong data-i18n="contact.address">地址</strong>
-          <p th:text="${contact.address}">地址信息</p>
+        <div class="contact-info-item" th:if="${contact.address}">
+          <div class="contact-info-icon">📍</div>
+          <div class="contact-info-text">
+            <strong data-i18n="contact.address">地址</strong>
+            <p th:text="${contact.address}">地址信息</p>
+          </div>
+        </div>
+
+        <div class="contact-info-item" th:if="${contact.phone}">
+          <div class="contact-info-icon">📞</div>
+          <div class="contact-info-text">
+            <strong data-i18n="contact.phone">电话</strong>
+            <p th:text="${contact.phone}">电话信息</p>
+          </div>
+        </div>
+
+        <div class="contact-info-item" th:if="${contact.email}">
+          <div class="contact-info-icon">✉️</div>
+          <div class="contact-info-text">
+            <strong data-i18n="contact.email">邮箱</strong>
+            <p th:text="${contact.email}">邮箱信息</p>
+          </div>
         </div>
       </div>
 
-      <div class="contact-info-item" th:if="${contact.phone}">
-        <div class="contact-info-icon">📞</div>
-        <div class="contact-info-text">
-          <strong data-i18n="contact.phone">电话</strong>
-          <p th:text="${contact.phone}">电话信息</p>
-        </div>
+      <!-- 右侧：询价表单 -->
+      <div class="inquiry-form-container slide-up delay-200">
+        <h3 data-i18n="contact.onlineInquiry">在线咨询</h3>
+
+        <div id="formMessage" class="form-message"></div>
+
+        <form id="contact-form" th:action="@{'/' + ${lang} + '/inquiry'}" method="post">
+          <div class="form-row">
+            <div class="form-group">
+              <input type="text" id="name" name="name" data-i18n="contact.name" placeholder="姓名" required>
+            </div>
+            <div class="form-group">
+              <input type="text" id="company" name="company" data-i18n="contact.company" placeholder="公司名称" required>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <input type="email" id="email" name="email" data-i18n="contact.email" placeholder="邮箱" required>
+            </div>
+            <div class="form-group">
+              <input type="tel" id="phone" name="phone" data-i18n="contact.phone" placeholder="电话" required>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <input type="text" id="product" name="product" data-i18n="contact.product" placeholder="产品名称">
+            </div>
+            <div class="form-group">
+              <input type="text" id="quantity" name="quantity" data-i18n="contact.quantity" placeholder="预计数量">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <textarea id="message" name="message" rows="4" data-i18n="contact.message" placeholder="需求说明" required></textarea>
+          </div>
+
+          <button type="submit" class="submit-btn" data-i18n="contact.submitMessage">发送询价</button>
+        </form>
       </div>
-
-      <div class="contact-info-item" th:if="${contact.email}">
-        <div class="contact-info-icon">✉️</div>
-        <div class="contact-info-text">
-          <strong data-i18n="contact.email">邮箱</strong>
-          <p th:text="${contact.email}">邮箱信息</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- 询价表单 -->
-    <div class="inquiry-form-container slide-up delay-200">
-      <h3 data-i18n="contact.onlineInquiry">在线咨询</h3>
-
-      <div id="formMessage" class="form-message"></div>
-
-      <form id="contact-form" th:action="@{'/' + ${lang} + '/inquiry'}" method="post">
-        <div class="form-row">
-          <div class="form-group">
-            <input type="text" id="name" name="name" data-i18n="contact.name" placeholder="姓名" required>
-          </div>
-          <div class="form-group">
-            <input type="text" id="company" name="company" data-i18n="contact.company" placeholder="公司名称" required>
-          </div>
-        </div>
-
-        <div class="form-row">
-          <div class="form-group">
-            <input type="email" id="email" name="email" data-i18n="contact.email" placeholder="邮箱" required>
-          </div>
-          <div class="form-group">
-            <input type="tel" id="phone" name="phone" data-i18n="contact.phone" placeholder="电话" required>
-          </div>
-        </div>
-
-        <div class="form-row">
-          <div class="form-group">
-            <input type="text" id="product" name="product" data-i18n="contact.product" placeholder="产品名称">
-          </div>
-          <div class="form-group">
-            <input type="text" id="quantity" name="quantity" data-i18n="contact.quantity" placeholder="预计数量">
-          </div>
-        </div>
-
-        <div class="form-group">
-          <textarea id="message" name="message" rows="4" data-i18n="contact.message" placeholder="需求说明" required></textarea>
-        </div>
-
-        <button type="submit" class="submit-btn" data-i18n="contact.submitMessage">发送询价</button>
-      </form>
     </div>
   </section>
 

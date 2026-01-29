@@ -93,89 +93,99 @@
 
     /* 内容区域 */
     .content-section {
-      padding: 1rem 2rem 4rem;
-      max-width: 900px;
+      padding: 3rem 2rem 4rem;
+      max-width: 1400px;
       margin: 0 auto;
+    }
+
+    /* 产品信息区 - 左右布局 */
+    .product-info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
       background: white;
+      padding: 3rem;
       border-radius: 8px;
-      margin-top: 1rem;
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+      margin-bottom: 2rem;
     }
 
-    /* 产品标题 */
-    .product-title-section {
-      text-align: center;
-      padding: 2rem 0 2rem;
-      border-bottom: 1px solid #eee;
+    /* 左侧主图区 */
+    .product-image-section {
+      position: relative;
     }
 
-    .product-title-section h1 {
-      font-size: 1.8rem;
-      font-weight: 600;
+    .product-main-image-large {
+      width: 100%;
+      border-radius: 8px;
+      overflow: hidden;
+      background: #f9f9f9;
+    }
+
+    .product-main-image-large img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* 右侧属性区 */
+    .product-details-section {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .product-title {
+      font-size: 2rem;
+      font-weight: 700;
       margin: 0 0 1rem 0;
       color: #333;
-      line-height: 1.4;
+      line-height: 1.3;
     }
 
-    .product-meta {
-      font-size: 0.85rem;
-      color: #999;
-      display: inline-block;
-      padding: 0.4rem 1rem;
-      background: #f5f5f5;
-      border-radius: 15px;
-    }
-
-    /* 产品内容 */
-    .product-content {
-      padding: 2rem 0;
-    }
-
-    .product-description {
+    .product-short-desc {
       color: #666;
       font-size: 1rem;
       line-height: 1.8;
       margin-bottom: 2rem;
-      text-align: justify;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid #e5e7eb;
     }
 
-    /* 产品主图 */
-    .product-main-image {
-      width: 100%;
-      margin: 2rem auto;
-      display: block;
-      text-align: center;
-    }
-
-    .product-main-image img {
-      width: 100%;
-      max-width: 600px;
-      height: auto;
+    /* 产品详情区 - 下方 */
+    .product-detail-content {
+      background: white;
+      padding: 3rem;
       border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
     }
 
-    /* 产品属性区 */
+    .product-detail-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 2rem;
+      color: #333;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid var(--primary-blue);
+    }
+
+    /* 产品属性列表 */
     .product-specs {
-      background: #f9f9f9;
-      padding: 2rem;
-      border-radius: 8px;
-      margin: 2rem 0;
+      flex: 1;
     }
 
     .product-specs h3 {
-      font-size: 1.1rem;
+      font-size: 1.2rem;
       font-weight: 600;
       margin: 0 0 1.5rem 0;
       color: #333;
-      text-align: center;
     }
 
     .spec-item {
-      display: flex;
-      justify-content: space-between;
-      padding: 1rem 0;
-      border-bottom: 1px solid #e0e0e0;
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 1rem;
+      padding: 0.8rem 0;
+      border-bottom: 1px solid #e5e7eb;
     }
 
     .spec-item:last-child {
@@ -185,10 +195,12 @@
     .spec-label {
       font-weight: 600;
       color: #666;
+      font-size: 0.95rem;
     }
 
     .spec-value {
       color: #333;
+      font-size: 0.95rem;
     }
 
     /* 产品图片展示 */
@@ -292,22 +304,36 @@
     }
 
     /* 响应式 */
+    @media (max-width: 1024px) {
+      .product-info-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+    }
+
     @media (max-width: 768px) {
       .breadcrumb {
         padding: 1.5rem 1.5rem 0;
       }
 
       .content-section {
-        padding: 1rem 1.5rem 3rem;
-        margin-top: 0.5rem;
+        padding: 2rem 1rem 3rem;
       }
 
-      .product-title-section h1 {
+      .product-info-grid {
+        padding: 2rem 1.5rem;
+      }
+
+      .product-detail-content {
+        padding: 2rem 1.5rem;
+      }
+
+      .product-title {
         font-size: 1.5rem;
       }
 
-      .product-content {
-        padding: 1.5rem 0;
+      .spec-item {
+        grid-template-columns: 100px 1fr;
       }
 
       .product-actions {
@@ -364,62 +390,55 @@
 
   <!-- 产品详情内容 -->
   <section class="content-section" th:if="${product}">
-    <!-- 产品标题 -->
-    <div class="product-title-section">
-      <h1 th:text="${product.name}">产品名称</h1>
-      <!-- <div th:if="${product.category}" class="product-meta">
-        <span th:text="${product.category}">产品分类</span>
-      </div> -->
-    </div>
 
-    <!-- 产品内容 -->
-    <div class="product-content">
-      <!-- 产品描述 -->
-      <div th:if="${product.shortDescription}" class="product-description">
-        <p th:text="${product.shortDescription}">产品简介</p>
-      </div>
-
-      <!-- 产品主图 -->
-      <div th:if="${product.mainImage}" class="product-main-image">
-        <img th:src="${product.mainImage}" th:alt="${product.name}" loading="lazy">
-      </div>
-
-      <!-- 产品属性 -->
-      <div th:if="${product.attributes != null && !product.attributes.isEmpty()}" class="product-specs">
-        <h3 data-i18n="productDetail.specifications">产品规格</h3>
-        <div th:each="attr : ${product.attributes}" class="spec-item">
-          <span class="spec-label" th:text="${attr.name}">属性名</span>
-          <span class="spec-value" th:text="${attr.value}">属性值</span>
+    <!-- 上方：左边主图，右边属性 -->
+    <div class="product-info-grid">
+      <!-- 左侧：主图 -->
+      <div class="product-image-section">
+        <div class="product-main-image-large">
+          <img th:if="${product.mainImage}" th:src="${product.mainImage}" th:alt="${product.name}" loading="lazy">
+          <div th:unless="${product.mainImage}" style="aspect-ratio: 1; background: linear-gradient(135deg, #7FA8DA, #C4D9EC); display: flex; align-items: center; justify-content: center; font-size: 4rem;">
+            📦
+          </div>
         </div>
       </div>
 
-      <!-- 产品图片展示 -->
-      <div th:if="${product.images != null && !product.images.isEmpty()}" class="product-images-section">
+      <!-- 右侧：标题 + 简介 + 属性 -->
+      <div class="product-details-section">
+        <h1 class="product-title" th:text="${product.name}">产品名称</h1>
+
+        <div th:if="${product.shortDescription}" class="product-short-desc">
+          <p th:text="${product.shortDescription}">产品简介</p>
+        </div>
+
+        <!-- 产品属性 -->
+        <div th:if="${product.attributes != null && !product.attributes.isEmpty()}" class="product-specs">
+          <h3 data-i18n="productDetail.specifications">产品规格</h3>
+          <div th:each="attr : ${product.attributes}" class="spec-item">
+            <span class="spec-label" th:text="${attr.name}">属性名</span>
+            <span class="spec-value" th:text="${attr.value}">属性值</span>
+          </div>
+        </div>
+
+        <!-- 询价按钮 -->
+        <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid #e5e7eb;">
+          <a th:href="@{'/' + ${lang} + '/contact'}" class="btn btn-primary" style="display: inline-block; background: var(--primary-blue); color: white; padding: 0.9rem 2.5rem; border-radius: 4px; text-decoration: none; font-weight: 600; transition: all 0.3s;" data-i18n="productDetail.inquire">
+            立即询价
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 下方：产品详情图片 -->
+    <div th:if="${product.images != null && !product.images.isEmpty()}" class="product-detail-content">
+      <h2 class="product-detail-title" data-i18n="productDetail.details">产品详情</h2>
+      <div class="product-images-section">
         <div th:each="image, iterStat : ${product.images}" class="product-image-item">
-          <img th:src=" ${image}" th:alt="${product.name} + ' - 图片 ' + ${iterStat.index + 1}" loading="lazy">
+          <img th:src="${image}" th:alt="${product.name} + ' - 图片 ' + ${iterStat.index + 1}" loading="lazy">
         </div>
       </div>
-
-      <!-- 行动按钮 -->
-      <!-- <div class="product-actions">
-        <a th:href="@{'/' + ${lang} + '/contact'}" class="btn btn-primary" data-i18n="productDetail.inquire">
-          立即咨询
-        </a>
-        
-      </div> -->
-
-      <!-- 底部导航 - 上一个/下一个产品 -->
-      <!-- <div th:if="${prevProduct != null || nextProduct != null}" class="bottom-nav">
-        <div class="nav-prev">
-          <a th:if="${prevProduct}" th:href="@{'/' + ${lang} + '/products/' + ${prevProduct.id}}"
-             th:text="'上一篇：' + ${prevProduct.name}" data-i18n-prefix="productDetail.previous">上一篇产品</a>
-        </div>
-        <div class="nav-next">
-          <a th:if="${nextProduct}" th:href="@{'/' + ${lang} + '/products/' + ${nextProduct.id}}"
-             th:text="'下一篇：' + ${nextProduct.name}" data-i18n-prefix="productDetail.next">下一篇产品</a>
-        </div>
-      </div> -->
     </div>
+
   </section>
 
   <!-- 空状态 -->
