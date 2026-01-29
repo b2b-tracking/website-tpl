@@ -4,9 +4,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" th:content="${siteSeo != null ? siteSeo.description : ''}" content="了解我们的公司文化、愿景和使命">
-  <meta name="keywords" th:content="${siteSeo != null ? siteSeo.keywords : ''}" content="">
-  <title th:text="${siteSeo != null ? siteSeo.title : site.name}">关于我们</title>
+  <meta name="description" th:content="${news.summary}" content="新闻详情">
+  <title th:text="${ news.title + ' - ' + site.name }">新闻详情</title>
   <link rel="stylesheet" th:href="@{'/' + ${lang} + '/css/style.css'}">
   <link rel="stylesheet" th:href="@{'/' + ${lang} + '/css/widget-posts.min.css'}">
   <link rel="stylesheet" th:href="@{'/' + ${lang} + '/css/navbar-footer.css'}">
@@ -24,7 +23,7 @@
     }
 
     /* Hero Banner */
-    .about-banner {
+    .news-banner {
       position: relative;
       height: 400px;
       background: linear-gradient(135deg, #7FA8DA 0%, #9BC4E8 50%, #C4D9EC 100%);
@@ -33,21 +32,21 @@
       overflow: hidden;
     }
 
-    .about-banner::before {
-      content: 'ABOUT';
-      position: absolute;
-      top: 50%;
-      right: 0%;
-      transform: translateY(-50%);
-      font-size: 20rem;
-      font-weight: 900;
-      color: rgba(255, 255, 255, 0.2);
-      letter-spacing: -0.05em;
-      z-index: 1;
-      line-height: 1;
+    .news-banner::before {
+      content: 'DETAIL';
+        position: absolute;
+        top: 50%;
+        right: -10%;
+        transform: translateY(-50%);
+        font-size: 25rem;
+        font-weight: 900;
+        color: rgba(255, 255, 255, 0.2);
+        letter-spacing: -0.05em;
+        z-index: 1;
+        line-height: 1;
     }
 
-    .about-banner-content {
+    .news-banner-content {
       position: relative;
       z-index: 2;
       text-align: left;
@@ -58,14 +57,14 @@
       padding: 0 4rem;
     }
 
-    .about-banner-title {
+    .news-banner-title {
       font-size: 2.5rem;
       font-weight: 700;
       margin-bottom: 0.8rem;
       letter-spacing: 0;
     }
 
-    .about-banner-subtitle {
+    .news-banner-subtitle {
       font-size: 1rem;
       opacity: 1;
       letter-spacing: 0;
@@ -75,81 +74,218 @@
     /* 内容区域 */
     .content-section {
       padding: 4rem 2rem;
-      max-width: 900px;
+      max-width: 1200px;
       margin: 0 auto;
+    }
+
+    .news-detail-container {
       background: white;
       border-radius: 8px;
-      margin-top: 1rem;
+      padding: 3rem;
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
     }
 
-    .about-title {
-      font-size: 2rem;
-      font-weight: 600;
+    .news-detail-header {
       margin-bottom: 2rem;
-      color: #333;
+      border-bottom: 2px solid var(--border-light);
+      padding-bottom: 2rem;
+    }
+
+    .news-detail-title {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--dark-blue);
+      line-height: 1.4;
+    }
+
+    .news-detail-meta {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      color: var(--text-light);
+      font-size: 0.9rem;
+      text-align: center;
+      justify-content: center;
+      margin-bottom: 2rem;
+    }
+
+    .news-detail-image {
+      margin: 2rem 0;
       text-align: center;
     }
 
-    .about-intro {
-      color: #666;
-      font-size: 1rem;
+    .news-detail-image img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .news-detail-body {
+      font-size: 1.05rem;
       line-height: 1.8;
-      margin-bottom: 3rem;
+      color: var(--text-light);
+      margin-top: 3rem;
+    }
+
+    .news-detail-body p {
+      margin-bottom: 1.5rem;
       text-align: justify;
     }
 
-    .about-image {
-      width: 100%;
-      margin: 2rem 0;
+    .news-detail-body h2,
+    .news-detail-body h3 {
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+      color: var(--dark-blue);
+    }
+
+    .news-detail-body h2 {
+      font-size: 1.5rem;
+      border-left: 4px solid var(--primary-blue);
+      padding-left: 1rem;
+    }
+
+    .news-detail-body h3 {
+      font-size: 1.2rem;
+    }
+
+    .news-detail-body ul,
+    .news-detail-body ol {
+      margin: 1.5rem 0 1.5rem 2rem;
+    }
+
+    .news-detail-body li {
+      margin-bottom: 0.8rem;
+    }
+
+    .news-detail-footer {
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 2px solid var(--border-light);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .back-to-news {
+      display: inline-block;
+      padding: 0.8rem 1.5rem;
+      background: transparent;
+      color: var(--primary-blue);
+      text-decoration: none;
+      border: 1px solid var(--primary-blue);
+      border-radius: 4px;
+      transition: all 0.3s;
+      font-weight: 500;
+    }
+
+    .back-to-news:hover {
+      background: var(--primary-blue);
+      color: white;
+      transform: translateX(-3px);
+    }
+
+    /* 相关新闻 */
+    .related-news {
+      margin-top: 4rem;
+      padding-top: 3rem;
+      border-top: 2px solid var(--border-light);
+    }
+
+    .section-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 2rem;
+      color: var(--dark-blue);
+    }
+
+    .related-news-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+
+    .news-card {
+      background: white;
       border-radius: 8px;
       overflow: hidden;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+      transition: all 0.3s;
     }
 
-    .about-image img {
+    .news-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    }
+
+    .news-card-image {
+      overflow: hidden;
+      height: 200px;
+      background: #f0f0f0;
+    }
+
+    .news-card-image img {
       width: 100%;
-      height: auto;
-      display: block;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
     }
 
-    /* 公司信息网格 */
-    .company-info-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 2rem;
-      margin: 3rem 0;
+    .news-card:hover .news-card-image img {
+      transform: scale(1.1);
     }
 
-    .info-card {
-      background: #f9f9f9;
-      padding: 2rem;
-      border-radius: 8px;
-      border-left: 4px solid var(--primary-blue);
+    .news-card-content {
+      padding: 1.5rem;
     }
 
-    .info-card h3 {
-      font-size: 1.1rem;
+    .news-card-title {
+      font-size: 1rem;
       font-weight: 600;
-      margin: 0 0 1rem 0;
-      color: #333;
+      margin-bottom: 0.8rem;
+      line-height: 1.5;
     }
 
-    .info-card p {
-      color: #666;
-      font-size: 0.95rem;
-      line-height: 1.6;
-      margin: 0;
+    .news-card-title a {
+      color: var(--text-dark);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .news-card-title a:hover {
+      color: var(--primary-blue);
+    }
+
+    .news-card-date {
+      font-size: 0.85rem;
+      color: var(--text-light);
+      margin-bottom: 1rem;
+    }
+
+    .news-card-link {
+      display: inline-block;
+      padding: 0.5rem 1.5rem;
+      border: 1px solid var(--text-dark);
+      border-radius: 20px;
+      color: var(--text-dark);
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: all 0.3s;
+    }
+
+    .news-card-link:hover {
+      background: var(--text-dark);
+      color: white;
     }
 
     /* 响应式 */
     @media (max-width: 1024px) {
-      .company-info-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .about-banner::before {
-        font-size: 12rem;
+      .related-news-grid {
+        grid-template-columns: repeat(2, 1fr);
       }
     }
 
@@ -158,41 +294,46 @@
         background: #f5f5f5;
       }
 
-      .about-banner {
+      .news-banner {
         height: 250px;
       }
 
-      .about-banner::before {
-        font-size: 8rem;
-      }
-
-      .about-banner-content {
+      .news-banner-content {
         padding: 0 2rem;
       }
 
-      .about-banner-title {
+      .news-banner-title {
         font-size: 1.8rem;
       }
 
-      .about-banner-subtitle {
+      .news-banner-subtitle {
         font-size: 0.9rem;
+      }
+
+      .news-detail-container {
+        padding: 2rem 1.5rem;
+      }
+
+      .news-detail-title {
+        font-size: 1.5rem;
+      }
+
+      .news-detail-meta {
+        gap: 1rem;
+        font-size: 0.9rem;
+      }
+
+      .news-detail-footer {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .related-news-grid {
+        grid-template-columns: 1fr;
       }
 
       .content-section {
         padding: 2rem 1rem;
-        margin-top: 0.5rem;
-      }
-
-      .about-title {
-        font-size: 1.5rem;
-      }
-
-      .company-info-grid {
-        gap: 1rem;
-      }
-
-      .info-card {
-        padding: 1.5rem;
       }
     }
   </style>
@@ -223,28 +364,51 @@
   </nav>
 
   <!-- Hero Banner -->
-  <section class="about-banner">
-    <div class="about-banner-content">
-      <h1 class="about-banner-title" data-i18n="nav.about">关于我们</h1>
-      <p class="about-banner-subtitle" data-i18n="footer.companyProfile">公司简介</p>
+  <section class="news-banner">
+    <div class="news-banner-content">
+      <h1 class="news-banner-title" data-i18n="news.detail">新闻详情</h1>
+      <p class="news-banner-subtitle" data-i18n="news.detailSubtitle">深入了解我们的最新动态</p>
     </div>
   </section>
 
-  <!-- 内容区域 -->
+  <!-- 新闻详情内容 -->
   <section class="content-section">
-    <!-- <h2 class="about-title" data-i18n="nav.about">关于我们</h2> -->
+    <div class="news-detail-container" th:if="${news}">
+      <!-- 返回按钮 -->
+      <div style="margin-bottom: 2rem;">
+        <a th:href="@{'/' + ${lang} + '/news'}" class="back-to-news" data-i18n="news.backToList">← 返回新闻列表</a>
+      </div>
 
-    <!-- 公司介绍文本 -->
-    <div th:if="${about}" class="about-intro" th:utext="${about.company_intro}">
-      公司介绍文本
+      <!-- 标题和元信息 -->
+      <div class="news-detail-header">
+        <h1 class="news-detail-title" th:text="${news.title}">新闻标题</h1>
+        <div class="news-detail-meta">
+          <span>📅 <span th:text="${#temporals.format(news.publish_time, 'yyyy-MM-dd')}">2024-09-27</span></span>
+          <span th:if="${news.view_count != null}">👁️ <span data-i18n="news.views">阅读量</span>: <span th:text="${news.view_count}">0</span></span>
+        </div>
+      </div>
+
+      <!-- 新闻图片 -->
+      <div class="news-detail-image" th:if="${news.cover_image}">
+        <img th:src="@{'/static/' + ${news.cover_image}}" th:alt="${news.title}">
+      </div>
+
+      <!-- 新闻内容 -->
+      <div class="news-detail-body" th:utext="${news.content}">
+        <p>新闻内容将显示在这里...</p>
+      </div>
+
+      <!-- 底部信息 -->
+      <!-- <div class="news-detail-footer">
+        <span th:if="${news.update_time}" th:text="'最后更新：' + ${#temporals.format(news.update_time, 'yyyy-MM-dd HH:mm')}" style="color: var(--text-light); font-size: 0.9rem;"></span>
+      </div> -->
     </div>
 
-    <!-- 公司图片 -->
-    <div th:if="${aboutUs.imageUrl}" class="about-image">
-      <img th:src="@{'/static/' + ${aboutUs.imageUrl}}" alt="公司图片" loading="lazy">
+    <!-- 空状态 -->
+    <div th:unless="${news}" style="text-align: center; padding: 4rem 0; background: white; border-radius: 8px;">
+      <p style="color: var(--text-light); font-size: 1.1rem; margin-bottom: 2rem;" data-i18n="news.notFound">新闻不存在或已删除</p>
+      <a th:href="@{'/' + ${lang} + '/news'}" class="back-to-news" data-i18n="news.backToList">返回新闻列表</a>
     </div>
-
-  
   </section>
 
   <!-- 页脚 -->
@@ -328,17 +492,23 @@
       try {
         const currentPath = window.location.pathname;
         let pathParts = currentPath.split('/').filter(p => p);
+
+        // 如果第一个部分是语言代码，替换它
         if (pathParts.length > 0 && (pathParts[0] === 'zh' || pathParts[0] === 'en')) {
           pathParts[0] = lang;
         } else {
+          // 否则在前面添加语言代码
           pathParts.unshift(lang);
         }
+
         const search = window.location.search || '';
         const newUrl = '/' + pathParts.join('/') + search;
+
         console.log('Switching language to:', lang, 'New URL:', newUrl);
         window.location.href = newUrl;
       } catch (error) {
         console.error('Language switch error:', error);
+        // 备用方案：直接重新加载页面
         window.location.reload();
       }
     }

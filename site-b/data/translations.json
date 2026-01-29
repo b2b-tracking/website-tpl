@@ -28,7 +28,7 @@
       "description1": "致力于电子烟及新型烟草产品的研发、生产和销售。拥有先进的生产设备和完善的质量管理体系，为全球客户提供一流的ODM/OEM服务。",
       "description2": "多年产品积累，提供完整的技术解决方案。满足客户对品质（Quality）、性能（Performance）、外观（Design）等全方位需求。全面、多样化、可实现的产品，为全球客户提供专业产品支持。",
       "learnMore": "探索更多",
-      "viewAll":"查看全部",
+      "viewAll": "查看全部",
       "details": "查看详情"
     },
     "research": {
@@ -62,6 +62,7 @@
     },
     "products": {
       "title": "产品中心",
+      "titleDetail": "产品详情",
       "subtitle": "创新设计，卓越体验",
       "viewDetails": "查看详情",
       "allProducts": "全部产品",
@@ -151,15 +152,25 @@
       "material": "材质",
       "dimensions": "尺寸",
       "weight": "重量",
-      "relatedProducts": "相关产品"
+      "relatedProducts": "相关产品",
+      "notFound": "产品不存在或已删除",
+      "previous": "上一篇",
+      "next": "下一篇"
     },
     "news": {
       "title": "新闻动态",
       "latest": "最新动态",
       "subtitle": "了解品牌动态和行业资讯",
+      "detail": "新闻详情",
+      "detailSubtitle": "深入了解我们的最新动态",
       "more": "查看更多",
-      "readMore": "查看更多",
+      "readMore": "查看详情",
       "viewAll": "查看全部新闻",
+      "backToList": "返回新闻列表",
+      "notFound": "新闻不存在或已删除",
+      "related": "相关新闻",
+      "views": "阅读量",
+      "author": "作者",
       "companyNews": "公司新闻",
       "industryNews": "行业动态",
       "productNews": "产品资讯",
@@ -167,7 +178,8 @@
       "sample1Title": "新产品发布会圆满举行",
       "sample1Excerpt": "公司最新研发的产品系列在本次发布会上隆重亮相，获得业界广泛关注。",
       "sample2Title": "参加国际展会，展示企业实力",
-      "sample2Excerpt": "我司参加国际行业展会，展示了最新的技术成果和产品，受到国内外客户好评。"
+      "sample2Excerpt": "我司参加国际行业展会，展示了最新的技术成果和产品，受到国内外客户好评。",
+      "empty": "暂无新闻资讯"
     },
     "stats": {
       "yearsExperience": "年行业经验",
@@ -252,6 +264,7 @@
       "title": "Products",
       "subtitle": "Innovative Design, Superior Experience",
       "viewDetails": "View Details",
+      "titleDetail": "Product Details",
       "allProducts": "All Products",
       "getQuote": "Get Quote",
       "buyNow": "Buy Now",
@@ -339,15 +352,25 @@
       "material": "Material",
       "dimensions": "Dimensions",
       "weight": "Weight",
-      "relatedProducts": "Related Products"
+      "relatedProducts": "Related Products",
+      "notFound": "Product not found or has been removed",
+      "previous": "Previous",
+      "next": "Next"
     },
     "news": {
       "title": "News & Updates",
       "subtitle": "Brand updates and industry information",
       "latest": "Latest News",
+      "detail": "News Details",
+      "detailSubtitle": "Get more insights into our latest updates",
       "more": "View More",
-      "readMore": "View More",
+      "readMore": "Read More",
       "viewAll": "View All News",
+      "backToList": "Back to News",
+      "notFound": "News not found or has been removed",
+      "related": "Related News",
+      "views": "Views",
+      "author": "Author",
       "companyNews": "Company News",
       "industryNews": "Industry News",
       "productNews": "Product News",
@@ -355,7 +378,8 @@
       "sample1Title": "New Product Launch Event Successfully Held",
       "sample1Excerpt": "Our latest product series was grandly unveiled at this launch event, receiving widespread attention from the industry.",
       "sample2Title": "Participating in International Exhibition, Showcasing Corporate Strength",
-      "sample2Excerpt": "Our company participated in the international industry exhibition, showcasing the latest technological achievements and products, receiving praise from domestic and foreign customers."
+      "sample2Excerpt": "Our company participated in the international industry exhibition, showcasing the latest technological achievements and products, receiving praise from domestic and foreign customers.",
+      "empty": "No news available"
     },
     "stats": {
       "yearsExperience": "Years of Experience",

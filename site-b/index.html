@@ -7,107 +7,9 @@
   <meta name="keywords" th:content="${siteSeo.keywords ?: ''}" content="">
   <title th:text="${siteSeo.title ?: site.name}">专业制造 - 品质为先</title>
   <link rel="stylesheet" th:href="@{'/' + ${lang} + '/css/style.css'}">
+  <link rel="stylesheet" th:href="@{'/' + ${lang} + '/css/navbar-footer.css'}">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    
-    :root {
-      --primary-blue: #4A90E2;
-      --light-blue: #E8F4F8;
-      --dark-blue: #1A3A5C;
-      --text-dark: #333;
-      --text-light: #666;
-      --border-light: #e0e0e0;
-    }
-
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Microsoft YaHei", sans-serif;
-      color: var(--text-dark);
-      line-height: 1.6;
-    }
-
-    /* 导航栏 */
-    .navbar {
-      background: var(--light-blue);
-      padding: 1rem 0;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-    }
-
-    .nav-container {
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 0 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .logo {
-      font-size: 1.8rem;
-      font-weight: 700;
-      color: var(--primary-blue);
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .nav-menu {
-      display: flex;
-      list-style: none;
-      gap: 2rem;
-      align-items: center;
-    }
-
-    .nav-link {
-      text-decoration: none;
-      color: var(--text-dark);
-      font-weight: 500;
-      transition: color 0.3s;
-      font-size: 0.95rem;
-    }
-
-    .nav-link:hover {
-      color: var(--primary-blue);
-    }
-
-    .lang-switcher {
-      display: flex;
-      gap: 0.5rem;
-    }
-
-    .lang-btn {
-      padding: 0.4rem 1rem;
-      border: 2px solid var(--primary-blue);
-      background: white;
-      color: var(--primary-blue);
-      border-radius: 20px;
-      cursor: pointer;
-      font-weight: 500;
-      transition: all 0.3s;
-      font-size: 0.9rem;
-    }
-
-    .lang-btn.active,
-    .lang-btn:hover {
-      background: var(--primary-blue);
-      color: white;
-    }
-
-    .mobile-menu-toggle {
-      display: none;
-      background: none;
-      border: none;
-      font-size: 1.5rem;
-      cursor: pointer;
-      color: var(--primary-blue);
-    }
+    /* 基础样式 */
 
     /* Hero Banner */
     .hero-banner {
@@ -398,75 +300,6 @@
       font-weight: 600;
     }
 
-    /* Footer */
-    .footer {
-      background: #2c3e50;
-      color: #ecf0f1;
-      padding: 3rem 2rem 1.5rem;
-    }
-
-    .footer-container {
-      max-width: 1400px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 3rem;
-      margin-bottom: 2rem;
-    }
-
-    .footer-column h4 {
-      font-size: 1.1rem;
-      margin-bottom: 1rem;
-      color: white;
-    }
-
-    .footer-column a,
-    .footer-column p {
-      display: block;
-      color: #bdc3c7;
-      text-decoration: none;
-      margin-bottom: 0.5rem;
-      font-size: 0.9rem;
-      transition: color 0.3s;
-    }
-
-    .footer-column a:hover {
-      color: var(--primary-blue);
-    }
-
-    .footer-bottom {
-      border-top: 1px solid #34495e;
-      padding-top: 1.5rem;
-      text-align: center;
-      color: #95a5a6;
-      font-size: 0.85rem;
-    }
-
-    .back-to-top {
-      position: fixed;
-      bottom: 2rem;
-      right: 2rem;
-      width: 50px;
-      height: 50px;
-      background: var(--primary-blue);
-      color: white;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.5rem;
-      cursor: pointer;
-      opacity: 0;
-      visibility: hidden;
-      transition: all 0.3s;
-      z-index: 999;
-    }
-
-    .back-to-top.show {
-      opacity: 1;
-      visibility: visible;
-    }
-
     /* 动画效果 */
     @keyframes fadeInUp {
       from {
@@ -628,26 +461,6 @@
 
     /* 响应式 */
     @media (max-width: 768px) {
-      .nav-menu {
-        display: none;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
-        background: white;
-        flex-direction: column;
-        padding: 1rem;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      }
-
-      .nav-menu.active {
-        display: flex;
-      }
-
-      .mobile-menu-toggle {
-        display: block;
-      }
-
       .content-grid {
         grid-template-columns: 1fr;
         gap: 2rem;
@@ -713,8 +526,8 @@
           <a th:href="@{'/' + ${lang} + '/contact'}" class="nav-link" data-i18n="nav.contact">联系我们</a>
         </li> -->
         <li class="lang-switcher">
-          <button class="lang-btn" th:classappend="${lang == 'zh'} ? 'active'" onclick="switchLanguage('zh')">中文</button>
-          <button class="lang-btn" th:classappend="${lang == 'en'} ? 'active'" onclick="switchLanguage('en')">EN</button>
+          <button type="button" class="lang-btn" th:classappend="${lang == 'zh'} ? 'active'" onclick="switchLanguage('zh'); return false;">中文</button>
+          <button type="button" class="lang-btn" th:classappend="${lang == 'en'} ? 'active'" onclick="switchLanguage('en'); return false;">EN</button>
         </li>
       </ul>
     </div>
@@ -809,34 +622,6 @@
             </div>
           </div>
         </div>
-
-        <!-- 默认示例新闻 -->
-        <div class="news-card animate-on-scroll scale-in" th:if="${news.isEmpty()}">
-          <div class="news-image" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
-            <span>📰</span>
-          </div>
-          <div class="news-info">
-            <h3 class="news-title" data-i18n="news.sample1Title">新产品发布会圆满举行</h3>
-            <p class="news-excerpt" data-i18n="news.sample1Excerpt">公司最新研发的产品系列在本次发布会上隆重亮相，获得业界广泛关注。</p>
-            <div class="news-meta">
-              <span class="news-date">📅 2026-01-15</span>
-              <a href="#" class="news-read-more" data-i18n="news.readMore">查看更多</a>
-            </div>
-          </div>
-        </div>
-        <div class="news-card animate-on-scroll scale-in" th:if="${news.isEmpty()}" style="animation-delay: 0.1s;">
-          <div class="news-image" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
-            <span>📰</span>
-          </div>
-          <div class="news-info">
-            <h3 class="news-title" data-i18n="news.sample2Title">参加国际展会，展示企业实力</h3>
-            <p class="news-excerpt" data-i18n="news.sample2Excerpt">我司参加国际行业展会，展示了最新的技术成果和产品，受到国内外客户好评。</p>
-            <div class="news-meta">
-              <span class="news-date">📅 2026-01-10</span>
-              <a href="#" class="news-read-more" data-i18n="news.readMore">查看更多</a>
-            </div>
-          </div>
-        </div>
       </div>
 
       <div style="text-align: center; margin-top: 3rem;" class="animate-on-scroll fade-in-up">
@@ -850,14 +635,13 @@
     <div class="footer-container">
       <div class="footer-column">
         <h4 th:text="${site.name ?: 'CLOUPOR'}">CLOUPOR</h4>
-        <p th:text="${siteI18n.description ?: ''}" data-i18n="footer.companyDescription">专业电子雾化设备制造商，致力于为全球客户提供高品质产品和定制化服务。</p>
+        <p th:text="${siteI18n.description ?: ''}" ></p>
       </div>
 
       <div class="footer-column">
         <h4 data-i18n="nav.about">关于我们</h4>
         <a th:href="@{'/' + ${lang} + '/about'}" data-i18n="footer.companyProfile">公司简介</a>
-        <a th:href="@{'/' + ${lang} + '/technology'}" data-i18n="footer.technology">技术实力</a>
-        <a th:href="@{'/' + ${lang} + '/innovation'}" data-i18n="footer.innovation">科创研究</a>
+        <!-- <a th:href="@{'/' + ${lang} + '/technology'}" data-i18n="footer.technology">技术实力</a> -->
       </div>
 
       <div class="footer-column">
@@ -883,7 +667,7 @@
     </div>
 
     <div class="footer-bottom">
-      <p>&copy; 2026 <span th:text="${site.name ?: 'CLOUPOR'}">CLOUPOR</span>. <span data-i18n="footer.allRightsReserved">保留所有权利</span></p>
+      <p>&copy; <span class="year"></span> <span th:text="${site.name ?: 'CLOUPOR'}">CLOUPOR</span>. <span data-i18n="footer.allRightsReserved">保留所有权利</span></p>
       <p th:if="${site.icpNumber}" th:text="${site.icpNumber}"></p>
     </div>
   </footer>
@@ -896,6 +680,26 @@
   <script th:src="@{'/' + ${lang} + '/js/main.js'}"></script>
 
   <script>
+    window.onload = function() {
+      document.querySelector('.year').textContent = new Date().getFullYear();
+
+      // 确保语言切换按钮可用 - 添加备用事件监听
+      const langButtons = document.querySelectorAll('.lang-btn');
+      langButtons.forEach(function(button) {
+        // 移除已有的点击事件（如果有的话）
+        const clone = button.cloneNode(true);
+        button.parentNode.replaceChild(clone, button);
+
+        // 添加新的点击事件
+        clone.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          const lang = this.textContent.trim() === '中文' ? 'zh' : 'en';
+          console.log('Language button clicked:', lang);
+          switchLanguage(lang);
+        });
+      });
+    };
     // Banner轮播
     let currentSlide = 0;
     const slides = document.querySelectorAll('.banner-slide');
@@ -938,14 +742,28 @@
 
     // 语言切换
     function switchLanguage(lang) {
-      const currentPath = window.location.pathname;
-      const pathParts = currentPath.split('/').filter(p => p);
-      if (pathParts[0] === 'zh' || pathParts[0] === 'en') {
-        pathParts[0] = lang;
-      } else {
-        pathParts.unshift(lang);
+      try {
+        const currentPath = window.location.pathname;
+        let pathParts = currentPath.split('/').filter(p => p);
+
+        // 如果第一个部分是语言代码，替换它
+        if (pathParts.length > 0 && (pathParts[0] === 'zh' || pathParts[0] === 'en')) {
+          pathParts[0] = lang;
+        } else {
+          // 否则在前面添加语言代码
+          pathParts.unshift(lang);
+        }
+
+        const search = window.location.search || '';
+        const newUrl = '/' + pathParts.join('/') + search;
+
+        console.log('Switching language to:', lang, 'New URL:', newUrl);
+        window.location.href = newUrl;
+      } catch (error) {
+        console.error('Language switch error:', error);
+        // 备用方案：直接重新加载页面
+        window.location.reload();
       }
-      window.location.href = '/' + pathParts.join('/') + (currentPath.endsWith('/') ? '/' : '');
     }
 
     // 返回顶部

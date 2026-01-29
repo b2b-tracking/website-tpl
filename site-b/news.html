@@ -1,115 +1,292 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" th:content="${siteSeo != null ? siteSeo.description : ''}" content="了解公司动态和行业资讯">
+  <meta name="description" th:content="${siteSeo != null ? siteSeo.description : ''}" content="公司新闻和行业资讯">
   <meta name="keywords" th:content="${siteSeo != null ? siteSeo.keywords : ''}" content="">
-  <title th:text="${siteSeo != null ? siteSeo.title : (site != null ? site.name : 'Smoant')}">新闻资讯</title>
+  <title th:text="${siteSeo != null ? siteSeo.title : site.name}">新闻资讯</title>
   <link rel="stylesheet" th:href="@{'/' + ${lang} + '/css/style.css'}">
+  <link rel="stylesheet" th:href="@{'/' + ${lang} + '/css/widget-posts.min.css'}">
+  <link rel="stylesheet" th:href="@{'/' + ${lang} + '/css/navbar-footer.css'}">
+  <style>
+    body {
+      background: #f5f5f5;
+    }
+
+    /* Hero Banner */
+    .news-banner {
+      position: relative;
+      height: 400px;
+      background: linear-gradient(135deg, #7FA8DA 0%, #9BC4E8 50%, #C4D9EC 100%);
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .news-banner::before {
+      content: 'NEWS';
+      position: absolute;
+      top: 50%;
+      right: -10%;
+      transform: translateY(-50%);
+      font-size: 25rem;
+      font-weight: 900;
+      color: rgba(255, 255, 255, 0.2);
+      letter-spacing: -0.05em;
+      z-index: 1;
+      line-height: 1;
+    }
+
+    .news-banner-content {
+      position: relative;
+      z-index: 2;
+      text-align: left;
+      color: white;
+      max-width: 1400px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 0 4rem;
+    }
+
+    .news-banner-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 0.8rem;
+      letter-spacing: 0;
+    }
+
+    .news-banner-subtitle {
+      font-size: 1rem;
+      opacity: 1;
+      letter-spacing: 0;
+      font-weight: 300;
+    }
+
+    /* 新闻容器 */
+    .content-section {
+      padding: 4rem 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    /* Elementor 网格样式覆盖 */
+    .elementor-posts-container.elementor-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+
+    .elementor-post.elementor-grid-item {
+      margin: 0;
+    }
+
+    .elementor-post__card {
+      border: none;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+      transition: all 0.3s;
+      background: white;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .elementor-post__card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    }
+
+    .elementor-post__thumbnail {
+      overflow: hidden;
+      margin-bottom: 0;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #f0f0f0;
+      position: relative;
+    }
+
+    .elementor-post__card .elementor-post__thumbnail img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+      display: block;
+      transform: scale(1.01) ;
+    }
+
+    .elementor-post__card .elementor-post__thumbnail:hover img {
+      transform: scale(1.3) translate(-50%,-50%);
+    }
+
+    .elementor-post__text {
+      padding: 1.5rem !important;
+      margin: 0 !important;
+    }
+
+    .elementor-post__title {
+      font-size: 1.05rem !important;
+      margin-bottom: 0.8rem !important;
+      line-height: 1.5 !important;
+      font-weight: 600 !important;
+    }
+
+    .elementor-post__title a {
+      color: #333;
+      text-decoration: none;
+      transition: color 0.3s;
+      display: block;
+    }
+
+    .elementor-post__title a:hover {
+      color: var(--primary-blue);
+    }
+
+    .elementor-post__meta-data {
+      border: none !important;
+      padding: 0 !important;
+      margin-bottom: 1.2rem !important;
+      color: #999 !important;
+      font-size: 0.8rem !important;
+    }
+
+    .elementor-post-date {
+      color: #999;
+    }
+
+    .elementor-post__read-more-wrapper {
+      margin: 0 !important;
+    }
+
+    .elementor-post__read-more {
+      display: inline-block;
+      padding: 0.5rem 1.8rem;
+      border: 1px solid #333;
+      border-radius: 25px;
+      color: #333;
+      text-decoration: none;
+      font-size: 0.8rem;
+      transition: all 0.3s;
+      background: white;
+      font-weight: 400;
+    }
+
+    .elementor-post__read-more:hover {
+      background: #333;
+      color: white;
+    }
+
+    /* 响应式 */
+    @media (max-width: 1024px) {
+      .elementor-posts-container.elementor-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      body {
+        background: #f5f5f5;
+      }
+
+      .news-banner {
+        height: 300px;
+      }
+
+      .news-banner-content {
+        padding: 0 2rem;
+      }
+
+      .news-banner-title {
+        font-size: 1.8rem;
+      }
+
+      .news-banner-subtitle {
+        font-size: 0.9rem;
+      }
+
+      .elementor-posts-container.elementor-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .content-section {
+        padding: 3rem 1.5rem;
+      }
+    }
+  </style>
 </head>
+
 <body>
   <!-- 导航栏 -->
-  <nav class="navbar" id="navbar">
+  <nav class="navbar">
     <div class="nav-container">
-      <div class="nav-logo">
-        <a th:href="@{'/' + ${lang} + '/'}" class="logo-link">
-          <img th:if="${site != null && site.logo}" th:src="@{'/static/' + ${site.logo}}" th:alt="${site != null ? site.name : 'Smoant'}" class="logo-img">
-          <span th:unless="${site != null && site.logo}" th:text="${site != null ? site.name : 'Smoant'}" class="logo-text">Smoant</span>
-        </a>
-      </div>
-
-      <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-
+      <a th:href="@{'/' + ${lang} + '/'}" class="logo">
+        <img th:if="${site.logo}" th:src="@{'/static/' + ${site.logo}}" th:alt="${site.name}"
+          style="height: 40px; vertical-align: middle;">
+        <span th:unless="${site.logo}" th:text="${site.name}"></span>
+      </a>
+      <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">☰</button>
       <ul class="nav-menu" id="navMenu">
-        <!-- 动态菜单 -->
-        <li class="nav-item" th:each="menu : ${menus}">
-          <a th:href="@{'/' + ${lang} + '/' + ${menu.target_url}}" class="nav-link" th:text="${menu.menu_name}">菜单</a>
+        <li th:each="menu : ${menus}">
+          <a th:href="@{'/' + ${lang} + '/' + ${menu.target_url}}" class="nav-link" th:text="${menu.menu_name}"></a>
         </li>
-        <!-- 备用菜单 -->
-        <li class="nav-item" th:if="${menus == null || menus.isEmpty()}">
-          <a th:href="@{'/' + ${lang} + '/'}" class="nav-link" data-i18n="nav.home">首页</a>
-        </li>
-        <li class="nav-item" th:if="${menus == null || menus.isEmpty()}">
-          <a th:href="@{'/' + ${lang} + '/products'}" class="nav-link" data-i18n="nav.products">产品中心</a>
-        </li>
-        <li class="nav-item" th:if="${menus == null || menus.isEmpty()}">
-          <a th:href="@{'/' + ${lang} + '/news'}" class="nav-link active" data-i18n="nav.news">新闻资讯</a>
-        </li>
-        <li class="nav-item" th:if="${menus == null || menus.isEmpty()}">
-          <a th:href="@{'/' + ${lang} + '/about'}" class="nav-link" data-i18n="nav.about">关于我们</a>
-        </li>
-
-        <li class="nav-item nav-lang-switcher">
-          <button class="lang-btn" th:classappend="${lang == 'zh'} ? 'active'" data-lang="zh"
-                  onclick="switchLanguage('zh')">中文</button>
-          <button class="lang-btn" th:classappend="${lang == 'en'} ? 'active'" data-lang="en"
-                  onclick="switchLanguage('en')">EN</button>
+        <li class="lang-switcher">
+          <button type="button" class="lang-btn" th:classappend="${lang == 'zh'} ? 'active'"
+            onclick="switchLanguage('zh'); return false;">中文</button>
+          <button type="button" class="lang-btn" th:classappend="${lang == 'en'} ? 'active'"
+            onclick="switchLanguage('en'); return false;">EN</button>
         </li>
       </ul>
     </div>
   </nav>
 
-  <!-- 新闻列表 -->
-  <section style="margin-top: 80px; padding: 4rem 2rem;">
-    <div class="section-container">
-      <h2 class="section-title" data-i18n="news.latest">最新动态</h2>
-      <p class="section-subtitle" data-i18n="news.subtitle">了解公司动态和行业资讯</p>
+  <!-- Hero Banner -->
+  <section class="news-banner">
+    <div class="news-banner-content">
+      <h1 class="news-banner-title" data-i18n="news.title">新闻动态</h1>
+      <p class="news-banner-subtitle" data-i18n="news.subtitle">了解公司动态和行业资讯</p>
+    </div>
+  </section>
 
-      <!-- 新闻网格 -->
-      <div class="discover-grid" style="margin-top: 3rem;">
-        <div th:each="newsItem, iterStat : ${news}"
-             style="background: white; border-radius: 8px; overflow: hidden; box-shadow: var(--shadow); cursor: pointer; transition: all 0.3s ease;"
-             th:onclick="'window.location.href=\'' + @{'/' + ${lang} + '/news/' + ${newsItem.id}} + '\''">
-          <div class="discover-image"
-               th:if="${newsItem.cover_image}"
-               th:style="'background-image: url(' + @{'/static/' + ${newsItem.cover_image}} + '); background-size: cover; background-position: center; height: 220px;'">
-          </div>
-          <div class="discover-image" th:unless="${newsItem.cover_image}"
-               th:style="'background: linear-gradient(135deg, hsl(' + ${(iterStat.index * 120) % 360} + ', 70%, 60%) 0%, hsl(' + ${((iterStat.index * 120) + 50) % 360} + ', 70%, 50%) 100%); height: 220px;'">
-          </div>
-          <div style="padding: 1.5rem;">
-            <h3 class="product-title" th:text="${newsItem.title}" style="margin-bottom: 0.8rem;">新闻标题</h3>
-            <p class="product-desc" th:text="${newsItem.summary}" style="margin-bottom: 1rem;">新闻摘要</p>
-            <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 1rem; border-top: 1px solid var(--border-color);">
-              <span style="color: var(--text-light); font-size: 0.9rem;">📅 <span th:text="${#temporals.format(newsItem.publish_time, 'yyyy-MM-dd')}">2026-01-10</span></span>
-              <a th:href="@{'/' + ${lang} + '/news/' + ${newsItem.id}}" class="discover-more" style="color: #000; text-decoration: none; font-weight: 600;" data-i18n="news.readMore">阅读更多 →</a>
+  <!-- 新闻列表 -->
+  <section class="content-section">
+    <div
+      class="elementor-posts-container elementor-posts elementor-posts--skin-classic elementor-grid elementor-has-item-ratio"
+      role="list">
+      <article th:each="newsItem : ${newsList}" class="elementor-post elementor-grid-item" role="listitem">
+        <div class="elementor-post__card">
+          <a class="elementor-post__thumbnail__link" th:href="@{'/' + ${lang} + '/news/' + ${newsItem.id}}"
+            tabindex="-1">
+            <div class="elementor-post__thumbnail" th:if="${newsItem.cover_image}">
+              <img loading="lazy" decoding="async" th:src="@{'/static/' + ${newsItem.cover_image}}"
+                th:alt="${newsItem.title}">
+            </div>
+            <div class="elementor-post__thumbnail" th:unless="${newsItem.cover_image}"
+              style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); height: 240px; display: flex; align-items: center; justify-content: center; font-size: 3rem; color: white;">
+              <span>📰</span>
+            </div>
+          </a>
+          <div class="elementor-post__text">
+            <h3 class="elementor-post__title">
+              <a th:href="@{'/' + ${lang} + '/news/' + ${newsItem.id}}" th:text="${newsItem.title}">新闻标题</a>
+            </h3>
+            <div class="elementor-post__meta-data">
+              <span class="elementor-post-date"
+                th:text="${#strings.replace(#temporals.format(newsItem.publish_time, 'yyyy-MM-dd'), '-', '.')}">2024.09.27</span>
+            </div>
+            <div class="elementor-post__read-more-wrapper">
+              <a class="elementor-post__read-more" th:href="@{'/' + ${lang} + '/news/' + ${newsItem.id}}"
+                th:attr="aria-label='Read more about ' + ${newsItem.title}" tabindex="-1" data-i18n="news.readMore">
+                查看详情
+              </a>
             </div>
           </div>
         </div>
-      </div>
+      </article>
 
       <!-- 空状态 -->
-      <div th:if="${news == null || news.isEmpty()}" style="text-align: center; padding: 4rem 0;">
-        <p style="color: var(--text-light); font-size: 1.2rem;">暂无新闻资讯</p>
-      </div>
-
-      <!-- 分页 -->
-      <div th:if="${totalPages > 1}" style="display: flex; justify-content: center; align-items: center; gap: 0.5rem; margin-top: 3rem;">
-        <a th:if="${currentPage > 1}"
-           th:href="@{/} + ${lang} + '/news?page=' + ${currentPage - 1}"
-           class="pagination-btn" style="padding: 0.5rem 1rem; border: 1px solid #ddd; text-decoration: none; color: var(--text-color); background: white; transition: all 0.3s; min-width: 40px; text-align: center; display: inline-block;">&lt;</a>
-
-        <span th:each="i : ${#numbers.sequence(1, totalPages)}"
-              th:if="${i == 1 || i == totalPages || (i >= currentPage - 2 && i <= currentPage + 2)}">
-          <a th:if="${i != currentPage}"
-             th:href="@{/} + ${lang} + '/news?page=' + ${i}"
-             class="pagination-btn"
-             style="padding: 0.5rem 1rem; border: 1px solid #ddd; text-decoration: none; color: var(--text-color); background: white; transition: all 0.3s; min-width: 40px; text-align: center; display: inline-block; margin: 0 2px;"
-             th:text="${i}">1</a>
-          <span th:if="${i == currentPage}"
-                class="pagination-btn active"
-                style="padding: 0.5rem 1rem; border: 1px solid #000; background: #000; color: var(--accent-color); min-width: 40px; text-align: center; display: inline-block; margin: 0 2px; font-weight: bold;"
-                th:text="${i}">1</span>
-        </span>
-
-        <a th:if="${currentPage < totalPages}"
-           th:href="@{/} + ${lang} + '/news?page=' + ${currentPage + 1}"
-           class="pagination-btn" style="padding: 0.5rem 1rem; border: 1px solid #ddd; text-decoration: none; color: var(--text-color); background: white; transition: all 0.3s; min-width: 40px; text-align: center; display: inline-block;">&gt;</a>
+      <div th:if="${newsList == null || newsList.isEmpty()}"
+        style="grid-column: 1 / -1; text-align: center; padding: 4rem 0;">
+        <p style="color: var(--text-light); font-size: 1.1rem;" data-i18n="news.empty">暂无新闻资讯</p>
       </div>
     </div>
   </section>
@@ -118,28 +295,29 @@
   <footer class="footer">
     <div class="footer-container">
       <div class="footer-column">
-        <h4 th:text="${site.name}">Smoant</h4>
-        <a th:href="@{'/' + ${lang} + '/'}" style="text-decoration: none; color: inherit; display: block;" data-i18n="nav.home">首页</a>
-        <a th:href="@{'/' + ${lang} + '/about'}" style="text-decoration: none; color: inherit; display: block;" data-i18n="nav.about">关于我们</a>
-        <a th:href="@{'/' + ${lang} + '/news'}" style="text-decoration: none; color: inherit; display: block;" data-i18n="nav.news">新闻资讯</a>
+        <h4 th:text="${site.name ?: 'CLOUPOR'}">CLOUPOR</h4>
+        <p th:text="${siteI18n != null ? siteI18n.description : ''}"></p>
+      </div>
+
+      <div class="footer-column">
+        <h4 data-i18n="nav.about">关于我们</h4>
+        <a th:href="@{'/' + ${lang} + '/about'}" data-i18n="footer.companyProfile">公司简介</a>
       </div>
 
       <div class="footer-column">
         <h4 data-i18n="products.title">产品中心</h4>
-        <a th:each="category : ${categories}"
-           th:href="@{'/' + ${lang} + '/products?category=' + ${category.id}}"
-           th:text="${category.name}"
-           style="text-decoration: none; color: inherit; display: block;">产品分类</a>
+        <a th:each="category : ${categories}" th:href="@{'/' + ${lang} + '/products?category=' + ${category.id}}"
+          th:text="${category.name}">产品分类</a>
+        <a href="#" th:if="${categories.isEmpty()}" data-i18n="footer.allProducts">全部产品</a>
       </div>
 
       <div class="footer-column">
         <h4 data-i18n="footer.quickLinks">快速链接</h4>
-        <a th:href="@{'/' + ${lang} + '/community'}" data-i18n="nav.community" style="text-decoration: none; color: inherit; display: block;">社区</a>
-        <a th:href="@{'/' + ${lang} + '/support'}" data-i18n="nav.support" style="text-decoration: none; color: inherit; display: block;">技术支持</a>
-        <a href="/#contact" data-i18n="nav.contact" style="text-decoration: none; color: inherit; display: block;">联系我们</a>
+        <a th:href="@{'/' + ${lang} + '/news'}" data-i18n="nav.news">新闻资讯</a>
+        <a th:href="@{'/' + ${lang} + '/contact'}" data-i18n="nav.contact">联系我们</a>
       </div>
 
-      <div class="footer-column">
+      <div class="footer-column" th:if="${contact}">
         <h4 data-i18n="contact.title">联系我们</h4>
         <p th:if="${contact.address}">📍 <span th:text="${contact.address}">地址</span></p>
         <p th:if="${contact.phone}">📞 <span th:text="${contact.phone}">电话</span></p>
@@ -148,36 +326,88 @@
     </div>
 
     <div class="footer-bottom">
-      <p>&copy; 2026 <span th:text="${site.name}">Smoant</span>. <span data-i18n="footer.allRightsReserved">保留所有权利</span></p>
-      <p style="color: #ff6b6b; font-size: 0.85rem; margin: 0.5rem 0;" data-i18n="footer.warning">本产品含有尼古丁，尼古丁是一种令人上瘾的化学物质</p>
-      <p style="font-size: 0.85rem; color: var(--text-light);">
-        <a href="#" style="text-decoration: none; color: inherit;" data-i18n="footer.privacyPolicy">隐私政策</a>
-        &nbsp; | &nbsp;
-        <a href="#" style="text-decoration: none; color: inherit;" data-i18n="footer.termsOfService">服务条款</a>
-      </p>
+      <p>&copy; <span class="year"></span> <span th:text="${site.name ?: 'CLOUPOR'}">CLOUPOR</span>. <span
+          data-i18n="footer.allRightsReserved">保留所有权利</span></p>
       <p th:if="${site.icpNumber}" th:text="${site.icpNumber}"></p>
     </div>
   </footer>
 
-  <!-- 返回顶部按钮 -->
-  <div class="back-to-top">↑</div>
+  <!-- 返回顶部 -->
+  <div class="back-to-top" onclick="scrollToTop()">↑</div>
 
-  <!-- 脚本 -->
+  <!-- Scripts -->
   <script th:src="@{'/' + ${lang} + '/js/i18n.js'}"></script>
   <script th:src="@{'/' + ${lang} + '/js/main.js'}"></script>
 
   <script>
+    window.onload = function () {
+      document.querySelector('.year').textContent = new Date().getFullYear();
+
+      // 确保语言切换按钮可用 - 添加备用事件监听
+      const langButtons = document.querySelectorAll('.lang-btn');
+      langButtons.forEach(function(button) {
+        // 移除已有的点击事件（如果有的话）
+        const clone = button.cloneNode(true);
+        button.parentNode.replaceChild(clone, button);
+
+        // 添加新的点击事件
+        clone.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          const lang = this.textContent.trim() === '中文' ? 'zh' : 'en';
+          console.log('Language button clicked:', lang);
+          switchLanguage(lang);
+        });
+      });
+    };
+
+    // 移动端菜单切换
+    function toggleMobileMenu() {
+      const navMenu = document.getElementById('navMenu');
+      navMenu.classList.toggle('active');
+    }
+
     // 语言切换
     function switchLanguage(lang) {
-      const currentPath = window.location.pathname;
-      const pathParts = currentPath.split('/').filter(p => p);
-      if (pathParts[0] === 'zh' || pathParts[0] === 'en') {
-        pathParts[0] = lang;
-      } else {
-        pathParts.unshift(lang);
+      try {
+        const currentPath = window.location.pathname;
+        let pathParts = currentPath.split('/').filter(p => p);
+
+        // 如果第一个部分是语言代码，替换它
+        if (pathParts.length > 0 && (pathParts[0] === 'zh' || pathParts[0] === 'en')) {
+          pathParts[0] = lang;
+        } else {
+          // 否则在前面添加语言代码
+          pathParts.unshift(lang);
+        }
+
+        const search = window.location.search || '';
+        const newUrl = '/' + pathParts.join('/') + search;
+
+        console.log('Switching language to:', lang, 'New URL:', newUrl);
+        window.location.href = newUrl;
+      } catch (error) {
+        console.error('Language switch error:', error);
+        // 备用方案：直接重新加载页面
+        window.location.reload();
       }
-      window.location.href = '/' + pathParts.join('/');
     }
+
+    // 返回顶部
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // 返回顶部按钮显示/隐藏
+    window.addEventListener('scroll', function () {
+      const backToTop = document.querySelector('.back-to-top');
+      if (window.scrollY > 300) {
+        backToTop.classList.add('show');
+      } else {
+        backToTop.classList.remove('show');
+      }
+    });
   </script>
 </body>
+
 </html>
