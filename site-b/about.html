@@ -10,6 +10,7 @@
   <link rel="stylesheet" th:href="@{'/' + ${lang} + '/css/style.css'}">
   <link rel="stylesheet" th:href="@{'/' + ${lang} + '/css/widget-posts.min.css'}">
   <link rel="stylesheet" th:href="@{'/' + ${lang} + '/css/navbar-footer.css'}">
+  <link rel="stylesheet" th:href="@{'/' + ${lang} + '/css/animations.css'}">
   <style>
     body {
       background: #f5f5f5;
@@ -235,12 +236,12 @@
     <!-- <h2 class="about-title" data-i18n="nav.about">关于我们</h2> -->
 
     <!-- 公司介绍文本 -->
-    <div th:if="${about}" class="about-intro" th:utext="${about.company_intro}">
+    <div th:if="${about}" class="about-intro slide-up" th:utext="${about.company_intro}">
       公司介绍文本
     </div>
 
     <!-- 公司图片 -->
-    <div th:if="${aboutUs.imageUrl}" class="about-image">
+    <div th:if="${aboutUs.imageUrl}" class="about-image fade-in delay-200">
       <img th:src="@{'/static/' + ${aboutUs.imageUrl}}" alt="公司图片" loading="lazy">
     </div>
 
@@ -294,6 +295,7 @@
   <!-- Scripts -->
   <script th:src="@{'/' + ${lang} + '/js/i18n.js'}"></script>
   <script th:src="@{'/' + ${lang} + '/js/main.js'}"></script>
+  <script th:src="@{'/' + ${lang} + '/js/animations.js'}"></script>
 
   <script>
     window.onload = function () {

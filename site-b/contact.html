@@ -10,6 +10,7 @@
   <link rel="stylesheet" th:href="@{'/' + ${lang} + '/css/style.css'}">
   <link rel="stylesheet" th:href="@{'/' + ${lang} + '/css/widget-posts.min.css'}">
   <link rel="stylesheet" th:href="@{'/' + ${lang} + '/css/navbar-footer.css'}">
+  <link rel="stylesheet" th:href="@{'/' + ${lang} + '/css/animations.css'}">
   <style>
     body {
       background: #f5f5f5;
@@ -348,7 +349,7 @@
   <!-- 联系内容区域 -->
   <section class="content-section">
     <!-- 联系信息卡片 -->
-    <div th:if="${contact}" class="contact-info-card">
+    <div th:if="${contact}" class="contact-info-card slide-up">
       <h3 data-i18n="contact.contactInfo">联系方式</h3>
 
       <div class="contact-info-item" th:if="${contact.address}">
@@ -377,7 +378,7 @@
     </div>
 
     <!-- 询价表单 -->
-    <div class="inquiry-form-container">
+    <div class="inquiry-form-container slide-up delay-200">
       <h3 data-i18n="contact.onlineInquiry">在线咨询</h3>
 
       <div id="formMessage" class="form-message"></div>
@@ -466,6 +467,7 @@
   <!-- Scripts -->
   <script th:src="@{'/' + ${lang} + '/js/i18n.js'}"></script>
   <script th:src="@{'/' + ${lang} + '/js/main.js'}"></script>
+  <script th:src="@{'/' + ${lang} + '/js/animations.js'}"></script>
 
   <script>
     window.onload = function () {

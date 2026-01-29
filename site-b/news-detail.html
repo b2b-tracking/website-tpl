@@ -9,6 +9,7 @@
   <link rel="stylesheet" th:href="@{'/' + ${lang} + '/css/style.css'}">
   <link rel="stylesheet" th:href="@{'/' + ${lang} + '/css/widget-posts.min.css'}">
   <link rel="stylesheet" th:href="@{'/' + ${lang} + '/css/navbar-footer.css'}">
+  <link rel="stylesheet" th:href="@{'/' + ${lang} + '/css/animations.css'}">
   <style>
     body {
       background: #f5f5f5;
@@ -373,7 +374,7 @@
 
   <!-- 新闻详情内容 -->
   <section class="content-section">
-    <div class="news-detail-container" th:if="${news}">
+    <div class="news-detail-container fade-in" th:if="${news}">
       <!-- 返回按钮 -->
       <div style="margin-bottom: 2rem;">
         <a th:href="@{'/' + ${lang} + '/news'}" class="back-to-news" data-i18n="news.backToList">← 返回新闻列表</a>
@@ -389,7 +390,7 @@
       </div>
 
       <!-- 新闻图片 -->
-      <div class="news-detail-image" th:if="${news.cover_image}">
+      <div class="news-detail-image slide-up delay-200" th:if="${news.cover_image}">
         <img th:src="@{'/static/' + ${news.cover_image}}" th:alt="${news.title}">
       </div>
 
@@ -458,6 +459,7 @@
   <!-- Scripts -->
   <script th:src="@{'/' + ${lang} + '/js/i18n.js'}"></script>
   <script th:src="@{'/' + ${lang} + '/js/main.js'}"></script>
+  <script th:src="@{'/' + ${lang} + '/js/animations.js'}"></script>
 
   <script>
     window.onload = function () {

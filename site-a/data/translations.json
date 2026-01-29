@@ -10,6 +10,9 @@
     "hero": {
       "learnMore": "了解更多"
     },
+    "about":{
+      "title":"公司简介"
+    },
     "manufacturing": {
       "title": "制造优势",
       "subtitle": "先进的生产设备与严格的质量管控",
@@ -85,6 +88,9 @@
       "about": "About Us",
       "news": "News",
       "contact": "Contact"
+    },
+    "about":{
+      "title": "Company Profile"
     },
     "hero": {
       "learnMore": "Learn More"

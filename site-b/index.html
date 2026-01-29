@@ -8,6 +8,7 @@
   <title th:text="${siteSeo.title ?: site.name}">专业制造 - 品质为先</title>
   <link rel="stylesheet" th:href="@{'/' + ${lang} + '/css/style.css'}">
   <link rel="stylesheet" th:href="@{'/' + ${lang} + '/css/navbar-footer.css'}">
+  <link rel="stylesheet" th:href="@{'/' + ${lang} + '/css/animations.css'}">
   <style>
     /* 基础样式 */
 
@@ -580,7 +581,7 @@
       <div class="content-text animate-on-scroll " th:classappend="${iterStat.index % 2 == 0 ? 'fade-in-right' : 'fade-in-left'}">
         <h2 th:text="${product.name}"> </h2>
         <p  th:text="${product.shortDescription}"></p>
-        <a href="#" class="btn" data-i18n="services.details">详情</a>
+        <a th:onclick="'window.location.href=\'' + @{'/' + ${lang} + '/products/' + ${product.id}} + '\''" class="btn" data-i18n="services.details">详情</a>
       </div>
 
       <div class="content-image animate-on-scroll fade-in-right" th:if="${iterStat.index % 2 != 0}">
@@ -678,6 +679,7 @@
   <!-- Scripts -->
   <script th:src="@{'/' + ${lang} + '/js/i18n.js'}"></script>
   <script th:src="@{'/' + ${lang} + '/js/main.js'}"></script>
+  <script th:src="@{'/' + ${lang} + '/js/animations.js'}"></script>
 
   <script>
     window.onload = function() {
@@ -755,7 +757,7 @@
         }
 
         const search = window.location.search || '';
-        const newUrl = '/' + pathParts.join('/') + search;
+        const newUrl = '/' + pathParts.join('/') + (search?search:'/');
 
         console.log('Switching language to:', lang, 'New URL:', newUrl);
         window.location.href = newUrl;
