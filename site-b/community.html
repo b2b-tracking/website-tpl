@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" th:content="${siteSeo != null ? siteSeo.description : ''}" content="加入我们的用户社区，分享使用体验">
+  <meta name="keywords" th:content="${siteSeo != null ? siteSeo.keywords : ''}" content="">
+  <title th:text="${siteSeo != null ? siteSeo.title : (site != null ? site.name : 'Smoant')}">社区</title>
+  <link rel="stylesheet" th:href="@{'/' + ${lang} + '/css/style.css'}">
+</head>
+<body>
+  <!-- 导航栏 -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <div class="nav-logo">
+        <a th:href="@{'/' + ${lang} + '/'}" class="logo-link">
+          <img th:if="${site != null && site.logo}" th:src="@{'/static/' + ${site.logo}}" th:alt="${site != null ? site.name : 'Smoant'}" class="logo-img">
+          <span th:unless="${site != null && site.logo}" th:text="${site != null ? site.name : 'Smoant'}" class="logo-text">Smoant</span>
+        </a>
+      </div>
+
+      <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <ul class="nav-menu" id="navMenu">
+        <li class="nav-item">
+          <a th:href="@{'/' + ${lang} + '/'}" class="nav-link">
+            <span data-i18n="nav.home">首页</span>
+          </a>
+        </li>
+
+        <li class="nav-item nav-dropdown">
+          <a href="javascript:void(0);" class="nav-link">
+            <span data-i18n="nav.products">产品中心</span>
+            <i class="dropdown-icon">▼</i>
+          </a>
+          <ul class="dropdown-menu">
+            <li><a th:href="@{'/' + ${lang} + '/products'}" data-i18n="products.allProducts">全部产品</a></li>
+            <li><a th:href="@{'/' + ${lang} + '/products?category=pod'}" data-i18n="products.podKits">小烟套装</a></li>
+            <li><a th:href="@{'/' + ${lang} + '/products?category=mod'}" data-i18n="products.modKits">主机套装</a></li>
+            <li><a th:href="@{'/' + ${lang} + '/products?category=accessory'}" data-i18n="products.accessories">配件中心</a></li>
+            <li><a th:href="@{'/' + ${lang} + '/products?category=disposable'}" data-i18n="products.disposable">一次性电子烟</a></li>
+          </ul>
+        </li>
+
+        <li class="nav-item">
+          <a th:href="@{'/' + ${lang} + '/news'}" class="nav-link">
+            <span data-i18n="nav.news">新闻资讯</span>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a th:href="@{'/' + ${lang} + '/community'}" class="nav-link active">
+            <span data-i18n="nav.community">社区</span>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a th:href="@{'/' + ${lang} + '/support'}" class="nav-link">
+            <span data-i18n="nav.support">技术支持</span>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a th:href="@{'/' + ${lang} + '/about'}" class="nav-link">
+            <span data-i18n="nav.about">关于我们</span>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a href="javascript:void(0);" onclick="document.getElementById('contact') && document.getElementById('contact').scrollIntoView({behavior:'smooth'})" class="nav-link">
+            <span data-i18n="nav.contact">联系我们</span>
+          </a>
+        </li>
+
+        <li class="nav-item nav-lang-switcher">
+          <button class="lang-btn" th:classappend="${lang == 'zh'} ? 'active'" data-lang="zh"
+                  th:onclick="'switchLanguage(\'zh\')'">中文</button>
+          <button class="lang-btn" th:classappend="${lang == 'en'} ? 'active'" data-lang="en"
+                  th:onclick="'switchLanguage(\'en\')'">EN</button>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- 社区页面 -->
+  <section style="margin-top: 80px; padding: 4rem 2rem;">
+    <div class="section-container">
+      <h2 class="section-title" data-i18n="community.title">用户社区</h2>
+      <p class="section-subtitle" data-i18n="community.subtitle">分享你的使用体验</p>
+
+      <!-- 社区功能区 -->
+      <div class="products-grid" style="margin-top: 3rem;">
+        <div style="background: white; padding: 2rem; border-radius: 8px; text-align: center; box-shadow: var(--shadow); cursor: pointer;">
+          <div style="font-size: 3rem; margin-bottom: 1rem;">👥</div>
+          <h3 style="margin-bottom: 0.5rem; color: #000;" data-i18n="community.forum">论坛讨论</h3>
+          <p style="color: var(--text-light); margin-bottom: 1rem;">与全球用户交流使用心得</p>
+          <a href="#" class="btn-learn-more" data-i18n="community.joinCommunity">加入社区</a>
+        </div>
+
+        <div style="background: white; padding: 2rem; border-radius: 8px; text-align: center; box-shadow: var(--shadow); cursor: pointer;">
+          <div style="font-size: 3rem; margin-bottom: 1rem;">⭐</div>
+          <h3 style="margin-bottom: 0.5rem; color: #000;" data-i18n="community.userReviews">用户评价</h3>
+          <p style="color: var(--text-light); margin-bottom: 1rem;">查看真实用户的产品评价</p>
+          <a href="#" class="btn-learn-more">查看评价</a>
+        </div>
+
+        <div style="background: white; padding: 2rem; border-radius: 8px; text-align: center; box-shadow: var(--shadow); cursor: pointer;">
+          <div style="font-size: 3rem; margin-bottom: 1rem;">📚</div>
+          <h3 style="margin-bottom: 0.5rem; color: #000;" data-i18n="community.tutorials">使用教程</h3>
+          <p style="color: var(--text-light); margin-bottom: 1rem;">学习产品使用技巧和窍门</p>
+          <a href="#" class="btn-learn-more">查看教程</a>
+        </div>
+      </div>
+
+      <!-- 用户评价展示 -->
+      <section style="margin-top: 4rem;">
+        <h3 style="text-align: center; font-size: 2rem; margin-bottom: 2rem; color: #000;">用户好评</h3>
+        <div class="products-grid">
+          <div th:each="review, iterStat : ${reviews}" style="background: #f5f5f5; padding: 2rem; border-radius: 8px;">
+            <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+              <div style="width: 50px; height: 50px; border-radius: 50%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; margin-right: 1rem;">
+                <span th:text="${review.userName != null ? #strings.substring(review.userName, 0, 1) : 'U'}">U</span>
+              </div>
+              <div>
+                <h4 th:text="${review.userName}" style="margin: 0; color: #000;">用户名</h4>
+                <div style="color: #FFB800;">★★★★★</div>
+              </div>
+            </div>
+            <p th:text="${review.content}" style="color: var(--text-light); line-height: 1.6;">用户评价内容...</p>
+          </div>
+        </div>
+
+        <!-- 空状态 -->
+        <div th:if="${reviews == null || reviews.isEmpty()}" style="text-align: center; padding: 4rem 0;">
+          <p style="color: var(--text-light); font-size: 1.2rem;">暂无用户评价</p>
+        </div>
+      </section>
+    </div>
+  </section>
+
+  <!-- 页脚 -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-column">
+        <h4 th:text="${site.name}">Smoant</h4>
+        <p data-i18n="nav.home">首页</p>
+        <p data-i18n="nav.products">产品中心</p>
+        <p data-i18n="nav.news">新闻资讯</p>
+      </div>
+
+      <div class="footer-column">
+        <h4 data-i18n="products.title">产品中心</h4>
+        <a th:each="category : ${categories}"
+           th:href="@{'/' + ${lang} + '/products?category=' + ${category.id}}"
+           th:text="${category.name}">产品分类</a>
+      </div>
+
+      <div class="footer-column">
+        <h4 data-i18n="footer.quickLinks">快速链接</h4>
+        <a th:href="@{'/' + ${lang} + '/about'}" data-i18n="nav.about">关于我们</a>
+        <a th:href="@{'/' + ${lang} + '/community'}" data-i18n="nav.community">社区</a>
+        <a th:href="@{'/' + ${lang} + '/support'}" data-i18n="nav.support">技术支持</a>
+      </div>
+
+      <div class="footer-column">
+        <h4 data-i18n="contact.title">联系我们</h4>
+        <p th:if="${contact.address}">📍 <span th:text="${contact.address}">地址</span></p>
+        <p th:if="${contact.phone}">📞 <span th:text="${contact.phone}">电话</span></p>
+        <p th:if="${contact.email}">✉️ <span th:text="${contact.email}">邮箱</span></p>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; 2026 <span th:text="${site.name}">Smoant</span>. <span data-i18n="footer.allRightsReserved">保留所有权利</span></p>
+      <p style="color: #ff6b6b; font-size: 0.85rem; margin-top: 0.5rem;" data-i18n="footer.warning">本产品含有尼古丁，尼古丁是一种令人上瘾的化学物质</p>
+      <p th:if="${site.icpNumber}" th:text="${site.icpNumber}"></p>
+    </div>
+  </footer>
+
+  <!-- 返回顶部按钮 -->
+  <div class="back-to-top">↑</div>
+
+  <!-- 脚本 -->
+  <script th:src="@{'/' + ${lang} + '/js/i18n.js'}"></script>
+  <script th:src="@{'/' + ${lang} + '/js/main.js'}"></script>
+</body>
+</html>

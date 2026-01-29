@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" th:content="${siteSeo != null ? siteSeo.description : ''}" content="获取专业的技术支持服务">
+  <meta name="keywords" th:content="${siteSeo != null ? siteSeo.keywords : ''}" content="">
+  <title th:text="${siteSeo != null ? siteSeo.title : (site != null ? site.name : 'Smoant')}">技术支持</title>
+  <link rel="stylesheet" th:href="@{'/' + ${lang} + '/css/style.css'}">
+</head>
+<body>
+  <!-- 导航栏 -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <div class="nav-logo">
+        <a th:href="@{'/' + ${lang} + '/'}" class="logo-link">
+          <img th:if="${site != null && site.logo}" th:src="@{'/static/' + ${site.logo}}" th:alt="${site != null ? site.name : 'Smoant'}" class="logo-img">
+          <span th:unless="${site != null && site.logo}" th:text="${site != null ? site.name : 'Smoant'}" class="logo-text">Smoant</span>
+        </a>
+      </div>
+
+      <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <ul class="nav-menu" id="navMenu">
+        <li class="nav-item">
+          <a th:href="@{'/' + ${lang} + '/'}" class="nav-link">
+            <span data-i18n="nav.home">首页</span>
+          </a>
+        </li>
+
+        <li class="nav-item nav-dropdown">
+          <a href="javascript:void(0);" class="nav-link">
+            <span data-i18n="nav.products">产品中心</span>
+            <i class="dropdown-icon">▼</i>
+          </a>
+          <ul class="dropdown-menu">
+            <li><a th:href="@{'/' + ${lang} + '/products'}" data-i18n="products.allProducts">全部产品</a></li>
+            <li><a th:href="@{'/' + ${lang} + '/products?category=pod'}" data-i18n="products.podKits">小烟套装</a></li>
+            <li><a th:href="@{'/' + ${lang} + '/products?category=mod'}" data-i18n="products.modKits">主机套装</a></li>
+            <li><a th:href="@{'/' + ${lang} + '/products?category=accessory'}" data-i18n="products.accessories">配件中心</a></li>
+            <li><a th:href="@{'/' + ${lang} + '/products?category=disposable'}" data-i18n="products.disposable">一次性电子烟</a></li>
+          </ul>
+        </li>
+
+        <li class="nav-item">
+          <a th:href="@{'/' + ${lang} + '/news'}" class="nav-link">
+            <span data-i18n="nav.news">新闻资讯</span>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a th:href="@{'/' + ${lang} + '/community'}" class="nav-link">
+            <span data-i18n="nav.community">社区</span>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a th:href="@{'/' + ${lang} + '/support'}" class="nav-link active">
+            <span data-i18n="nav.support">技术支持</span>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a th:href="@{'/' + ${lang} + '/about'}" class="nav-link">
+            <span data-i18n="nav.about">关于我们</span>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a href="javascript:void(0);" onclick="document.getElementById('contact') && document.getElementById('contact').scrollIntoView({behavior:'smooth'})" class="nav-link">
+            <span data-i18n="nav.contact">联系我们</span>
+          </a>
+        </li>
+
+        <li class="nav-item nav-lang-switcher">
+          <button class="lang-btn" th:classappend="${lang == 'zh'} ? 'active'" data-lang="zh"
+                  th:onclick="'switchLanguage(\'zh\')'">中文</button>
+          <button class="lang-btn" th:classappend="${lang == 'en'} ? 'active'" data-lang="en"
+                  th:onclick="'switchLanguage(\'en\')'">EN</button>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- 技术支持页面 -->
+  <section style="margin-top: 80px; padding: 4rem 2rem;">
+    <div class="section-container">
+      <h2 class="section-title" data-i18n="support.title">技术支持</h2>
+      <p class="section-subtitle" data-i18n="support.subtitle">为您提供专业的技术支持服务</p>
+
+      <!-- 支持服务区 -->
+      <div class="products-grid" style="margin-top: 3rem;">
+        <div style="background: white; padding: 2rem; border-radius: 8px; text-align: center; box-shadow: var(--shadow); cursor: pointer;">
+          <div style="font-size: 3rem; margin-bottom: 1rem;">🛡️</div>
+          <h3 style="margin-bottom: 0.5rem; color: #000;" data-i18n="support.warranty">质保服务</h3>
+          <p style="color: var(--text-light); margin-bottom: 1rem;">了解产品质保政策和申请流程</p>
+          <a href="#warranty" class="btn-learn-more" data-i18n="support.warrantyPolicy">查看质保政策</a>
+        </div>
+
+        <div style="background: white; padding: 2rem; border-radius: 8px; text-align: center; box-shadow: var(--shadow); cursor: pointer;">
+          <div style="font-size: 3rem; margin-bottom: 1rem;">📖</div>
+          <h3 style="margin-bottom: 0.5rem; color: #000;" data-i18n="support.userManual">用户手册</h3>
+          <p style="color: var(--text-light); margin-bottom: 1rem;">下载产品使用说明书</p>
+          <a href="#manual" class="btn-learn-more">下载手册</a>
+        </div>
+
+        <div style="background: white; padding: 2rem; border-radius: 8px; text-align: center; box-shadow: var(--shadow); cursor: pointer;">
+          <div style="font-size: 3rem; margin-bottom: 1rem;">❓</div>
+          <h3 style="margin-bottom: 0.5rem; color: #000;" data-i18n="support.faq">常见问题</h3>
+          <p style="color: var(--text-light); margin-bottom: 1rem;">查找常见问题的解决方案</p>
+          <a href="#faq" class="btn-learn-more">查看FAQ</a>
+        </div>
+
+        <div style="background: white; padding: 2rem; border-radius: 8px; text-align: center; box-shadow: var(--shadow); cursor: pointer;">
+          <div style="font-size: 3rem; margin-bottom: 1rem;">💬</div>
+          <h3 style="margin-bottom: 0.5rem; color: #000;" data-i18n="support.contactSupport">联系客服</h3>
+          <p style="color: var(--text-light); margin-bottom: 1rem;">获取一对一专业支持</p>
+          <a href="/#contact" class="btn-learn-more">联系我们</a>
+        </div>
+      </div>
+
+      <!-- 质保政策 -->
+      <section id="warranty" style="margin-top: 4rem; max-width: 900px; margin-left: auto; margin-right: auto;">
+        <h3 style="font-size: 2rem; margin-bottom: 2rem; color: #000;" data-i18n="support.warrantyPolicy">质保政策</h3>
+        <div style="background: #f5f5f5; padding: 2rem; border-radius: 8px;">
+          <div th:if="${warranty.content}" th:utext="${warranty.content}">
+            <p style="line-height: 1.8; color: var(--text-light); margin-bottom: 1rem;">
+              我们为所有产品提供 <strong>6个月质保服务</strong>，从购买日期起计算。
+            </p>
+            <ul style="list-style: disc; padding-left: 2rem; line-height: 1.8; color: var(--text-light);">
+              <li>质保期内因产品质量问题导致的故障，免费维修或更换</li>
+              <li>人为损坏、私自拆机或改装不在质保范围内</li>
+              <li>申请质保需提供有效购买凭证</li>
+              <li>质保不包括正常损耗部件（如雾化芯、烟嘴等）</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- 常见问题FAQ -->
+      <section id="faq" style="margin-top: 4rem; max-width: 900px; margin-left: auto; margin-right: auto;">
+        <h3 style="font-size: 2rem; margin-bottom: 2rem; color: #000;" data-i18n="support.faq">常见问题</h3>
+
+        <div th:each="faq, iterStat : ${faqs}" style="background: white; padding: 1.5rem; border-radius: 8px; margin-bottom: 1rem; box-shadow: var(--shadow); cursor: pointer;">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h4 th:text="${faq.question}" style="margin: 0; color: #000;">问题标题</h4>
+            <span style="font-size: 1.5rem; color: var(--text-light);">+</span>
+          </div>
+          <div style="margin-top: 1rem; display: none; color: var(--text-light); line-height: 1.8;">
+            <p th:text="${faq.answer}">答案内容...</p>
+          </div>
+        </div>
+
+        <!-- 默认FAQ -->
+        <div th:if="${faqs == null || faqs.isEmpty()}">
+          <div style="background: white; padding: 1.5rem; border-radius: 8px; margin-bottom: 1rem; box-shadow: var(--shadow);">
+            <h4 style="margin: 0 0 1rem 0; color: #000;">如何正确使用和保养设备？</h4>
+            <p style="color: var(--text-light); line-height: 1.8;">
+              请按照产品说明书操作，定期清洁设备，及时更换雾化芯，使用原装充电器充电。
+            </p>
+          </div>
+
+          <div style="background: white; padding: 1.5rem; border-radius: 8px; margin-bottom: 1rem; box-shadow: var(--shadow);">
+            <h4 style="margin: 0 0 1rem 0; color: #000;">设备无法开机怎么办？</h4>
+            <p style="color: var(--text-light); line-height: 1.8;">
+              请先检查电池是否有电，尝试充电后再开机。如果问题依然存在，请联系客服。
+            </p>
+          </div>
+
+          <div style="background: white; padding: 1.5rem; border-radius: 8px; margin-bottom: 1rem; box-shadow: var(--shadow);">
+            <h4 style="margin: 0 0 1rem 0; color: #000;">雾化芯多久需要更换？</h4>
+            <p style="color: var(--text-light); line-height: 1.8;">
+              一般建议1-2周更换一次，具体取决于使用频率和烟油类型。当出现焦味或口感变差时应及时更换。
+            </p>
+          </div>
+
+          <div style="background: white; padding: 1.5rem; border-radius: 8px; margin-bottom: 1rem; box-shadow: var(--shadow);">
+            <h4 style="margin: 0 0 1rem 0; color: #000;">设备可以带上飞机吗？</h4>
+            <p style="color: var(--text-light); line-height: 1.8;">
+              根据航空安全规定，电子烟设备必须随身携带，不能托运。烟油容量不得超过100ml。具体规定请咨询航空公司。
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 下载中心 -->
+      <section id="manual" style="margin-top: 4rem;">
+        <h3 style="text-align: center; font-size: 2rem; margin-bottom: 2rem; color: #000;" data-i18n="support.downloadCenter">下载中心</h3>
+        <div class="products-grid">
+          <div th:each="download : ${downloads}" style="background: white; padding: 2rem; border-radius: 8px; box-shadow: var(--shadow); text-align: center;">
+            <div style="font-size: 3rem; margin-bottom: 1rem;">📄</div>
+            <h4 th:text="${download.title}" style="margin-bottom: 0.5rem; color: #000;">文档标题</h4>
+            <p th:text="${download.description}" style="color: var(--text-light); margin-bottom: 1rem;">文档描述</p>
+            <a th:href="${download.url}" class="btn-learn-more" download>下载</a>
+          </div>
+        </div>
+
+        <!-- 空状态 -->
+        <div th:if="${downloads == null || downloads.isEmpty()}" style="text-align: center; padding: 4rem 0;">
+          <p style="color: var(--text-light); font-size: 1.2rem;">暂无下载资源</p>
+        </div>
+      </section>
+    </div>
+  </section>
+
+  <!-- 页脚 -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-column">
+        <h4 th:text="${site.name}">Smoant</h4>
+        <p data-i18n="nav.home">首页</p>
+        <p data-i18n="nav.products">产品中心</p>
+        <p data-i18n="nav.news">新闻资讯</p>
+      </div>
+
+      <div class="footer-column">
+        <h4 data-i18n="products.title">产品中心</h4>
+        <a th:each="category : ${categories}"
+           th:href="@{'/' + ${lang} + '/products?category=' + ${category.id}}"
+           th:text="${category.name}">产品分类</a>
+      </div>
+
+      <div class="footer-column">
+        <h4 data-i18n="footer.quickLinks">快速链接</h4>
+        <a th:href="@{'/' + ${lang} + '/about'}" data-i18n="nav.about">关于我们</a>
+        <a th:href="@{'/' + ${lang} + '/community'}" data-i18n="nav.community">社区</a>
+        <a th:href="@{'/' + ${lang} + '/support'}" data-i18n="nav.support">技术支持</a>
+      </div>
+
+      <div class="footer-column">
+        <h4 data-i18n="contact.title">联系我们</h4>
+        <p th:if="${contact.address}">📍 <span th:text="${contact.address}">地址</span></p>
+        <p th:if="${contact.phone}">📞 <span th:text="${contact.phone}">电话</span></p>
+        <p th:if="${contact.email}">✉️ <span th:text="${contact.email}">邮箱</span></p>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; 2026 <span th:text="${site.name}">Smoant</span>. <span data-i18n="footer.allRightsReserved">保留所有权利</span></p>
+      <p style="color: #ff6b6b; font-size: 0.85rem; margin-top: 0.5rem;" data-i18n="footer.warning">本产品含有尼古丁，尼古丁是一种令人上瘾的化学物质</p>
+      <p th:if="${site.icpNumber}" th:text="${site.icpNumber}"></p>
+    </div>
+  </footer>
+
+  <!-- 返回顶部按钮 -->
+  <div class="back-to-top">↑</div>
+
+  <!-- 脚本 -->
+  <script th:src="@{'/' + ${lang} + '/js/i18n.js'}"></script>
+  <script th:src="@{'/' + ${lang} + '/js/main.js'}"></script>
+
+  <script>
+    // FAQ手风琴效果
+    document.addEventListener('DOMContentLoaded', function() {
+      const faqItems = document.querySelectorAll('#faq > div');
+      faqItems.forEach(item => {
+        item.addEventListener('click', function() {
+          const answer = this.querySelector('div[style*="display: none"]');
+          const icon = this.querySelector('span');
+          if (answer) {
+            const isHidden = answer.style.display === 'none' || !answer.style.display;
+            answer.style.display = isHidden ? 'block' : 'none';
+            icon.textContent = isHidden ? '−' : '+';
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>

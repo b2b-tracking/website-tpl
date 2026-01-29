@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" th:content="${siteSeo != null ? siteSeo.description : ''}" content="了解我们的公司文化、愿景和使命">
+  <meta name="keywords" th:content="${siteSeo != null ? siteSeo.keywords : ''}" content="">
+  <title th:text="${siteSeo != null ? siteSeo.title : (site != null ? site.name : 'Smoant')}">关于我们</title>
+  <link rel="stylesheet" th:href="@{'/' + ${lang} + '/css/style.css'}">
+</head>
+<body>
+  <!-- 导航栏 -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <div class="nav-logo">
+        <a th:href="@{'/' + ${lang} + '/'}" class="logo-link">
+          <img th:if="${site != null && site.logo}" th:src="@{'/static/' + ${site.logo}}" th:alt="${site != null ? site.name : 'Smoant'}" class="logo-img">
+          <span th:unless="${site != null && site.logo}" th:text="${site != null ? site.name : 'Smoant'}" class="logo-text">Smoant</span>
+        </a>
+      </div>
+
+      <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <ul class="nav-menu" id="navMenu">
+        <!-- 动态菜单 -->
+        <li class="nav-item" th:each="menu : ${menus}">
+          <a th:href="@{'/' + ${lang} + '/' + ${menu.target_url}}" class="nav-link" th:text="${menu.menu_name}">菜单</a>
+        </li>
+        <!-- 备用菜单 -->
+        <li class="nav-item" th:if="${menus == null || menus.isEmpty()}">
+          <a th:href="@{'/' + ${lang} + '/'}" class="nav-link" data-i18n="nav.home">首页</a>
+        </li>
+        <li class="nav-item" th:if="${menus == null || menus.isEmpty()}">
+          <a th:href="@{'/' + ${lang} + '/products'}" class="nav-link" data-i18n="nav.products">产品中心</a>
+        </li>
+        <li class="nav-item" th:if="${menus == null || menus.isEmpty()}">
+          <a th:href="@{'/' + ${lang} + '/news'}" class="nav-link" data-i18n="nav.news">新闻资讯</a>
+        </li>
+        <li class="nav-item" th:if="${menus == null || menus.isEmpty()}">
+          <a th:href="@{'/' + ${lang} + '/about'}" class="nav-link active" data-i18n="nav.about">关于我们</a>
+        </li>
+
+        <li class="nav-item nav-lang-switcher">
+          <button class="lang-btn" th:classappend="${lang == 'zh'} ? 'active'" data-lang="zh"
+                  onclick="switchLanguage('zh')">中文</button>
+          <button class="lang-btn" th:classappend="${lang == 'en'} ? 'active'" data-lang="en"
+                  onclick="switchLanguage('en')">EN</button>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- 关于我们 -->
+  <section style="margin-top: 80px; padding: 4rem 2rem;">
+    <div class="section-container">
+      <h2 class="section-title">关于 Smoant</h2>
+      <p class="section-subtitle">专业电子烟研发制造商</p>
+
+      <!-- 公司简介 -->
+      <div style="max-width: 900px; margin: 0 auto; background: #f5f5f5; padding: 3rem; border-radius: 8px; margin-bottom: 3rem;">
+        <p style="text-align: center; color: var(--text-light); line-height: 1.8; margin-bottom: 1.5rem; font-size: 1.05rem;"
+           th:utext="${about.company_intro}">
+          Smoant成立于2014年，是一家专注于电子烟研发、生产和销售的创新型企业。
+          我们拥有一支经验丰富的研发团队和先进的生产设施，致力于为全球用户提供优质的电子烟产品。
+          公司产品远销全球50多个国家和地区，赢得了广大消费者的认可和好评。
+        </p>
+      </div>
+
+      <!-- 核心价值观 -->
+      <section style="margin-bottom: 4rem;">
+        <h3 style="text-align: center; font-size: 2rem; margin-bottom: 2rem; color: #000;">核心价值观</h3>
+        <div class="products-grid" style="margin-bottom: 3rem;">
+          <div style="background: white; padding: 2rem; border-radius: 8px; text-align: center; box-shadow: var(--shadow);">
+            <div style="font-size: 3rem; margin-bottom: 1rem;">🎯</div>
+            <h4 style="margin-bottom: 0.5rem; color: #000;">创新</h4>
+            <p style="color: var(--text-light);">持续推动技术创新，研发满足市场需求的产品</p>
+          </div>
+          <div style="background: white; padding: 2rem; border-radius: 8px; text-align: center; box-shadow: var(--shadow);">
+            <div style="font-size: 3rem; margin-bottom: 1rem;">✨</div>
+            <h4 style="margin-bottom: 0.5rem; color: #000;">品质</h4>
+            <p style="color: var(--text-light);">严格的质量管理体系，确保产品安全可靠</p>
+          </div>
+          <div style="background: white; padding: 2rem; border-radius: 8px; text-align: center; box-shadow: var(--shadow);">
+            <div style="font-size: 3rem; margin-bottom: 1rem;">🤝</div>
+            <h4 style="margin-bottom: 0.5rem; color: #000;">服务</h4>
+            <p style="color: var(--text-light);">全心全意为客户服务，建立长期合作关系</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 公司优势 -->
+      <section style="margin-bottom: 4rem;">
+        <h3 style="text-align: center; font-size: 2rem; margin-bottom: 2rem; color: #000;">企业优势</h3>
+        <div class="products-grid">
+          <div style="background: white; padding: 2rem; border-radius: 8px; text-align: center; box-shadow: var(--shadow);">
+            <div style="font-size: 3rem; margin-bottom: 1rem;">🏭</div>
+            <h4 style="margin-bottom: 0.5rem; color: #000;">先进设施</h4>
+            <p style="color: var(--text-light);">拥有国际先进的全自动生产线和检测设备</p>
+          </div>
+          <div style="background: white; padding: 2rem; border-radius: 8px; text-align: center; box-shadow: var(--shadow);">
+            <div style="font-size: 3rem; margin-bottom: 1rem;">👥</div>
+            <h4 style="margin-bottom: 0.5rem; color: #000;">专业团队</h4>
+            <p style="color: var(--text-light);">拥有多年行业经验的研发、生产和销售团队</p>
+          </div>
+          <div style="background: white; padding: 2rem; border-radius: 8px; text-align: center; box-shadow: var(--shadow);">
+            <div style="font-size: 3rem; margin-bottom: 1rem;">📊</div>
+            <h4 style="margin-bottom: 0.5rem; color: #000;">严格管理</h4>
+            <p style="color: var(--text-light);">建立完整的质量管理和生产追溯系统</p>
+          </div>
+          <div style="background: white; padding: 2rem; border-radius: 8px; text-align: center; box-shadow: var(--shadow);">
+            <div style="font-size: 3rem; margin-bottom: 1rem;">🌍</div>
+            <h4 style="margin-bottom: 0.5rem; color: #000;">国际服务</h4>
+            <p style="color: var(--text-light);">为全球客户提供专业的销售和技术支持</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 发展历程 -->
+      <section style="margin-bottom: 4rem;">
+        <h3 style="text-align: center; font-size: 2rem; margin-bottom: 2rem; color: #000;">发展历程</h3>
+        <div style="max-width: 800px; margin: 0 auto;">
+          <div style="display: flex; margin-bottom: 2rem; align-items: flex-start;">
+            <div style="min-width: 100px; font-weight: bold; color: var(--primary-color);">2014年</div>
+            <div style="flex: 1; padding-left: 2rem; border-left: 3px solid var(--primary-color);">
+              <h4 style="margin: 0 0 0.5rem 0; color: #000;">公司成立</h4>
+              <p style="margin: 0; color: var(--text-light);">Smoant公司正式成立，开始电子烟产品研发</p>
+            </div>
+          </div>
+
+          <div style="display: flex; margin-bottom: 2rem; align-items: flex-start;">
+            <div style="min-width: 100px; font-weight: bold; color: var(--primary-color);">2016年</div>
+            <div style="flex: 1; padding-left: 2rem; border-left: 3px solid var(--primary-color);">
+              <h4 style="margin: 0 0 0.5rem 0; color: #000;">首款产品上市</h4>
+              <p style="margin: 0; color: var(--text-light);">推出第一款Pod系统产品，获得市场好评</p>
+            </div>
+          </div>
+
+          <div style="display: flex; margin-bottom: 2rem; align-items: flex-start;">
+            <div style="min-width: 100px; font-weight: bold; color: var(--primary-color);">2018年</div>
+            <div style="flex: 1; padding-left: 2rem; border-left: 3px solid var(--primary-color);">
+              <h4 style="margin: 0 0 0.5rem 0; color: #000;">国际认证</h4>
+              <p style="margin: 0; color: var(--text-light);">获得CE、FCC、RoHS等国际认证</p>
+            </div>
+          </div>
+
+          <div style="display: flex; margin-bottom: 2rem; align-items: flex-start;">
+            <div style="min-width: 100px; font-weight: bold; color: var(--primary-color);">2020年</div>
+            <div style="flex: 1; padding-left: 2rem; border-left: 3px solid var(--primary-color);">
+              <h4 style="margin: 0 0 0.5rem 0; color: #000;">产品线扩展</h4>
+              <p style="margin: 0; color: var(--text-light);">推出MOD系列产品，丰富产品线</p>
+            </div>
+          </div>
+
+          <div style="display: flex; align-items: flex-start;">
+            <div style="min-width: 100px; font-weight: bold; color: var(--primary-color);">2026年</div>
+            <div style="flex: 1; padding-left: 2rem; border-left: 3px solid var(--primary-color);">
+              <h4 style="margin: 0 0 0.5rem 0; color: #000;">持续创新</h4>
+              <p style="margin: 0; color: var(--text-light);">继续推进研发创新，满足全球市场需求</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 公司图片 -->
+      <div th:if="${aboutUs.imageUrl}" style="margin-top: 3rem; text-align: center;">
+        <img th:src="@{'/static/' + ${aboutUs.imageUrl}}" alt="Company Image" style="max-width: 100%; border-radius: 8px; box-shadow: var(--shadow-lg);">
+      </div>
+    </div>
+  </section>
+
+  <!-- 页脚 -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-column">
+        <h4 th:text="${site.name}">Smoant</h4>
+        <a th:href="@{'/' + ${lang} + '/'}" style="text-decoration: none; color: inherit; display: block;" data-i18n="nav.home">首页</a>
+        <a th:href="@{'/' + ${lang} + '/about'}" style="text-decoration: none; color: inherit; display: block;" data-i18n="nav.about">关于我们</a>
+        <a th:href="@{'/' + ${lang} + '/news'}" style="text-decoration: none; color: inherit; display: block;" data-i18n="nav.news">新闻资讯</a>
+      </div>
+
+      <div class="footer-column">
+        <h4 data-i18n="products.title">产品中心</h4>
+        <a th:each="category : ${categories}"
+           th:href="@{'/' + ${lang} + '/products?category=' + ${category.id}}"
+           th:text="${category.name}"
+           style="text-decoration: none; color: inherit; display: block;">产品分类</a>
+      </div>
+
+      <div class="footer-column">
+        <h4 data-i18n="footer.quickLinks">快速链接</h4>
+        <a th:href="@{'/' + ${lang} + '/community'}" data-i18n="nav.community" style="text-decoration: none; color: inherit; display: block;">社区</a>
+        <a th:href="@{'/' + ${lang} + '/support'}" data-i18n="nav.support" style="text-decoration: none; color: inherit; display: block;">技术支持</a>
+        <a href="/#contact" data-i18n="nav.contact" style="text-decoration: none; color: inherit; display: block;">联系我们</a>
+      </div>
+
+      <div class="footer-column">
+        <h4 data-i18n="contact.title">联系我们</h4>
+        <p th:if="${contact.address}">📍 <span th:text="${contact.address}">地址</span></p>
+        <p th:if="${contact.phone}">📞 <span th:text="${contact.phone}">电话</span></p>
+        <p th:if="${contact.email}">✉️ <span th:text="${contact.email}">邮箱</span></p>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; 2026 <span th:text="${site.name}">Smoant</span>. <span data-i18n="footer.allRightsReserved">保留所有权利</span></p>
+      <p style="color: #ff6b6b; font-size: 0.85rem; margin: 0.5rem 0;" data-i18n="footer.warning">本产品含有尼古丁，尼古丁是一种令人上瘾的化学物质</p>
+      <p style="font-size: 0.85rem; color: var(--text-light);">
+        <a href="#" style="text-decoration: none; color: inherit;" data-i18n="footer.privacyPolicy">隐私政策</a>
+        &nbsp; | &nbsp;
+        <a href="#" style="text-decoration: none; color: inherit;" data-i18n="footer.termsOfService">服务条款</a>
+      </p>
+      <p th:if="${site.icpNumber}" th:text="${site.icpNumber}"></p>
+    </div>
+  </footer>
+
+  <!-- 返回顶部按钮 -->
+  <div class="back-to-top">↑</div>
+
+  <!-- 脚本 -->
+  <script th:src="@{'/' + ${lang} + '/js/i18n.js'}"></script>
+  <script th:src="@{'/' + ${lang} + '/js/main.js'}"></script>
+
+  <script>
+    // 语言切换
+    function switchLanguage(lang) {
+      const currentPath = window.location.pathname;
+      const pathParts = currentPath.split('/').filter(p => p);
+      if (pathParts[0] === 'zh' || pathParts[0] === 'en') {
+        pathParts[0] = lang;
+      } else {
+        pathParts.unshift(lang);
+      }
+      window.location.href = '/' + pathParts.join('/');
+    }
+  </script>
+</body>
+</html>

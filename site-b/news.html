@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" th:content="${siteSeo != null ? siteSeo.description : ''}" content="">
+  <meta name="description" th:content="${siteSeo != null ? siteSeo.description : ''}" content="了解公司动态和行业资讯">
   <meta name="keywords" th:content="${siteSeo != null ? siteSeo.keywords : ''}" content="">
-  <title th:text="${product != null ? product.name + ' - ' + (site != null ? site.name : 'Smoant') : 'Product Detail'}">产品详情</title>
+  <title th:text="${siteSeo != null ? siteSeo.title : (site != null ? site.name : 'Smoant')}">新闻资讯</title>
   <link rel="stylesheet" th:href="@{'/' + ${lang} + '/css/style.css'}">
 </head>
 <body>
@@ -35,10 +35,10 @@
           <a th:href="@{'/' + ${lang} + '/'}" class="nav-link" data-i18n="nav.home">首页</a>
         </li>
         <li class="nav-item" th:if="${menus == null || menus.isEmpty()}">
-          <a th:href="@{'/' + ${lang} + '/products'}" class="nav-link active" data-i18n="nav.products">产品中心</a>
+          <a th:href="@{'/' + ${lang} + '/products'}" class="nav-link" data-i18n="nav.products">产品中心</a>
         </li>
         <li class="nav-item" th:if="${menus == null || menus.isEmpty()}">
-          <a th:href="@{'/' + ${lang} + '/news'}" class="nav-link" data-i18n="nav.news">新闻资讯</a>
+          <a th:href="@{'/' + ${lang} + '/news'}" class="nav-link active" data-i18n="nav.news">新闻资讯</a>
         </li>
         <li class="nav-item" th:if="${menus == null || menus.isEmpty()}">
           <a th:href="@{'/' + ${lang} + '/about'}" class="nav-link" data-i18n="nav.about">关于我们</a>
@@ -54,72 +54,63 @@
     </div>
   </nav>
 
-  <!-- 产品详情 -->
+  <!-- 新闻列表 -->
   <section style="margin-top: 80px; padding: 4rem 2rem;">
     <div class="section-container">
-      <a th:href="@{'/' + ${lang} + '/products'}" style="color: #000; text-decoration: none; margin-bottom: 2rem; display: inline-block;" data-i18n="productDetail.backToProducts">← 返回产品列表</a>
+      <h2 class="section-title" data-i18n="news.latest">最新动态</h2>
+      <p class="section-subtitle" data-i18n="news.subtitle">了解公司动态和行业资讯</p>
 
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-top: 2rem;">
-        <!-- 产品图片 -->
-        <div>
-          <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); height: 500px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-size: 5rem;">
-            <span th:if="${product.mainImage}" th:style="'background-image: url(' + ${product.mainImage} + '); background-size: cover; background-position: center; width: 100%; height: 100%; border-radius: 8px;'"></span>
-            <span th:unless="${product.mainImage}">📦</span>
+      <!-- 新闻网格 -->
+      <div class="discover-grid" style="margin-top: 3rem;">
+        <div th:each="newsItem, iterStat : ${news}"
+             style="background: white; border-radius: 8px; overflow: hidden; box-shadow: var(--shadow); cursor: pointer; transition: all 0.3s ease;"
+             th:onclick="'window.location.href=\'' + @{'/' + ${lang} + '/news/' + ${newsItem.id}} + '\''">
+          <div class="discover-image"
+               th:if="${newsItem.cover_image}"
+               th:style="'background-image: url(' + @{'/static/' + ${newsItem.cover_image}} + '); background-size: cover; background-position: center; height: 220px;'">
           </div>
-        </div>
-
-        <!-- 产品信息 -->
-        <div>
-          <h1 th:text="${product.name}" style="font-size: 2.5rem; margin-bottom: 1rem; color: #000;">产品名称</h1>
-
-          <div style="margin-bottom: 2rem;">
-            <p th:text="${product.shortDescription}" style="color: var(--text-light); font-size: 1.1rem; margin-bottom: 1rem;">产品简介</p>
-            <p th:text="${product.description}" style="color: var(--text-light); line-height: 1.8;">产品详细描述</p>
+          <div class="discover-image" th:unless="${newsItem.cover_image}"
+               th:style="'background: linear-gradient(135deg, hsl(' + ${(iterStat.index * 120) % 360} + ', 70%, 60%) 0%, hsl(' + ${((iterStat.index * 120) + 50) % 360} + ', 70%, 50%) 100%); height: 220px;'">
           </div>
-
-          <!-- 产品规格 -->
-          <div style="background: #f5f5f5; padding: 2rem; border-radius: 8px; margin-bottom: 2rem;">
-            <h3 style="margin-bottom: 1rem; color: #000;">产品规格</h3>
-            <ul style="list-style: none;">
-              <li style="padding: 0.8rem 0; border-bottom: 1px solid #ddd; display: flex; justify-content: space-between;">
-                <strong>SKU</strong>
-                <span th:text="${product.sku}">SKU</span>
-              </li>
-              <li th:if="${product.category}" style="padding: 0.8rem 0; border-bottom: 1px solid #ddd; display: flex; justify-content: space-between;">
-                <strong>分类</strong>
-                <span th:text="${product.category}">分类</span>
-              </li>
-            </ul>
-          </div>
-
-          <!-- 操作按钮 -->
-          <div style="display: flex; gap: 1rem;">
-            <a href="/#contact" class="btn-learn-more" data-i18n="productDetail.inquire">立即询价</a>
-            <a th:href="@{'/' + ${lang} + '/products'}" class="btn-outline" data-i18n="productDetail.backToProducts">返回列表</a>
+          <div style="padding: 1.5rem;">
+            <h3 class="product-title" th:text="${newsItem.title}" style="margin-bottom: 0.8rem;">新闻标题</h3>
+            <p class="product-desc" th:text="${newsItem.summary}" style="margin-bottom: 1rem;">新闻摘要</p>
+            <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 1rem; border-top: 1px solid var(--border-color);">
+              <span style="color: var(--text-light); font-size: 0.9rem;">📅 <span th:text="${#temporals.format(newsItem.publish_time, 'yyyy-MM-dd')}">2026-01-10</span></span>
+              <a th:href="@{'/' + ${lang} + '/news/' + ${newsItem.id}}" class="discover-more" style="color: #000; text-decoration: none; font-weight: 600;" data-i18n="news.readMore">阅读更多 →</a>
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- 相关产品 -->
-      <section style="margin-top: 4rem;">
-        <h2 class="section-title" data-i18n="productDetail.viewMore">查看更多产品</h2>
-        <div class="products-grid">
-          <div th:each="relatedProduct, iterStat : ${relatedProducts}" class="product-card"
-               th:onclick="'window.location.href=\'' + @{'/' + ${lang} + '/products/' + ${relatedProduct.id}} + '\''">
-            <div class="product-image" th:if="${relatedProduct.mainImage}"
-                 th:style="'background-image: url(' + ${relatedProduct.mainImage} + '); background-size: cover; background-position: center;'">
-            </div>
-            <div class="product-image" th:unless="${relatedProduct.mainImage}"
-                 th:style="'background: linear-gradient(135deg, hsl(' + ${(iterStat.index * 60) % 360} + ', 70%, 60%) 0%, hsl(' + ${((iterStat.index * 60) + 30) % 360} + ', 70%, 50%) 100%);'">
-              <span>📦</span>
-            </div>
-            <div class="product-info">
-              <h3 class="product-title" th:text="${relatedProduct.name}">产品名称</h3>
-              <p class="product-desc" th:text="${relatedProduct.shortDescription}">产品简介</p>
-            </div>
-          </div>
-        </div>
-      </section>
+      <!-- 空状态 -->
+      <div th:if="${news == null || news.isEmpty()}" style="text-align: center; padding: 4rem 0;">
+        <p style="color: var(--text-light); font-size: 1.2rem;">暂无新闻资讯</p>
+      </div>
+
+      <!-- 分页 -->
+      <div th:if="${totalPages > 1}" style="display: flex; justify-content: center; align-items: center; gap: 0.5rem; margin-top: 3rem;">
+        <a th:if="${currentPage > 1}"
+           th:href="@{/} + ${lang} + '/news?page=' + ${currentPage - 1}"
+           class="pagination-btn" style="padding: 0.5rem 1rem; border: 1px solid #ddd; text-decoration: none; color: var(--text-color); background: white; transition: all 0.3s; min-width: 40px; text-align: center; display: inline-block;">&lt;</a>
+
+        <span th:each="i : ${#numbers.sequence(1, totalPages)}"
+              th:if="${i == 1 || i == totalPages || (i >= currentPage - 2 && i <= currentPage + 2)}">
+          <a th:if="${i != currentPage}"
+             th:href="@{/} + ${lang} + '/news?page=' + ${i}"
+             class="pagination-btn"
+             style="padding: 0.5rem 1rem; border: 1px solid #ddd; text-decoration: none; color: var(--text-color); background: white; transition: all 0.3s; min-width: 40px; text-align: center; display: inline-block; margin: 0 2px;"
+             th:text="${i}">1</a>
+          <span th:if="${i == currentPage}"
+                class="pagination-btn active"
+                style="padding: 0.5rem 1rem; border: 1px solid #000; background: #000; color: var(--accent-color); min-width: 40px; text-align: center; display: inline-block; margin: 0 2px; font-weight: bold;"
+                th:text="${i}">1</span>
+        </span>
+
+        <a th:if="${currentPage < totalPages}"
+           th:href="@{/} + ${lang} + '/news?page=' + ${currentPage + 1}"
+           class="pagination-btn" style="padding: 0.5rem 1rem; border: 1px solid #ddd; text-decoration: none; color: var(--text-color); background: white; transition: all 0.3s; min-width: 40px; text-align: center; display: inline-block;">&gt;</a>
+      </div>
     </div>
   </section>
 
@@ -157,14 +148,14 @@
     </div>
 
     <div class="footer-bottom">
-      <p>&copy; 2026 <span th:text="${site != null ? site.name : 'Smoant'}">Smoant</span>. <span data-i18n="footer.allRightsReserved">保留所有权利</span></p>
+      <p>&copy; 2026 <span th:text="${site.name}">Smoant</span>. <span data-i18n="footer.allRightsReserved">保留所有权利</span></p>
       <p style="color: #ff6b6b; font-size: 0.85rem; margin: 0.5rem 0;" data-i18n="footer.warning">本产品含有尼古丁，尼古丁是一种令人上瘾的化学物质</p>
       <p style="font-size: 0.85rem; color: var(--text-light);">
         <a href="#" style="text-decoration: none; color: inherit;" data-i18n="footer.privacyPolicy">隐私政策</a>
         &nbsp; | &nbsp;
         <a href="#" style="text-decoration: none; color: inherit;" data-i18n="footer.termsOfService">服务条款</a>
       </p>
-      <p th:if="${site != null && site.icpNumber}" th:text="${site.icpNumber}"></p>
+      <p th:if="${site.icpNumber}" th:text="${site.icpNumber}"></p>
     </div>
   </footer>
 
