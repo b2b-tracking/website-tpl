@@ -1,0 +1,231 @@
+/* ========================================
+   滚动触发动画系统
+   ======================================== */
+
+/* 动画初始状态 - 隐藏元素 */
+.animate-on-scroll {
+  opacity: 0;
+  transition: all 0.8s ease-out;
+}
+
+/* 淡入动画 */
+.fade-in {
+  opacity: 0;
+  transform: translateY(0);
+}
+
+.fade-in.animated {
+  opacity: 1;
+}
+
+/* 从下往上滑入 */
+.slide-up {
+  opacity: 0;
+  transform: translateY(60px);
+}
+
+.slide-up.animated {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 从左往右滑入 */
+.slide-right {
+  opacity: 0;
+  transform: translateX(-60px);
+}
+
+.slide-right.animated {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* 从右往左滑入 */
+.slide-left {
+  opacity: 0;
+  transform: translateX(60px);
+}
+
+.slide-left.animated {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* 放大进入 */
+.zoom-in {
+  opacity: 0;
+  transform: scale(0.9);
+}
+
+.zoom-in.animated {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* 缩小进入 */
+.zoom-out {
+  opacity: 0;
+  transform: scale(1.1);
+}
+
+.zoom-out.animated {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* 旋转进入 */
+.rotate-in {
+  opacity: 0;
+  transform: rotate(-10deg) scale(0.9);
+}
+
+.rotate-in.animated {
+  opacity: 1;
+  transform: rotate(0) scale(1);
+}
+
+/* 翻转进入 */
+.flip-in {
+  opacity: 0;
+  transform: perspective(400px) rotateY(20deg);
+}
+
+.flip-in.animated {
+  opacity: 1;
+  transform: perspective(400px) rotateY(0);
+}
+
+/* 延迟动画类 */
+.delay-100 {
+  transition-delay: 0.1s;
+}
+
+.delay-200 {
+  transition-delay: 0.2s;
+}
+
+.delay-300 {
+  transition-delay: 0.3s;
+}
+
+.delay-400 {
+  transition-delay: 0.4s;
+}
+
+.delay-500 {
+  transition-delay: 0.5s;
+}
+
+.delay-600 {
+  transition-delay: 0.6s;
+}
+
+.delay-700 {
+  transition-delay: 0.7s;
+}
+
+.delay-800 {
+  transition-delay: 0.8s;
+}
+
+/* 动画速度类 */
+.fast {
+  transition-duration: 0.4s;
+}
+
+.slow {
+  transition-duration: 1.2s;
+}
+
+.slower {
+  transition-duration: 1.6s;
+}
+
+/* Hero Banner 动画 */
+@keyframes slideInFromLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInFromBottom {
+  from {
+    opacity: 0;
+    transform: translateY(60px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Banner 内容动画 - 自动执行 */
+.banner-content .banner-title,
+.banner-content .news-banner-title,
+.banner-content .about-banner-title,
+.banner-content .products-banner-title,
+.banner-content .contact-banner-title {
+  animation: slideInFromLeft 0.8s ease-out;
+}
+
+.banner-content .banner-subtitle,
+.banner-content .news-banner-subtitle,
+.banner-content .about-banner-subtitle,
+.banner-content .products-banner-subtitle,
+.banner-content .contact-banner-subtitle {
+  animation: slideInFromBottom 0.8s ease-out 0.2s both;
+}
+
+/* 卡片悬停效果增强 */
+.product-card,
+.news-card,
+.elementor-post__card,
+.info-card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.product-card:hover,
+.news-card:hover,
+.elementor-post__card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+/* 响应式：移动端减少动画 */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .slide-up,
+  .slide-left,
+  .slide-right {
+    transform: translateY(30px);
+  }
+
+  .slide-up.animated,
+  .slide-left.animated,
+  .slide-right.animated {
+    transform: translateY(0) translateX(0);
+  }
+}
