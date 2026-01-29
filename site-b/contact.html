@@ -1,144 +1,421 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" th:content="${siteSeo != null ? siteSeo.description : ''}" content="加入我们的用户社区，分享使用体验">
-  <meta name="keywords" th:content="${siteSeo != null ? siteSeo.keywords : ''}" content="">
-  <title th:text="${siteSeo != null ? siteSeo.title : (site != null ? site.name : 'Smoant')}">社区</title>
+  <meta name="description" th:content="${siteSeo != null ? siteSeo.description : ''}">
+  <meta name="keywords" th:content="${siteSeo != null ? siteSeo.keywords : ''}">
+  <title th:text="${siteSeo != null ? siteSeo.title : site.name}">联系我们</title>
   <link rel="stylesheet" th:href="@{'/' + ${lang} + '/css/style.css'}">
+  <link rel="stylesheet" th:href="@{'/' + ${lang} + '/css/widget-posts.min.css'}">
+  <link rel="stylesheet" th:href="@{'/' + ${lang} + '/css/navbar-footer.css'}">
+  <style>
+    body {
+      background: #f5f5f5;
+    }
+
+    /* 确保导航栏和页脚使用navbar-footer.css的样式 */
+    .navbar {
+      background: var(--light-blue) !important;
+      position: sticky !important;
+    }
+
+    .footer {
+      background: #2c3e50 !important;
+      color: #ecf0f1 !important;
+    }
+
+    .footer-column h4 {
+      color: white !important;
+    }
+
+    .footer-column a,
+    .footer-column p {
+      color: #bdc3c7 !important;
+    }
+
+    .footer-column a:hover {
+      color: var(--primary-blue) !important;
+    }
+
+    /* Hero Banner */
+    .contact-banner {
+      position: relative;
+      height: 400px;
+      background: linear-gradient(135deg, #7FA8DA 0%, #9BC4E8 50%, #C4D9EC 100%);
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .contact-banner::before {
+      content: 'CONTACT';
+      position: absolute;
+      top: 50%;
+      right: 0%;
+      transform: translateY(-50%);
+      font-size: 20rem;
+      font-weight: 900;
+      color: rgba(255, 255, 255, 0.2);
+      letter-spacing: -0.05em;
+      z-index: 1;
+      line-height: 1;
+    }
+
+    .contact-banner-content {
+      position: relative;
+      z-index: 2;
+      text-align: left;
+      color: white;
+      max-width: 1400px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 0 4rem;
+    }
+
+    .contact-banner-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 0.8rem;
+      letter-spacing: 0;
+    }
+
+    .contact-banner-subtitle {
+      font-size: 1rem;
+      opacity: 1;
+      letter-spacing: 0;
+      font-weight: 300;
+    }
+
+    /* 内容区域 */
+    .content-section {
+      padding: 4rem 2rem;
+      max-width: 900px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 8px;
+      margin-top: 1rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    }
+
+    .contact-title {
+      font-size: 2rem;
+      font-weight: 600;
+      margin-bottom: 2rem;
+      color: #333;
+      text-align: center;
+    }
+
+    .contact-container {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+
+    /* 联系信息卡片 */
+    .contact-info-card {
+      background: #f9f9f9;
+      padding: 2rem;
+      border-radius: 8px;
+      border-left: 4px solid var(--primary-blue);
+    }
+
+    .contact-info-card h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      color: #333;
+    }
+
+    .contact-info-item {
+      display: flex;
+      align-items: start;
+      margin-bottom: 1.5rem;
+    }
+
+    .contact-info-icon {
+      font-size: 1.5rem;
+      margin-right: 1rem;
+      min-width: 2rem;
+    }
+
+    .contact-info-text {
+      flex: 1;
+    }
+
+    .contact-info-text strong {
+      display: block;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 0.3rem;
+    }
+
+    .contact-info-text p {
+      color: #666;
+      font-size: 0.95rem;
+      margin: 0;
+    }
+
+    /* 询价表单 */
+    .inquiry-form-container {
+      background: #f9f9f9;
+      padding: 2rem;
+      border-radius: 8px;
+      border-left: 4px solid var(--primary-blue);
+    }
+
+    .inquiry-form-container h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      color: #333;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.8rem;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-family: inherit;
+      transition: border-color 0.3s;
+      box-sizing: border-box;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--primary-blue);
+      box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .form-row .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 1rem;
+      background: var(--primary-blue);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-top: 1rem;
+    }
+
+    .submit-btn:hover {
+      background: #3a7bc8;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(74, 144, 226, 0.3);
+    }
+
+    .submit-btn:active {
+      transform: translateY(0);
+    }
+
+    /* 成功消息 */
+    .form-message {
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 1.5rem;
+      display: none;
+    }
+
+    .form-message.success {
+      background: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+      display: block;
+    }
+
+    .form-message.error {
+      background: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+      display: block;
+    }
+
+    /* 响应式 */
+    @media (max-width: 1024px) {
+      .contact-banner::before {
+        font-size: 12rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      body {
+        background: #f5f5f5;
+      }
+
+      .contact-banner {
+        height: 250px;
+      }
+
+      .contact-banner::before {
+        font-size: 8rem;
+      }
+
+      .contact-banner-content {
+        padding: 0 2rem;
+      }
+
+      .contact-banner-title {
+        font-size: 1.8rem;
+      }
+
+      .contact-banner-subtitle {
+        font-size: 0.9rem;
+      }
+
+      .content-section {
+        padding: 2rem 1rem;
+        margin-top: 0.5rem;
+      }
+
+      .contact-title {
+        font-size: 1.5rem;
+      }
+
+      .contact-container {
+        gap: 2rem;
+      }
+
+      .contact-info-card,
+      .inquiry-form-container {
+        padding: 1.5rem;
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
+
 <body>
   <!-- 导航栏 -->
-  <nav class="navbar" id="navbar">
+  <nav class="navbar">
     <div class="nav-container">
-      <div class="nav-logo">
-        <a th:href="@{'/' + ${lang} + '/'}" class="logo-link">
-          <img th:if="${site != null && site.logo}" th:src="@{'/static/' + ${site.logo}}" th:alt="${site != null ? site.name : 'Smoant'}" class="logo-img">
-          <span th:unless="${site != null && site.logo}" th:text="${site != null ? site.name : 'Smoant'}" class="logo-text">Smoant</span>
-        </a>
-      </div>
-
-      <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-
+      <a th:href="@{'/' + ${lang} + '/'}" class="logo">
+        <img th:if="${site.logo}" th:src="@{'/static/' + ${site.logo}}" th:alt="${site.name}"
+          style="height: 40px; vertical-align: middle;">
+        <span th:unless="${site.logo}" th:text="${site.name}"></span>
+      </a>
+      <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">☰</button>
       <ul class="nav-menu" id="navMenu">
-        <li class="nav-item">
-          <a th:href="@{'/' + ${lang} + '/'}" class="nav-link">
-            <span data-i18n="nav.home">首页</span>
-          </a>
+        <li th:each="menu : ${menus}">
+          <a th:href="@{'/' + ${lang} + '/' + ${menu.target_url}}" class="nav-link" th:text="${menu.menu_name}"></a>
         </li>
-
-        <li class="nav-item nav-dropdown">
-          <a href="javascript:void(0);" class="nav-link">
-            <span data-i18n="nav.products">产品中心</span>
-            <i class="dropdown-icon">▼</i>
-          </a>
-          <ul class="dropdown-menu">
-            <li><a th:href="@{'/' + ${lang} + '/products'}" data-i18n="products.allProducts">全部产品</a></li>
-            <li><a th:href="@{'/' + ${lang} + '/products?category=pod'}" data-i18n="products.podKits">小烟套装</a></li>
-            <li><a th:href="@{'/' + ${lang} + '/products?category=mod'}" data-i18n="products.modKits">主机套装</a></li>
-            <li><a th:href="@{'/' + ${lang} + '/products?category=accessory'}" data-i18n="products.accessories">配件中心</a></li>
-            <li><a th:href="@{'/' + ${lang} + '/products?category=disposable'}" data-i18n="products.disposable">一次性电子烟</a></li>
-          </ul>
-        </li>
-
-        <li class="nav-item">
-          <a th:href="@{'/' + ${lang} + '/news'}" class="nav-link">
-            <span data-i18n="nav.news">新闻资讯</span>
-          </a>
-        </li>
-
-        <li class="nav-item">
-          <a th:href="@{'/' + ${lang} + '/community'}" class="nav-link active">
-            <span data-i18n="nav.community">社区</span>
-          </a>
-        </li>
-
-        <li class="nav-item">
-          <a th:href="@{'/' + ${lang} + '/support'}" class="nav-link">
-            <span data-i18n="nav.support">技术支持</span>
-          </a>
-        </li>
-
-        <li class="nav-item">
-          <a th:href="@{'/' + ${lang} + '/about'}" class="nav-link">
-            <span data-i18n="nav.about">关于我们</span>
-          </a>
-        </li>
-
-        <li class="nav-item">
-          <a href="javascript:void(0);" onclick="document.getElementById('contact') && document.getElementById('contact').scrollIntoView({behavior:'smooth'})" class="nav-link">
-            <span data-i18n="nav.contact">联系我们</span>
-          </a>
-        </li>
-
-        <li class="nav-item nav-lang-switcher">
-          <button class="lang-btn" th:classappend="${lang == 'zh'} ? 'active'" data-lang="zh"
-                  th:onclick="'switchLanguage(\'zh\')'">中文</button>
-          <button class="lang-btn" th:classappend="${lang == 'en'} ? 'active'" data-lang="en"
-                  th:onclick="'switchLanguage(\'en\')'">EN</button>
+        <li class="lang-switcher">
+          <button type="button" class="lang-btn" th:classappend="${lang == 'zh'} ? 'active'"
+            onclick="switchLanguage('zh'); return false;">中文</button>
+          <button type="button" class="lang-btn" th:classappend="${lang == 'en'} ? 'active'"
+            onclick="switchLanguage('en'); return false;">EN</button>
         </li>
       </ul>
     </div>
   </nav>
 
-  <!-- 社区页面 -->
-  <section style="margin-top: 80px; padding: 4rem 2rem;">
-    <div class="section-container">
-      <h2 class="section-title" data-i18n="community.title">用户社区</h2>
-      <p class="section-subtitle" data-i18n="community.subtitle">分享你的使用体验</p>
+  <!-- Hero Banner -->
+  <section class="contact-banner">
+    <div class="contact-banner-content">
+      <h1 class="contact-banner-title" data-i18n="contact.title">联系我们</h1>
+      <p class="contact-banner-subtitle" data-i18n="contact.subtitle">欢迎咨询报价与合作</p>
+    </div>
+  </section>
 
-      <!-- 社区功能区 -->
-      <div class="products-grid" style="margin-top: 3rem;">
-        <div style="background: white; padding: 2rem; border-radius: 8px; text-align: center; box-shadow: var(--shadow); cursor: pointer;">
-          <div style="font-size: 3rem; margin-bottom: 1rem;">👥</div>
-          <h3 style="margin-bottom: 0.5rem; color: #000;" data-i18n="community.forum">论坛讨论</h3>
-          <p style="color: var(--text-light); margin-bottom: 1rem;">与全球用户交流使用心得</p>
-          <a href="#" class="btn-learn-more" data-i18n="community.joinCommunity">加入社区</a>
-        </div>
+  <!-- 联系内容区域 -->
+  <section class="content-section">
+    <!-- 联系信息卡片 -->
+    <div th:if="${contact}" class="contact-info-card">
+      <h3 data-i18n="contact.contactInfo">联系方式</h3>
 
-        <div style="background: white; padding: 2rem; border-radius: 8px; text-align: center; box-shadow: var(--shadow); cursor: pointer;">
-          <div style="font-size: 3rem; margin-bottom: 1rem;">⭐</div>
-          <h3 style="margin-bottom: 0.5rem; color: #000;" data-i18n="community.userReviews">用户评价</h3>
-          <p style="color: var(--text-light); margin-bottom: 1rem;">查看真实用户的产品评价</p>
-          <a href="#" class="btn-learn-more">查看评价</a>
-        </div>
-
-        <div style="background: white; padding: 2rem; border-radius: 8px; text-align: center; box-shadow: var(--shadow); cursor: pointer;">
-          <div style="font-size: 3rem; margin-bottom: 1rem;">📚</div>
-          <h3 style="margin-bottom: 0.5rem; color: #000;" data-i18n="community.tutorials">使用教程</h3>
-          <p style="color: var(--text-light); margin-bottom: 1rem;">学习产品使用技巧和窍门</p>
-          <a href="#" class="btn-learn-more">查看教程</a>
+      <div class="contact-info-item" th:if="${contact.address}">
+        <div class="contact-info-icon">📍</div>
+        <div class="contact-info-text">
+          <strong data-i18n="contact.address">地址</strong>
+          <p th:text="${contact.address}">地址信息</p>
         </div>
       </div>
 
-      <!-- 用户评价展示 -->
-      <section style="margin-top: 4rem;">
-        <h3 style="text-align: center; font-size: 2rem; margin-bottom: 2rem; color: #000;">用户好评</h3>
-        <div class="products-grid">
-          <div th:each="review, iterStat : ${reviews}" style="background: #f5f5f5; padding: 2rem; border-radius: 8px;">
-            <div style="display: flex; align-items: center; margin-bottom: 1rem;">
-              <div style="width: 50px; height: 50px; border-radius: 50%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; margin-right: 1rem;">
-                <span th:text="${review.userName != null ? #strings.substring(review.userName, 0, 1) : 'U'}">U</span>
-              </div>
-              <div>
-                <h4 th:text="${review.userName}" style="margin: 0; color: #000;">用户名</h4>
-                <div style="color: #FFB800;">★★★★★</div>
-              </div>
-            </div>
-            <p th:text="${review.content}" style="color: var(--text-light); line-height: 1.6;">用户评价内容...</p>
+      <div class="contact-info-item" th:if="${contact.phone}">
+        <div class="contact-info-icon">📞</div>
+        <div class="contact-info-text">
+          <strong data-i18n="contact.phone">电话</strong>
+          <p th:text="${contact.phone}">电话信息</p>
+        </div>
+      </div>
+
+      <div class="contact-info-item" th:if="${contact.email}">
+        <div class="contact-info-icon">✉️</div>
+        <div class="contact-info-text">
+          <strong data-i18n="contact.email">邮箱</strong>
+          <p th:text="${contact.email}">邮箱信息</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 询价表单 -->
+    <div class="inquiry-form-container">
+      <h3 data-i18n="contact.onlineInquiry">在线咨询</h3>
+
+      <div id="formMessage" class="form-message"></div>
+
+      <form id="contact-form" th:action="@{'/' + ${lang} + '/inquiry'}" method="post">
+        <div class="form-row">
+          <div class="form-group">
+            <input type="text" id="name" name="name" data-i18n="contact.name" placeholder="姓名" required>
+          </div>
+          <div class="form-group">
+            <input type="text" id="company" name="company" data-i18n="contact.company" placeholder="公司名称" required>
           </div>
         </div>
 
-        <!-- 空状态 -->
-        <div th:if="${reviews == null || reviews.isEmpty()}" style="text-align: center; padding: 4rem 0;">
-          <p style="color: var(--text-light); font-size: 1.2rem;">暂无用户评价</p>
+        <div class="form-row">
+          <div class="form-group">
+            <input type="email" id="email" name="email" data-i18n="contact.email" placeholder="邮箱" required>
+          </div>
+          <div class="form-group">
+            <input type="tel" id="phone" name="phone" data-i18n="contact.phone" placeholder="电话" required>
+          </div>
         </div>
-      </section>
+
+        <div class="form-row">
+          <div class="form-group">
+            <input type="text" id="product" name="product" data-i18n="contact.product" placeholder="产品名称">
+          </div>
+          <div class="form-group">
+            <input type="text" id="quantity" name="quantity" data-i18n="contact.quantity" placeholder="预计数量">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <textarea id="message" name="message" rows="4" data-i18n="contact.message" placeholder="需求说明" required></textarea>
+        </div>
+
+        <button type="submit" class="submit-btn" data-i18n="contact.submitMessage">发送询价</button>
+      </form>
     </div>
   </section>
 
@@ -146,27 +423,29 @@
   <footer class="footer">
     <div class="footer-container">
       <div class="footer-column">
-        <h4 th:text="${site.name}">Smoant</h4>
-        <p data-i18n="nav.home">首页</p>
-        <p data-i18n="nav.products">产品中心</p>
-        <p data-i18n="nav.news">新闻资讯</p>
+        <h4 th:text="${site.name ?: 'CLOUPOR'}">CLOUPOR</h4>
+        <p th:text="${siteI18n != null ? siteI18n.description : ''}"></p>
+      </div>
+
+      <div class="footer-column">
+        <h4 data-i18n="nav.about">关于我们</h4>
+        <a th:href="@{'/' + ${lang} + '/about'}" data-i18n="footer.companyProfile">公司简介</a>
       </div>
 
       <div class="footer-column">
         <h4 data-i18n="products.title">产品中心</h4>
-        <a th:each="category : ${categories}"
-           th:href="@{'/' + ${lang} + '/products?category=' + ${category.id}}"
-           th:text="${category.name}">产品分类</a>
+        <a th:each="category : ${categories}" th:href="@{'/' + ${lang} + '/products?category=' + ${category.id}}"
+          th:text="${category.name}">产品分类</a>
+        <a href="#" th:if="${categories.isEmpty()}" data-i18n="footer.allProducts">全部产品</a>
       </div>
 
       <div class="footer-column">
         <h4 data-i18n="footer.quickLinks">快速链接</h4>
-        <a th:href="@{'/' + ${lang} + '/about'}" data-i18n="nav.about">关于我们</a>
-        <a th:href="@{'/' + ${lang} + '/community'}" data-i18n="nav.community">社区</a>
-        <a th:href="@{'/' + ${lang} + '/support'}" data-i18n="nav.support">技术支持</a>
+        <a th:href="@{'/' + ${lang} + '/news'}" data-i18n="nav.news">新闻资讯</a>
+        <a th:href="@{'/' + ${lang} + '/contact'}" data-i18n="nav.contact">联系我们</a>
       </div>
 
-      <div class="footer-column">
+      <div class="footer-column" th:if="${contact}">
         <h4 data-i18n="contact.title">联系我们</h4>
         <p th:if="${contact.address}">📍 <span th:text="${contact.address}">地址</span></p>
         <p th:if="${contact.phone}">📞 <span th:text="${contact.phone}">电话</span></p>
@@ -175,17 +454,95 @@
     </div>
 
     <div class="footer-bottom">
-      <p>&copy; 2026 <span th:text="${site.name}">Smoant</span>. <span data-i18n="footer.allRightsReserved">保留所有权利</span></p>
-      <p style="color: #ff6b6b; font-size: 0.85rem; margin-top: 0.5rem;" data-i18n="footer.warning">本产品含有尼古丁，尼古丁是一种令人上瘾的化学物质</p>
+      <p>&copy; <span class="year"></span> <span th:text="${site.name ?: 'CLOUPOR'}">CLOUPOR</span>. <span
+          data-i18n="footer.allRightsReserved">保留所有权利</span></p>
       <p th:if="${site.icpNumber}" th:text="${site.icpNumber}"></p>
     </div>
   </footer>
 
-  <!-- 返回顶部按钮 -->
-  <div class="back-to-top">↑</div>
+  <!-- 返回顶部 -->
+  <div class="back-to-top" onclick="scrollToTop()">↑</div>
 
-  <!-- 脚本 -->
+  <!-- Scripts -->
   <script th:src="@{'/' + ${lang} + '/js/i18n.js'}"></script>
   <script th:src="@{'/' + ${lang} + '/js/main.js'}"></script>
+
+  <script>
+    window.onload = function () {
+      document.querySelector('.year').textContent = new Date().getFullYear();
+
+      // 确保语言切换按钮可用 - 添加备用事件监听
+      const langButtons = document.querySelectorAll('.lang-btn');
+      langButtons.forEach(function(button) {
+        // 移除已有的点击事件（如果有的话）
+        const clone = button.cloneNode(true);
+        button.parentNode.replaceChild(clone, button);
+
+        // 添加新的点击事件
+        clone.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          const lang = this.textContent.trim() === '中文' ? 'zh' : 'en';
+          console.log('Language button clicked:', lang);
+          switchLanguage(lang);
+        });
+      });
+    };
+
+    // 移动端菜单切换
+    function toggleMobileMenu() {
+      const navMenu = document.getElementById('navMenu');
+      navMenu.classList.toggle('active');
+    }
+
+    // 语言切换
+    function switchLanguage(lang) {
+      try {
+        const currentPath = window.location.pathname;
+        let pathParts = currentPath.split('/').filter(p => p);
+        if (pathParts.length > 0 && (pathParts[0] === 'zh' || pathParts[0] === 'en')) {
+          pathParts[0] = lang;
+        } else {
+          pathParts.unshift(lang);
+        }
+        const search = window.location.search || '';
+        const newUrl = '/' + pathParts.join('/') + search;
+        console.log('Switching language to:', lang, 'New URL:', newUrl);
+        window.location.href = newUrl;
+      } catch (error) {
+        console.error('Language switch error:', error);
+        window.location.reload();
+      }
+    }
+
+    // 返回顶部
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // 返回顶部按钮显示/隐藏
+    window.addEventListener('scroll', function () {
+      const backToTop = document.querySelector('.back-to-top');
+      if (window.scrollY > 300) {
+        backToTop.classList.add('show');
+      } else {
+        backToTop.classList.remove('show');
+      }
+    });
+
+    // 表单提交处理
+    document.getElementById('contact-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const formMessage = document.getElementById('formMessage');
+
+      // 这里可以添加表单验证逻辑
+      // 在实际应用中，表单会通过 POST 提交到后端
+      console.log('Form submitted');
+
+      // 清空消息
+      formMessage.className = 'form-message';
+    });
+  </script>
 </body>
+
 </html>
