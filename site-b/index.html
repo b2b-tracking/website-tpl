@@ -6,9 +6,9 @@
   <meta name="description" th:content="${siteSeo.description ?: ''}" content="专业电子雾化设备制造商">
   <meta name="keywords" th:content="${siteSeo.keywords ?: ''}" content="">
   <title th:text="${siteSeo.title ?: site.name}">专业制造 - 品质为先</title>
-  <link rel="stylesheet" th:href="@{'/' + ${lang} + '/css/style.css'}">
-  <link rel="stylesheet" th:href="@{'/' + ${lang} + '/css/navbar-footer.css'}">
-  <link rel="stylesheet" th:href="@{'/' + ${lang} + '/css/animations.css'}">
+  <link rel="stylesheet" th:href="@{'/css/style.css'}">
+  <link rel="stylesheet" th:href="@{'/css/navbar-footer.css'}">
+  <link rel="stylesheet" th:href="@{'/css/animations.css'}">
   <style>
     /* 基础样式 */
 
@@ -822,9 +822,9 @@
   <div class="back-to-top" onclick="scrollToTop()">↑</div>
 
   <!-- Scripts -->
-  <script th:src="@{'/' + ${lang} + '/js/i18n.js'}"></script>
-  <script th:src="@{'/' + ${lang} + '/js/main.js'}"></script>
-  <script th:src="@{'/' + ${lang} + '/js/animations.js'}"></script>
+  <script th:src="@{'/js/i18n.js'}"></script>
+  <script th:src="@{'/js/main.js'}"></script>
+  <script th:src="@{'/js/animations.js'}"></script>
 
   <script>
     window.onload = function() {

@@ -7,10 +7,10 @@
   <meta name="description" th:content="${siteSeo != null ? siteSeo.description : ''}" content="公司新闻和行业资讯">
   <meta name="keywords" th:content="${siteSeo != null ? siteSeo.keywords : ''}" content="">
   <title th:text="${siteSeo != null ? siteSeo.title : site.name}">新闻资讯</title>
-  <link rel="stylesheet" th:href="@{'/' + ${lang} + '/css/style.css'}">
-  <link rel="stylesheet" th:href="@{'/' + ${lang} + '/css/widget-posts.min.css'}">
-  <link rel="stylesheet" th:href="@{'/' + ${lang} + '/css/navbar-footer.css'}">
-  <link rel="stylesheet" th:href="@{'/' + ${lang} + '/css/animations.css'}">
+  <link rel="stylesheet" th:href="@{'/css/style.css'}">
+  <link rel="stylesheet" th:href="@{'/css/widget-posts.min.css'}">
+  <link rel="stylesheet" th:href="@{'/css/navbar-footer.css'}">
+  <link rel="stylesheet" th:href="@{'/css/animations.css'}">
   <style>
     body {
       background: #f5f5f5;
@@ -326,9 +326,9 @@
   <div class="back-to-top" onclick="scrollToTop()">↑</div>
 
   <!-- Scripts -->
-  <script th:src="@{'/' + ${lang} + '/js/i18n.js'}"></script>
-  <script th:src="@{'/' + ${lang} + '/js/main.js'}"></script>
-  <script th:src="@{'/' + ${lang} + '/js/animations.js'}"></script>
+  <script th:src="@{'/js/i18n.js'}"></script>
+  <script th:src="@{'/js/main.js'}"></script>
+  <script th:src="@{'/js/animations.js'}"></script>
 
   <script>
     window.onload = function () {

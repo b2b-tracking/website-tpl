@@ -11,7 +11,7 @@ class I18n {
       const pathParts = window.location.pathname.split('/').filter(p => p);
       const lang = (pathParts[0] === 'zh' || pathParts[0] === 'en') ? pathParts[0] : 'zh';
 
-      const response = await fetch(`/${lang}/data/translations.json`);
+      const response = await fetch(`/data/translations.json`);
       this.translations = await response.json();
       this.setLanguage(lang);
     } catch (error) {

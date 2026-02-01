@@ -6,7 +6,7 @@
   <meta name="description" th:content="${siteSeo != null ? siteSeo.description : ''}" content="查看我们的全部产品系列">
   <meta name="keywords" th:content="${siteSeo != null ? siteSeo.keywords : ''}" content="">
   <title th:text="${siteSeo != null ? siteSeo.title : site.name}">产品中心 - ManufacturePro</title>
-  <link rel="stylesheet" th:href="@{'/' + ${lang} + '/css/style.css'}">
+  <link rel="stylesheet" th:href="@{'/css/style.css'}">
 </head>
 <body>
   <!-- 导航栏 -->
@@ -189,7 +189,7 @@
   </style>
 
   <!-- 脚本 -->
-  <script th:src="@{'/' + ${lang} + '/js/i18n.js'}"></script>
-  <script th:src="@{'/' + ${lang} + '/js/main.js'}"></script>
+  <script th:src="@{'/js/i18n.js'}"></script>
+  <script th:src="@{'/js/main.js'}"></script>
 </body>
 </html>
