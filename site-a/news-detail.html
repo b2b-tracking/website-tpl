@@ -12,7 +12,7 @@
   <nav class="navbar">
     <div class="nav-container">
       <a th:href="@{'/' + ${lang} + '/'}" class="logo">
-        <img th:if="${site.logo}" th:src="@{'/upload/' + ${site.logo}}" th:alt="${site.name}" style="height: 40px; vertical-align: middle;">
+        <img th:if="${site.logo}" th:src="@{${site.logo}}" th:alt="${site.name}" style="height: 40px; vertical-align: middle;">
         <span th:unless="${site.logo}" th:text="${site.name}">ManufacturePro</span>
       </a>
       <button class="mobile-menu-toggle">☰</button>
@@ -50,7 +50,7 @@
 
       <!-- 封面图片 -->
       <div th:if="${news.cover_image}" style="margin: 2rem 0; text-align: center;">
-        <img th:src="@{'/upload/' + ${news.cover_image}}" alt="News Cover" style="max-width: 100%; height: auto;">
+        <img th:src="@{${news.cover_image}}" alt="News Cover" style="max-width: 100%; height: auto;">
       </div>
 
       <!-- 新闻内容 -->

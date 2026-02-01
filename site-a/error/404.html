@@ -45,7 +45,7 @@
   <nav class="navbar">
     <div class="nav-container">
       <a th:href="@{'/' + ${lang} + '/'}" class="logo">
-        <img th:if="${site != null and site.logo != null and !site.logo.isEmpty()}" th:src="@{'/upload/' + ${site.logo}}" th:alt="${site.name}" style="height: 40px; vertical-align: middle;">
+        <img th:if="${site != null and site.logo != null and !site.logo.isEmpty()}" th:src="@{${site.logo}}" th:alt="${site.name}" style="height: 40px; vertical-align: middle;">
         <span th:unless="${site != null and site.logo != null and !site.logo.isEmpty()}" th:text="${site != null ? site.name : 'Site'}">Site</span>
       </a>
     </div>

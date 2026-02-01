@@ -211,7 +211,7 @@
   <nav class="navbar">
     <div class="nav-container">
       <a th:href="@{'/' + ${lang} + '/'}" class="logo">
-        <img th:if="${site.logo}" th:src="@{'/upload/' + ${site.logo}}" th:alt="${site.name}"
+        <img th:if="${site.logo}" th:src="@{${site.logo}}" th:alt="${site.name}"
           style="height: 40px; vertical-align: middle;">
         <span th:unless="${site.logo}" th:text="${site.name}"></span>
       </a>
@@ -248,7 +248,7 @@
           <a class="elementor-post__thumbnail__link" th:href="@{'/' + ${lang} + '/news/' + ${newsItem.id}}"
             tabindex="-1">
             <div class="elementor-post__thumbnail" th:if="${newsItem.cover_image}"
-                 th:style="'background-image: url(' + @{'/upload/' + ${newsItem.cover_image}} + '); background-size: contain; background-position: center; background-repeat: no-repeat;'">
+                 th:style="'background-image: url(' + @{${newsItem.cover_image}} + '); background-size: contain; background-position: center; background-repeat: no-repeat;'">
             </div>
             <div class="elementor-post__thumbnail" th:unless="${newsItem.cover_image}"
               style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); height: 240px; display: flex; align-items: center; justify-content: center; font-size: 3rem; color: white;">

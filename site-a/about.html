@@ -13,7 +13,7 @@
   <nav class="navbar">
     <div class="nav-container">
       <a th:href="@{'/' + ${lang} + '/'}" class="logo">
-        <img th:if="${site.logo}" th:src="@{'/upload/' + ${site.logo}}" th:alt="${site.name}" style="height: 40px; vertical-align: middle;">
+        <img th:if="${site.logo}" th:src="@{${site.logo}}" th:alt="${site.name}" style="height: 40px; vertical-align: middle;">
         <span th:unless="${site.logo}" th:text="${site.name}">ManufacturePro</span>
       </a>
       <button class="mobile-menu-toggle">☰</button>
@@ -45,7 +45,7 @@
 
       <!-- 公司图片 -->
       <div th:if="${aboutUs.imageUrl}" style="margin-top: 3rem; text-align: center;">
-        <img th:src="@{'/upload/' + ${aboutUs.imageUrl}}" alt="Company Image" style="max-width: 100%; border-radius: 12px; box-shadow: var(--shadow);">
+        <img th:src="@{${aboutUs.imageUrl}}" alt="Company Image" style="max-width: 100%; border-radius: 12px; box-shadow: var(--shadow);">
       </div>
     </div>
   </section>
