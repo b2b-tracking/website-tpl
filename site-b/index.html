@@ -641,7 +641,7 @@
   <nav class="navbar">
     <div class="nav-container">
       <a th:href="@{'/' + ${lang} + '/'}" class="logo">
-        <img th:if="${site.logo}" th:src="@{'/static/' + ${site.logo}}" th:alt="${site.name}" style="height: 40px;">
+        <img th:if="${site.logo}" th:src="@{'/upload/' + ${site.logo}}" th:alt="${site.name}" style="height: 40px;">
         <span th:unless="${site.logo}" th:text="${site.name}">品牌名称</span>
       </a>
       <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">☰</button>
@@ -680,7 +680,7 @@
     <div th:each="banner, iterStat : ${banners}"
          class="banner-slide"
          th:classappend="${iterStat.first} ? 'active'"
-         th:style="${banner.image_url} ? 'background-image: url(' + @{'/static/' + ${banner.image_url}} + ');' : ''">
+         th:style="${banner.image_url} ? 'background-image: url(' + @{'/upload/' + ${banner.image_url}} + ');' : ''">
       <div class="banner-content">
         <h1 class="banner-title" th:text="${banner.title}">电子雾化设备及新型烟草产品</h1>
         <p class="banner-subtitle" th:text="${banner.subtitle}">一站式服务引领者</p>
@@ -753,7 +753,7 @@
              th:onclick="'window.location.href=\'' + @{'/' + ${lang} + '/news/' + ${newsItem.id}} + '\''">
           <div class="news-image"
                th:if="${newsItem.cover_image}"
-               th:style="'background-image: url(' + @{'/static/' + ${newsItem.cover_image}} + '); background-size: contain; background-position: center; background-repeat: no-repeat;'">
+               th:style="'background-image: url(' + @{'/upload/' + ${newsItem.cover_image}} + '); background-size: contain; background-position: center; background-repeat: no-repeat;'">
           </div>
           <div class="news-image" th:unless="${newsItem.cover_image}"
                th:style="'background: linear-gradient(135deg, hsl(' + ${(iterStat.index * 120) % 360} + ', 70%, 60%) 0%, hsl(' + ${((iterStat.index * 120) + 50) % 360} + ', 70%, 50%) 100%);'">

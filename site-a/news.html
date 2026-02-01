@@ -13,7 +13,7 @@
   <nav class="navbar">
     <div class="nav-container">
       <a th:href="@{'/' + ${lang} + '/'}" class="logo">
-        <img th:if="${site.logo}" th:src="@{'/static/' + ${site.logo}}" th:alt="${site.name}" style="height: 40px; vertical-align: middle;">
+        <img th:if="${site.logo}" th:src="@{'/upload/' + ${site.logo}}" th:alt="${site.name}" style="height: 40px; vertical-align: middle;">
         <span th:unless="${site.logo}" th:text="${site.name}">ManufacturePro</span>
       </a>
       <button class="mobile-menu-toggle">☰</button>
@@ -43,7 +43,7 @@
            th:onclick="'window.location.href=\'' + @{'/' + ${lang} + '/news/' + ${newsItem.id}} + '\''">
         <div class="news-image"
              th:if="${newsItem.cover_image}"
-             th:style="'background-image: url(' + @{'/static/' + ${newsItem.cover_image}} + '); background-size: contain; background-position: center; background-repeat: no-repeat;'">
+             th:style="'background-image: url(' + @{'/upload/' + ${newsItem.cover_image}} + '); background-size: contain; background-position: center; background-repeat: no-repeat;'">
         </div>
         <div class="news-image" th:unless="${newsItem.cover_image}"
              th:style="'background: linear-gradient(135deg, hsl(' + ${(iterStat.index * 120) % 360} + ', 70%, 60%) 0%, hsl(' + ${((iterStat.index * 120) + 50) % 360} + ', 70%, 50%) 100%);'">

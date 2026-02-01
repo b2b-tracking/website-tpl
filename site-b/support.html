@@ -14,7 +14,7 @@
     <div class="nav-container">
       <div class="nav-logo">
         <a th:href="@{'/' + ${lang} + '/'}" class="logo-link">
-          <img th:if="${site != null && site.logo}" th:src="@{'/static/' + ${site.logo}}" th:alt="${site != null ? site.name : 'Smoant'}" class="logo-img">
+          <img th:if="${site != null && site.logo}" th:src="@{'/upload/' + ${site.logo}}" th:alt="${site != null ? site.name : 'Smoant'}" class="logo-img">
           <span th:unless="${site != null && site.logo}" th:text="${site != null ? site.name : 'Smoant'}" class="logo-text">Smoant</span>
         </a>
       </div>

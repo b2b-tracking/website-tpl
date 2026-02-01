@@ -303,7 +303,7 @@
   <nav class="navbar">
     <div class="nav-container">
       <a th:href="@{'/' + ${lang} + '/'}" class="logo">
-        <img th:if="${site.logo}" th:src="@{'/static/' + ${site.logo}}" th:alt="${site.name}"
+        <img th:if="${site.logo}" th:src="@{'/upload/' + ${site.logo}}" th:alt="${site.name}"
           style="height: 40px; vertical-align: middle;">
         <span th:unless="${site.logo}" th:text="${site.name}"></span>
       </a>
