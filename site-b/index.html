@@ -26,7 +26,7 @@
       position: relative;
       background-size: cover;
       background-position: center;
-      background-attachment: fixed;
+      background-repeat: no-repeat;
     }
 
     .banner-slide.active {
@@ -168,15 +168,29 @@
     .content-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 3rem;
+      gap: 4rem;
       align-items: center;
-      margin-bottom: 2rem;
+      margin-bottom: 5rem;
+      padding: 2rem 0;
     }
 
     .content-image {
       width: 100%;
-      border-radius: 12px;
+      border-radius: 20px;
       overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+      position: relative;
+    }
+
+    .content-image::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(74, 144, 226, 0.05) 0%, rgba(74, 144, 226, 0) 100%);
+      pointer-events: none;
     }
 
     .content-image img {
@@ -186,11 +200,24 @@
     }
 
     .content-text h2 {
-      font-size: 2rem;
+      font-size: 2.2rem;
       font-weight: 700;
-      margin-bottom: 1.2rem;
+      margin-bottom: 1.5rem;
       color: var(--text-dark);
       line-height: 1.3;
+      position: relative;
+      padding-bottom: 1rem;
+    }
+
+    .content-text h2::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 60px;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary-blue) 0%, var(--light-blue) 100%);
+      border-radius: 2px;
     }
 
     .content-text h3 {
@@ -202,9 +229,20 @@
 
     .content-text p {
       color: var(--text-light);
-      margin-bottom: 1.8rem;
-      line-height: 1.8;
-      font-size: 1.05rem;
+      margin-bottom: 2.5rem;
+      line-height: 1.9;
+      font-size: 1.1rem;
+    }
+
+    .content-text .btn {
+      padding: 1rem 2.8rem;
+      font-size: 1rem;
+      box-shadow: 0 8px 24px rgba(74, 144, 226, 0.2);
+    }
+
+    .content-text .btn:hover {
+      box-shadow: 0 12px 32px rgba(74, 144, 226, 0.3);
+      transform: translateY(-2px);
     }
 
     /* 新闻动态 */
@@ -440,7 +478,8 @@
     }
 
     .content-image:hover {
-      transform: scale(1.02);
+      transform: translateY(-8px);
+      box-shadow: 0 28px 80px rgba(0, 0, 0, 0.12);
     }
 
     /* 按钮动画 */
@@ -469,7 +508,7 @@
 
     /* 响应式 */
     @media (max-width: 768px) {
-      .content-grid {
+      .products-grid {
         grid-template-columns: 1fr;
         gap: 2rem;
       }
@@ -479,10 +518,6 @@
       }
 
       .banner-title {
-        font-size: 1.8rem;
-      }
-
-      .content-text h2 {
         font-size: 1.8rem;
       }
 
@@ -502,10 +537,86 @@
       }
     }
 
-    /* 产品展示区标题 */
+    /* 产品展示区 */
     .products-showcase-section {
-      padding: 4rem 2rem 2rem;
-      background: #ffffff;
+      padding: 5rem 2rem 4rem;
+      background: #f8f9fa;
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 2.5rem;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 3rem 0;
+    }
+
+    .product-card {
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    }
+
+    .product-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.12);
+    }
+
+    .product-card-image {
+      width: 100%;
+      padding-bottom: 100%;
+      background-size: contain;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-color: #f8f9fa;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .product-card-image::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 60px;
+      background: linear-gradient(to top, rgba(248,249,250,0.8), transparent);
+    }
+
+    .product-card-content {
+      padding: 2rem 1.8rem;
+    }
+
+    .product-card-title {
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-bottom: 1rem;
+      line-height: 1.4;
+    }
+
+    .product-card-desc {
+      color: var(--text-light);
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+      font-size: 0.95rem;
+    }
+
+    .product-card-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--primary-blue);
+      font-weight: 500;
+      text-decoration: none;
+      transition: gap 0.3s ease;
+    }
+
+    .product-card-btn:hover {
+      gap: 1rem;
     }
 
     .section-subtitle {
@@ -576,7 +687,7 @@
       </div>
     </div>
     <!-- 默认Banner（当没有后端数据时） -->
-    <div class="banner-slide active" th:if="${banners.isEmpty()}">
+    <div class="banner-slide active" th:if="${banners == null || #lists.isEmpty(banners)}">
       <div class="banner-content">
         <h1 class="banner-title" data-i18n="hero.defaultTitle">电子雾化设备及新型烟草产品</h1>
         <p class="banner-subtitle" data-i18n="hero.defaultSubtitle">一站式服务引领者</p>
@@ -599,41 +710,35 @@
   </section>
 
   <!-- 产品展示区 -->
-  <section class="products-showcase-section">
+  <section class="products-showcase-section" id="products">
     <div class="content-section">
       <div class="section-header animate-on-scroll fade-in-up">
         <h2 class="section-title" data-i18n="products.title">核心产品</h2>
         <p class="section-subtitle" data-i18n="products.subtitle">专业品质，精工制造</p>
       </div>
-    </div>
-  </section>
 
-  <!-- 服务介绍区 -->
-  <section class="content-section" id="services" th:each="product, iterStat : ${products}" th:attr="data-product-id=${product.id}" th:if="${iterStat.index < 3}">
-    <div th:if="${iterStat.index > 0}" class="product-divider"></div>
-    <div class="content-grid">
-      <div class="content-image animate-on-scroll fade-in-left" th:if="${iterStat.index % 2 == 0}" th:html="${product.mainImage}">
-
-        <div th:if="${product.mainImage}" th:style="'background-image: url(' + ${product.mainImage} + ');background-size: cover; background-position: center; width: 100%; height: 380px; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white; font-size: 4rem;'">
-
+      <div class="products-grid">
+        <div class="product-card animate-on-scroll fade-in-up"
+             th:each="product, iterStat : ${products}"
+             th:if="${iterStat.index < 6}"
+             th:onclick="'window.location.href=\'' + @{'/' + ${lang} + '/products/' + ${product.id}} + '\''"
+             style="cursor: pointer;">
+          <div class="product-card-image"
+               th:style="${product.mainImage} ? 'background-image: url(' + ${product.mainImage} + ');' : 'background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);'">
+          </div>
+          <div class="product-card-content">
+            <h3 class="product-card-title" th:text="${product.name}">产品名称</h3>
+            <p class="product-card-desc" th:text="${product.shortDescription}">产品描述</p>
+            <a class="product-card-btn" data-i18n="products.viewDetails">了解详情 →</a>
+          </div>
         </div>
       </div>
-      <div class="content-text animate-on-scroll " th:classappend="${iterStat.index % 2 == 0 ? 'fade-in-right' : 'fade-in-left'}">
-        <h2 th:text="${product.name}"> </h2>
-        <p  th:text="${product.shortDescription}"></p>
-        <a th:onclick="'window.location.href=\'' + @{'/' + ${lang} + '/products/' + ${product.id}} + '\''" class="btn" data-i18n="services.details">了解详情</a>
-      </div>
 
-      <div class="content-image animate-on-scroll fade-in-right" th:if="${iterStat.index % 2 != 0}">
-        <div th:if="${product.mainImage}" th:style="'background-image: url(' + ${product.mainImage} + ');background-size: cover; background-position: center; width: 100%; height: 380px; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white; font-size: 4rem;'">
-
-        </div>
+      <div style="text-align: center; margin-top: 2.5rem;" class="animate-on-scroll fade-in-up">
+        <a th:href="@{'/' + ${lang} + '/products'}" class="btn" data-i18n="services.viewAll">查看全部产品</a>
       </div>
     </div>
   </section>
-  <div style="text-align: center; margin: 3rem 0 4rem;" class="animate-on-scroll fade-in-up " >
-    <a th:href="@{'/' + ${lang} + '/products'}" class="btn" data-i18n="services.viewAll">查看全部产品</a>
-  </div>
 
 
   <!-- 新闻动态 -->
@@ -648,7 +753,7 @@
              th:onclick="'window.location.href=\'' + @{'/' + ${lang} + '/news/' + ${newsItem.id}} + '\''">
           <div class="news-image"
                th:if="${newsItem.cover_image}"
-               th:style="'background-image: url(' + @{'/static/' + ${newsItem.cover_image}} + '); background-size: cover; background-position: center;'">
+               th:style="'background-image: url(' + @{'/static/' + ${newsItem.cover_image}} + '); background-size: contain; background-position: center; background-repeat: no-repeat;'">
           </div>
           <div class="news-image" th:unless="${newsItem.cover_image}"
                th:style="'background: linear-gradient(135deg, hsl(' + ${(iterStat.index * 120) % 360} + ', 70%, 60%) 0%, hsl(' + ${((iterStat.index * 120) + 50) % 360} + ', 70%, 50%) 100%);'">

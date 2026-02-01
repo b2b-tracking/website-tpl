@@ -752,3 +752,21 @@ body {
     grid-template-columns: 1fr;
   }
 }
+
+
+/* 修复图片显示被切割问题 */
+img {
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+/* 修复商品和新闻图片显示 */
+.product-image,
+.news-image,
+.product-card-image,
+.news-card-image {
+  background-size: auto 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
