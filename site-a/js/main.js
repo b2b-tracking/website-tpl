@@ -144,7 +144,6 @@ document.addEventListener('DOMContentLoaded', function() {
         return;
       }
 
-      // 提交表单数据
       const formData = new FormData(this);
 
       fetch(this.action, {
