@@ -157,7 +157,7 @@
           <h3 class="news-title" th:text="${newsItem.title}">新闻标题</h3>
           <p class="news-excerpt" th:text="${newsItem.summary}">新闻摘要</p>
           <div class="news-meta">
-            <span class="news-date">📅 <span th:text="${#temporals.format(newsItem.publish_time, 'yyyy-MM-dd')}">2026-01-10</span></span>
+            <span class="news-date">📅 <span class="utc-date" th:attr="data-utc=${newsItem.publish_time}" th:text="${#temporals.format(newsItem.publish_time, 'yyyy-MM-dd')}">2026-01-10</span></span>
             <a th:href="@{'/' + ${lang} + '/news/' + ${newsItem.id}}" class="news-read-more" data-i18n="news.readMore">阅读全文 →</a>
           </div>
         </div>

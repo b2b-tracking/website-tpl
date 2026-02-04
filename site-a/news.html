@@ -56,7 +56,7 @@
             新闻摘要...
           </p>
           <div class="news-meta">
-            <span class="news-date" th:text="'📅 ' + ${#temporals.format(newsItem.publish_time, 'yyyy-MM-dd')}">📅 2026-01-10</span>
+            <span class="news-date">📅 <span class="utc-date" th:attr="data-utc=${newsItem.publish_time}" th:text="${#temporals.format(newsItem.publish_time, 'yyyy-MM-dd')}">2026-01-10</span></span>
             <span class="news-views" th:if="${newsItem.view_count != null}" th:text="'👁 ' + ${newsItem.view_count}">👁 1258</span>
           </div>
         </div>

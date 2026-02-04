@@ -45,7 +45,7 @@
 
       <!-- 元信息 -->
       <div style="text-align: center; color: var(--text-light); margin-bottom: 2rem;">
-        <span>📅 <span th:text="${#temporals.format(news.publish_time, 'yyyy-MM-dd')}">2026-01-10</span></span>
+        <span>📅 <span class="utc-date" th:attr="data-utc=${news.publish_time}" th:text="${#temporals.format(news.publish_time, 'yyyy-MM-dd')}">2026-01-10</span></span>
         <span th:if="${news.view_count != null}" style="margin-left: 2rem;">👁️ 阅读量: <span th:text="${news.view_count}">1258</span></span>
       </div>
 

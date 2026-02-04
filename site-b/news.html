@@ -261,7 +261,7 @@
               <a th:href="@{'/' + ${lang} + '/news/' + ${newsItem.id}}" th:text="${newsItem.title}">新闻标题</a>
             </h3>
             <div class="elementor-post__meta-data">
-              <span class="elementor-post-date"
+              <span class="elementor-post-date utc-date" th:attr="data-utc=${newsItem.publish_time},data-format='yyyy.MM.dd'"
                 th:text="${#strings.replace(#temporals.format(newsItem.publish_time, 'yyyy-MM-dd'), '-', '.')}">2024.09.27</span>
             </div>
             <div class="elementor-post__read-more-wrapper">
