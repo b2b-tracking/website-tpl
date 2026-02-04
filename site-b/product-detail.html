@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" th:content="${product.shortDescription}" content="产品详细信息">
   <title th:text="${product.name} + ' - ' + ${site.name}">产品详情</title>
+  <link rel="icon" th:if="${site.favicon}" th:href="@{${site.favicon}}" type="image/x-icon">
   <link rel="stylesheet" th:href="@{'/css/style.css'}">
   <link rel="stylesheet" th:href="@{'/css/widget-posts.min.css'}">
   <link rel="stylesheet" th:href="@{'/css/navbar-footer.css'}">
@@ -431,7 +432,7 @@
 
     <!-- 下方：产品详情图片 -->
     <div th:if="${product.images != null && !product.images.isEmpty()}" class="product-detail-content">
-      <h2 class="product-detail-title" data-i18n="productDetail.details">产品详情</h2>
+      <h2 class="product-detail-title" data-i18n="productDetail.gallery">产品图片</h2>
       <div class="product-images-section">
         <div th:each="image, iterStat : ${product.images}" class="product-image-item">
           <img th:src="${image}" th:alt="${product.name} + ' - 图片 ' + ${iterStat.index + 1}" loading="lazy">
@@ -439,7 +440,40 @@
       </div>
     </div>
 
+    <!-- 产品详细描述 -->
+    <div style="background: white; padding: 3rem; border-radius: 8px; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08); margin-top: 2rem;">
+      <h2 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 2rem; color: #333; padding-bottom: 1rem; border-bottom: 2px solid var(--primary-blue);" data-i18n="productDetail.description">产品详情</h2>
+      <div class="rich-text-content" style="line-height: 1.8; color: #333;" th:utext="${product.description}"></div>
+    </div>
+
   </section>
+
+  <style>
+    .rich-text-content {
+      width: 100%;
+      overflow: hidden;
+    }
+    .rich-text-content img {
+      max-width: 100% !important;
+      width: 100% !important;
+      height: auto !important;
+      display: block;
+    }
+    .rich-text-content p {
+      margin: 1rem 0;
+      max-width: 100%;
+    }
+    .rich-text-content p img {
+      max-width: 100% !important;
+      width: 100% !important;
+      height: auto !important;
+    }
+    .rich-text-content figure,
+    .rich-text-content .image {
+      width: 100% !important;
+      max-width: 100% !important;
+    }
+  </style>
 
   <!-- 空状态 -->
   <section th:unless="${product}" class="content-section" style="text-align: center; padding: 4rem 2rem;">
@@ -496,7 +530,6 @@
   <!-- Scripts -->
   <script th:src="@{'/js/i18n.js'}"></script>
   <script th:src="@{'/js/main.js'}"></script>
-  <script th:src="@{'/js/animations.js'}"></script>
 
   <script>
     window.onload = function () {
@@ -505,64 +538,49 @@
       // 确保语言切换按钮可用 - 添加备用事件监听
       const langButtons = document.querySelectorAll('.lang-btn');
       langButtons.forEach(function(button) {
-        // 移除已有的点击事件（如果有的话）
         const clone = button.cloneNode(true);
         button.parentNode.replaceChild(clone, button);
-
-        // 添加新的点击事件
         clone.addEventListener('click', function(e) {
           e.preventDefault();
           e.stopPropagation();
           const lang = this.textContent.trim() === '中文' ? 'zh' : 'en';
-          console.log('Language button clicked:', lang);
           switchLanguage(lang);
         });
       });
     };
 
-    // 移动端菜单切换
     function toggleMobileMenu() {
       const navMenu = document.getElementById('navMenu');
       navMenu.classList.toggle('active');
     }
 
-    // 语言切换
     function switchLanguage(lang) {
       try {
         const currentPath = window.location.pathname;
         let pathParts = currentPath.split('/').filter(p => p);
-
-        // 如果第一个部分是语言代码，替换它
         if (pathParts.length > 0 && (pathParts[0] === 'zh' || pathParts[0] === 'en')) {
           pathParts[0] = lang;
         } else {
-          // 否则在前面添加语言代码
           pathParts.unshift(lang);
         }
-
         const search = window.location.search || '';
         const newUrl = '/' + pathParts.join('/') + search;
-
-        console.log('Switching language to:', lang, 'New URL:', newUrl);
         window.location.href = newUrl;
       } catch (error) {
         console.error('Language switch error:', error);
-        // 备用方案：直接重新加载页面
         window.location.reload();
       }
     }
 
-    // 返回顶部
     function scrollToTop() {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // 返回顶部按钮显示/隐藏
     window.addEventListener('scroll', function () {
       const backToTop = document.querySelector('.back-to-top');
-      if (window.scrollY > 300) {
+      if (backToTop && window.scrollY > 300) {
         backToTop.classList.add('show');
-      } else {
+      } else if (backToTop) {
         backToTop.classList.remove('show');
       }
     });

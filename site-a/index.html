@@ -6,6 +6,7 @@
   <meta name="description" th:content="${siteSeo != null ? siteSeo.description : ''}" content="专业制造企业，提供高品质产品和定制化服务">
   <meta name="keywords" th:content="${siteSeo != null ? siteSeo.keywords : ''}" content="">
   <title th:text="${siteSeo != null ? siteSeo.title : site.name}">专业制造，品质为先 - ManufacturePro</title>
+  <link rel="icon" th:if="${site.favicon}" th:href="@{${site.favicon}}" type="image/x-icon">
   <link rel="stylesheet" th:href="@{'/css/style.css'}">
 </head>
 <body>
