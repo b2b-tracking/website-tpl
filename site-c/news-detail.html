@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" th:content="${news.summary}" content="新闻详情">
+    <title th:text="${news.title} + ' - ' + ${site.name}">新闻详情 - SMOANT</title>
+    <style>
+        /* 全局重置 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        body {
+            background: #FFFFFF;
+            color: #333333;
+            line-height: 1.5;
+        }
+
+        /* 顶部警告栏 */
+        .top-warning {
+            background: #000000;
+            color: #FFFFFF;
+            font-size: 9px;
+            text-align: center;
+            padding: 2px 0;
+        }
+
+        /* 顶部导航栏 */
+        .top-nav {
+            width: 100%;
+            height: 60px;
+            background-color: #000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 5%;
+            position: fixed;
+            top: 0;
+            z-index: 998;
+        }
+        .logo {
+            color: #FFD100;
+            font-size: 20px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+        .nav-links {
+            display: flex;
+            gap: 39px;
+        }
+        .nav-links a {
+            color: #fff;
+            font-size: 14px;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.8;
+            transition: all 0.3s;
+            position: relative;
+        }
+        .nav-links a:hover {
+            opacity: 1;
+            color: #FFD100;
+        }
+        .nav-links a.active {
+            opacity: 1;
+            color: #FFD100;
+        }
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: #FFD100;
+        }
+        .nav-actions {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        .nav-actions i {
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+        .nav-actions i:hover {
+            opacity: 1;
+        }
+        .lang-switcher {
+            display: flex;
+            gap: 5px;
+            margin-left: 10px;
+        }
+        .lang-btn {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #fff;
+            font-size: 12px;
+            padding: 6px 12px;
+            cursor: pointer;
+            border-radius: 3px;
+            transition: all 0.3s;
+            text-transform: uppercase;
+        }
+        .lang-btn:hover {
+            border-color: #fff;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .lang-btn.active {
+            background: #fff;
+            color: #000;
+            border-color: #fff;
+        }
+
+        /* 面包屑导航 */
+        .breadcrumb {
+            width: 85%;
+            margin: 80px auto 20px auto; /* 顶部留出导航栏空间 */
+            font-size: 11px;
+            color: #999;
+        }
+        .breadcrumb a {
+            color: #999;
+            text-decoration: none;
+        }
+        .breadcrumb a:hover {
+            color: #FFD100;
+        }
+
+        /* 主内容区 */
+        .main-container {
+            width: 85%;
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            margin-bottom: 50px;
+            padding-top: 8vh; /* 添加顶部内边距，避免被导航栏遮挡 */
+        }
+
+        /* 左侧新闻详情 */
+        .news-detail {
+            padding-right: 20px;
+        }
+        .news-header {
+            margin-bottom: 20px;
+        }
+        .news-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #000;
+            margin-bottom: 10px;
+        }
+        .news-meta {
+            font-size: 11px;
+            color: #999;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        .social-icons {
+            display: flex;
+            gap: 6px;
+        }
+        .social-icons i {
+            color: #FFD100;
+            font-size: 14px;
+        }
+        .news-content img {
+            width: 100%;
+            height: auto;
+            margin: 20px 0;
+        }
+        .news-content p {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 15px;
+        }
+        .news-content h2 {
+            font-size: 18px;
+            font-weight: bold;
+            color: #000;
+            margin: 25px 0 15px 0;
+        }
+        .news-content ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+            font-size: 14px;
+            color: #666;
+        }
+        .prev-btn {
+            display: inline-block;
+            padding: 6px 20px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            font-size: 12px;
+            color: #666;
+            text-decoration: none;
+            margin-top: 20px;
+        }
+        .prev-btn:hover {
+            border-color: #FFD100;
+            color: #FFD100;
+        }
+
+        /* 右侧边栏 */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            position: sticky;
+            top: 80px; /* 导航栏高度 + 间距 */
+            align-self: flex-start; /* 确保从顶部开始 */
+            max-height: calc(100vh - 100px); /* 限制最大高度，留出上下空间 */
+            overflow-y: auto; /* 如果内容过长，允许滚动 */
+        }
+        .sidebar-widget {
+            border: 1px solid #eee;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .widget-title {
+            background: #000;
+            color: #fff;
+            padding: 8px 12px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+        .widget-content {
+            padding: 15px;
+        }
+        .newsletter-widget {
+            background: #e8f4ff;
+            text-align: center;
+            padding: 15px;
+        }
+        .newsletter-widget h3 {
+            font-size: 14px;
+            color: #000;
+            margin-bottom: 10px;
+        }
+        .newsletter-widget p {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 15px;
+        }
+        .newsletter-input {
+            display: flex;
+        }
+        .newsletter-input input {
+            flex: 1;
+            padding: 6px;
+            border: 1px solid #ddd;
+            border-radius: 2px 0 0 2px;
+            font-size: 12px;
+        }
+        .newsletter-input button {
+            background: #000;
+            color: #fff;
+            border: none;
+            padding: 0 12px;
+            border-radius: 0 2px 2px 0;
+            cursor: pointer;
+        }
+        .toc-list {
+            list-style: none;
+            font-size: 12px;
+        }
+        .toc-list li {
+            margin-bottom: 6px;
+        }
+        .toc-list a {
+            color: #666;
+            text-decoration: none;
+        }
+        .toc-list a:hover {
+            color: #FFD100;
+        }
+        .toc-list .highlight {
+            color: #FFD100;
+        }
+        .article-list {
+            list-style: none;
+            font-size: 12px;
+        }
+        .article-list li {
+            margin-bottom: 8px;
+        }
+        .article-list a {
+            color: #666;
+            text-decoration: none;
+        }
+        .article-list a:hover {
+            color: #FFD100;
+        }
+        .featured-article {
+            margin-top: 15px;
+        }
+        .featured-article img {
+            width: 100%;
+            height: auto;
+            margin-bottom: 8px;
+        }
+        .featured-article a {
+            font-size: 12px;
+            color: #000;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        /* ========== 修正后的 HOT SALE PRODUCT 样式（1:1 匹配参考图） ========== */
+        .hot-sale {
+            width: 100%;
+            background: #F8F8F8; /* 参考图背景色 */
+            padding: 60px 0 80px 0; /* 上下内边距匹配参考图 */
+            text-align: center;
+            margin: 40px 0 0 0;
+        }
+        .hot-sale .inner {
+            width: 85%;
+            max-width: 1400px;
+            margin: 0 auto; /* 内容居中，宽度匹配主内容区 */
+        }
+        .hot-sale h2 {
+            font-size: 28px; /* 标题字号匹配参考图 */
+            font-weight: 600;
+            color: #000000;
+            text-transform: uppercase; /* 大写 */
+            margin-bottom: 40px;
+            position: relative;
+            display: inline-block;
+        }
+        /* 标题下方黄色横线，宽度和位置匹配参考图 */
+        .hot-sale h2::after {
+            content: '';
+            width: 60px;
+            height: 3px;
+            background: #FFD100;
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        /* 产品网格：4列等宽，间距匹配参考图 */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px; /* 产品间距匹配参考图 */
+            margin-bottom: 50px;
+        }
+        /* 产品卡片：样式完全匹配参考图 */
+        .product-card {
+            text-align: center;
+            background: #FFFFFF;
+            padding: 25px 15px; /* 内边距匹配 */
+            border: 1px solid #EEEEEE; /* 边框样式 */
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+        .product-card:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05); /* hover 阴影效果 */
+        }
+        .product-card img:hover{
+            transform: scale(1.1);
+            transition: all 0.5s ease;
+        }
+        .product-card img {
+            width: 120px; /* 图片大小匹配参考图 */
+            height: auto;
+            margin: 0 auto 20px auto; /* 图片居中+下方间距 */
+        }
+        .product-card h3 {
+            font-size: 16px; /* 产品名称字号 */
+            color: #000000;
+            font-weight: 500;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+        /* 产品按钮：参考图的胶囊状按钮 */
+        .product-card .product-btn {
+            display: inline-block;
+            padding: 6px 25px;
+            border: 1px solid #CCCCCC;
+            border-radius: 20px;
+            font-size: 11px;
+            color: #666666;
+            text-decoration: none;
+            background: transparent;
+        }
+        .product-card .product-btn:hover {
+            border-color: #FFD100;
+            color: #FFD100;
+        }
+        /* 更多产品按钮：样式匹配参考图 */
+        .more-products-btn {
+            display: inline-block;
+            padding: 8px 35px;
+            border: 1px solid #000000; /* 黑色边框 */
+            border-radius: 25px;
+            font-size: 12px;
+            color: #000000;
+            text-decoration: none;
+            background: transparent;
+            font-weight: 500;
+        }
+        .more-products-btn:hover {
+            background: #000;
+            color: #FFD100;
+        }
+
+        /* 底部导航 */
+        .footer {
+            background-color: #000;
+            color: #fff;
+            padding: 60px 5% 30px;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr;
+            gap: 40px;
+            max-width: 1400px;
+            margin: 0 auto 40px;
+        }
+        .footer-logo-col {
+            max-width: 280px;
+        }
+        .footer-logo img {
+            /* filter: brightness(0) invert(1); */
+        }
+        .footer-col h5 {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+            color: #FFD100;
+        }
+        .footer-col ul {
+            list-style: none;
+        }
+        .footer-col ul li {
+            margin-bottom: 10px;
+        }
+        .footer-col ul li a {
+            color: #fff;
+            font-size: 11px;
+            text-decoration: none;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+        .footer-col ul li a:hover {
+            opacity: 1;
+            color: #FFD100;
+        }
+        .footer-col .contact-text {
+            font-size: 11px;
+            color: #999;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .social-links a {
+            color: #fff;
+            font-size: 14px;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+        .social-links a:hover {
+            opacity: 1;
+        }
+        .subscribe-form {
+            display: flex;
+        }
+        .subscribe-form input {
+            flex: 4;
+            padding: 8px;
+            border: none;
+            outline: none;
+            font-size: 11px;
+        }
+        .subscribe-form button {
+            flex: 1;
+            padding: 8px;
+            border: none;
+            background-color: #ffcc00;
+            color: #000;
+            font-size: 11px;
+            text-transform: uppercase;
+            cursor: pointer;
+        }
+        .footer-bottom {
+            text-align: center;
+            font-size: 9px;
+            color: #999;
+            padding-top: 30px;
+            border-top: 1px solid #333;
+        }
+        .footer-bottom-links {
+            margin-bottom: 10px;
+        }
+        .footer-bottom-links a {
+            color: #999;
+            text-decoration: none;
+            margin: 0 8px;
+            transition: color 0.3s;
+        }
+        .footer-bottom-links a:hover {
+            color: #fff;
+        }
+
+        /* 侧边栏滚动条美化 */
+        .sidebar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .sidebar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 3px;
+        }
+        .sidebar::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 3px;
+        }
+        .sidebar::-webkit-scrollbar-thumb:hover {
+            background: #999;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 992px) {
+            .sidebar {
+                position: relative; /* 在小屏幕上取消粘性定位 */
+                top: auto;
+                max-height: none;
+                overflow-y: visible;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <!-- 顶部导航 -->
+    <nav class="top-nav">
+        <!-- <a th:href="@{'/' + ${lang} + '/'}" class="logo" th:text="${site.name}">SMOANT</a> -->
+        <a th:href="@{'/' + ${lang} + '/'}" class="logo">
+            <img th:if="${site.logo}" th:src="${site.logo}" th:alt="${site.name}" style="height: 40px; margin-right: 10px; vertical-align: middle;">
+            <span  th:text="${site.name}"></span>
+        </a>
+        <div class="nav-links">
+            <a th:each="menu : ${menus}"
+               th:href="@{'/' + ${lang} + '/' + ${menu.target_url}}"
+               th:text="${menu.menu_name}"
+               th:attr="data-url=${'/'+lang + '/' + menu.target_url}"
+            >菜单</a>
+        </div>
+        <div class="nav-actions">
+            <!-- 语言切换器 -->
+            <div class="lang-switcher" style="display: flex; gap: 5px; margin-left: 10px;">
+                <button class="lang-btn" th:classappend="${lang == 'zh'} ? 'active'" data-lang="zh"
+                        th:onclick="'window.location.href=\'' + @{'/zh/news/' + ${news.id}} + '\''">中文</button>
+                <button class="lang-btn" th:classappend="${lang == 'en'} ? 'active'" data-lang="en"
+                        th:onclick="'window.location.href=\'' + @{'/en/news/' + ${news.id}} + '\''">EN</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主内容区 -->
+    <div class="main-container">
+        <!-- 左侧新闻详情 -->
+        <div class="news-detail">
+            <div class="news-header">
+                <h1 class="news-title" th:text="${news.title}">新闻标题</h1>
+                <div class="news-meta">
+                    <span th:if="${news.publish_time}">
+                        📅 <span th:text="${#temporals.format(news.publish_time, 'yyyy-MM-dd')}">2026-01-01</span>
+                    </span>
+                    <span th:if="${news.view_count != null}" style="margin-left: 20px;">
+                        👁️ <span data-i18n="news.viewCount">阅读量</span>: <span th:text="${news.view_count}">0</span>
+                    </span>
+                </div>
+            </div>
+            <div class="news-content">
+                <!-- 封面图片 -->
+                <img th:if="${news.cover_image}"
+                     th:src="@{${news.cover_image}}"
+                     th:alt="${news.title}"
+                     alt="News Cover">
+
+                <!-- 新闻内容 -->
+                <div th:utext="${news.content}">
+                    <p>新闻内容...</p>
+                </div>
+
+                <!-- 返回按钮 -->
+                <a th:href="@{'/' + ${lang} + '/news'}" class="prev-btn" data-i18n="news.backToList">← 返回新闻列表</a>
+            </div>
+        </div>
+
+        <!-- 右侧边栏 -->
+        <div class="sidebar">
+            <!-- 最新文章 -->
+            <div class="sidebar-widget">
+                <div class="widget-title" data-i18n="news.latestNews">最新动态</div>
+                <div class="widget-content">
+                    <ul class="article-list">
+                        <li th:each="newsItem, iterStat : ${newsList}" th:if="${iterStat.index < 5}">
+                            <a th:href="@{'/' + ${lang} + '/news/' + ${newsItem.id}}"
+                               th:text="${newsItem.title}">新闻标题</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 修正后的 HOT SALE PRODUCT 区域 -->
+    <section class="hot-sale">
+            <div class="inner">
+                <h2 data-i18n="products.hotSale">HOT SALE PRODUCT</h2>
+                <div class="product-grid">
+                    <div class="product-card" th:each="product, iterStat : ${products}" th:if="${iterStat.index < 4}">
+                        <img th:if="${product.mainImage}"
+                             th:src="@{${product.mainImage}}"
+                             th:alt="${product.name}"
+                             alt="Product">
+                        <h3 th:text="${product.name}">PRODUCT NAME</h3>
+                        <a th:href="@{'/' + ${lang} + '/products/' + ${product.id}}" class="product-btn">
+                            <span data-i18n="products.learnMore">Learn More</span> >
+                        </a>
+                    </div>
+                </div>
+                <a th:href="@{'/' + ${lang} + '/products'}" class="more-products-btn" data-i18n="products.moreSeries">More series products</a>
+            </div>
+    </section>
+
+    <!-- 底部导航 -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <!-- Logo 和公司简介 -->
+            <div class="footer-col footer-logo-col">
+                <div class="footer-logo">
+                    <img th:if="${site.logo}"
+                         th:src="${site.logo}"
+                         th:alt="${site.name}"
+                         style="height: 50px; margin-bottom: 15px;">
+                    <h3 th:text="${siteI18n != null ? siteI18n.site_name : site.name}">ManufacturePro</h3>
+                    <p th:text="${siteI18n != null ? siteI18n.description : ''}">我们是一家专业的制造企业，拥有完善的生产设施和质量管理体系，致力于为全球客户提供高品质的产品和定制化服务。</p>
+                </div>
+            </div>
+
+            <!-- 产品分类 -->
+            <div class="footer-col">
+                <h5 data-i18n="footer.product.title">Product</h5>
+                <ul>
+                    <li><a th:href="@{'/' + ${lang} + '/products'}" data-i18n="footer.product.all">All Product</a></li>
+                    <!-- 动态加载产品分类 -->
+                    <li th:each="category, iterStat : ${categories}"  th:if="${iterStat.index < 3 }">
+                        <a th:href="@{'/' + ${lang} + '/products?category=' + ${category.id}}"
+                           th:text="${category.name}">分类名称</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- 关于我们 -->
+            <div class="footer-col">
+                <h5 data-i18n="footer.about.title">About Us</h5>
+                <ul>
+                    <!-- <li><a th:href="@{'/' + ${lang} + '/about'}" data-i18n="footer.about.brandStory">Brand Story</a></li>
+                    <li><a th:href="@{'/' + ${lang} + '/about'}" data-i18n="footer.about.manufacturing">Manufacturing</a></li> -->
+                    <li><a th:href="@{'/' + ${lang} + '/contact'}" data-i18n="footer.about.contact">Contact Us</a></li>
+                </ul>
+            </div>
+            <!-- 社区 -->
+            <div class="footer-col">
+                <h5 data-i18n="footer.community.title">Community</h5>
+                <ul>
+                    <li><a th:href="@{'/' + ${lang} + '/news'}" data-i18n="footer.community.news">News</a></li>
+                    <!-- <li><a href="#" data-i18n="footer.community.video">Video</a></li>
+                    <li><a href="#" data-i18n="footer.community.gallery">Gallery</a></li> -->
+                </ul>
+            </div>
+            <!-- 联系我们 -->
+            <div class="footer-col" th:if="${contact}">
+                <h5 data-i18n="footer.contact.title">Contact Us</h5>
+                <p class="contact-text">
+                    <span data-i18n="footer.contact.tel">TEL:</span> <span th:text="${contact.phone}">+86-755-86568800</span><br>
+                    <span data-i18n="footer.contact.email">Email:</span> <span th:text="${contact.email}">support@smoant.com</span><br>
+                    <span data-i18n="footer.contact.address">Address:</span> <span th:text="${contact.address}">Shenzhen, China</span>
+                </p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="footer-bottom-links">
+                <a href="#" data-i18n="footer.bottom.faq">FAQ</a>
+                <a href="#" data-i18n="footer.bottom.privacy">Privacy Policy</a>
+                <a href="#" data-i18n="footer.bottom.conditions">Conditions Policy</a>
+            </div>
+            <p><span data-i18n="footer.bottom.copyrightPrefix">Copyright ©</span> <span class="year"></span> <span th:text="${site.name}">SMOANT</span> <span data-i18n="footer.bottom.allRights">All rights reserved.</span></p>
+        </div>
+    </footer>
+
+    <script>
+        window.onload = function () {
+            // 设置年份
+            const yearElements = document.getElementsByClassName('year');
+            if (yearElements.length > 0) {
+                yearElements[0].innerHTML = new Date().getFullYear();
+            }
+
+            // 导航高亮
+            const currentPath = window.location.pathname;
+            const navLinks = document.querySelectorAll('.nav-links a');
+            navLinks.forEach(link => {
+                const targetUrl = link.getAttribute('data-url');
+                if (targetUrl == currentPath) {
+                    link.classList.add('active');
+                }
+            });
+        }
+    </script>
+
+    <!-- 国际化脚本 -->
+    <script th:src="@{'/js/i18n.js'}"></script>
+</body>
+</html>

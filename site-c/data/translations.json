@@ -1,0 +1,714 @@
+{
+  "zh": {
+    "title": "PASITO III - SMOANT® 电子烟",
+    "warning": {
+      "label": "警告：",
+      "text": "本产品含有尼古丁。尼古丁是一种容易上瘾的化学物质。仅供成人使用"
+    },
+    "nav": {
+      "home": "首页",
+      "product": "产品",
+      "aboutUs": "关于我们",
+      "community": "社区",
+      "support": "支持",
+      "contact": "联系我们",
+      "overview": "概述",
+      "specs": "规格"
+    },
+    "about": {
+      "title": "公司简介"
+    },
+    "hero": {
+      "title": "PASITO III",
+      "subtitle": "全新登场"
+    },
+    "video": {
+      "playButton": "播放"
+    },
+    "highlights": {
+      "title": "产品亮点",
+      "items": [
+        {
+          "title": "100W 最大功率输出",
+          "description": "爆发式升级"
+        },
+        {
+          "title": "口味分享",
+          "description": ""
+        },
+        {
+          "title": "4种智能输出模式",
+          "description": ""
+        },
+        {
+          "title": "2800mAh电池 & 4A超快充电",
+          "description": "持久电池确保全天候稳定使用"
+        },
+        {
+          "title": "兼容K系列线圈",
+          "description": ""
+        },
+        {
+          "title": "1.3英寸高清TFT彩色屏幕",
+          "description": "多主题界面，升级的交互方式"
+        }
+      ]
+    },
+    "power": {
+      "title": "5-100W",
+      "subtitle": "功率输出"
+    },
+    "flavor": {
+      "title": "分享你的口味",
+      "description": "体验分享的乐趣"
+    },
+    "kSeries": {
+      "title": "新朋友，K系列",
+      "description": "兼容K系列线圈，升级口感"
+    },
+    "battery": {
+      "title": "超快充电，超长续航",
+      "features": [
+        {
+          "title": "2800mAh大容量",
+          "description": "持久电力，全天使用"
+        },
+        {
+          "title": "4A超快充电",
+          "description": "18W≈4A充电电流"
+        },
+        {
+          "title": "Type-C接口",
+          "description": "通用充电解决方案"
+        }
+      ]
+    },
+    "screen": {
+      "title": "1.3英寸高清TFT彩色屏幕",
+      "subtitle": "升级的视觉体验",
+      "features": [
+        {
+          "title": "三种主题风格",
+          "description": "选择你喜欢的主题"
+        },
+        {
+          "title": "24种可选壁纸",
+          "description": "个性化你的设备"
+        },
+        {
+          "title": "用户活动日志",
+          "description": "跟踪你的使用习惯"
+        }
+      ]
+    },
+    "modes": {
+      "title": "4种模式匹配你的节奏",
+      "items": [
+        {
+          "name": "强力模式",
+          "description": "瞬间释放澎湃动力"
+        },
+        {
+          "name": "标准模式",
+          "description": "实验室级精准输出"
+        },
+        {
+          "name": "柔和模式",
+          "description": "温和流畅的体验"
+        },
+        {
+          "name": "DVW模式",
+          "description": "动态可变功率"
+        }
+      ]
+    },
+    "design": {
+      "title": "熟悉的设计",
+      "description": "经典的气流调节系统"
+    },
+    "capacity": {
+      "title": "7ml烟弹容量",
+      "description": "极大减少繁琐的补充次数"
+    },
+    "classic": {
+      "title": "尊重经典，成为经典",
+      "description": "Pasito III在美学上展现了彻底的进步，同时延续了Pasito家族设计的经典艺术"
+    },
+    "colors": {
+      "title": "选择你的风格",
+      "description": "八种配色选择和升级的皮革包裹设计，提供更舒适的握持感",
+      "items": [
+        "天蓝色",
+        "太空灰",
+        "深蓝色",
+        "迷彩绿",
+        "经典红",
+        "洛可可紫",
+        "哑光黑",
+        "胡椒白"
+      ]
+    },
+    "components": {
+      "title": "组件"
+    },
+    "comparison": {
+      "title": "PASITO III 对比 PASITO II",
+      "pasito3": "PASITO III",
+      "pasito2": "PASITO II"
+    },
+    "specs": {
+      "title": "技术规格",
+      "items": {
+        "capacity": {
+          "label": "烟弹容量",
+          "value": "7ml",
+          "compare": "6ml"
+        },
+        "screen": {
+          "label": "屏幕",
+          "value": "1.3英寸",
+          "compare": "0.96英寸"
+        },
+        "battery": {
+          "label": "电池容量",
+          "value": "2800mAh",
+          "compare": "2000mAh"
+        },
+        "mode": {
+          "label": "模式",
+          "value": "4种智能功率模式",
+          "compare": "2种模式"
+        },
+        "power": {
+          "label": "功率输出",
+          "value": "5-100W",
+          "compare": "5-25W"
+        },
+        "charging": {
+          "label": "充电电流",
+          "value": "18W≈4A",
+          "compare": "15W"
+        },
+        "resistance": {
+          "label": "电阻范围",
+          "value": "0.1-3.0Ω",
+          "compare": "0.4-3.0Ω"
+        },
+        "voltage": {
+          "label": "电压",
+          "value": "3.3-4.2V",
+          "compare": "3.0-4.2V"
+        },
+        "material": {
+          "label": "材质",
+          "value": "锌合金 + 皮革",
+          "compare": "锌合金"
+        },
+        "size": {
+          "label": "尺寸",
+          "value": "29.05×40.22×120.30毫米",
+          "compare": "25.5×41×104毫米"
+        }
+      }
+    },
+    "package": {
+      "title": "包装清单",
+      "items": [
+        "1× Pasito III 主机",
+        "1× 0.2Ω双网K-4线圈",
+        "1× 烟弹（预装0.15Ω网K-5线圈）",
+        "1× Type-C数据线",
+        "1× 用户手册（保修卡、认证卡）"
+      ]
+    },
+    "products": {
+      "title": "产品中心",
+      "allProducts": "全部产品",
+      "noProducts": "暂无产品",
+      "hotSale": "热卖产品",
+      "learnMore": "了解更多",
+      "moreSeries": "更多系列产品",
+      "topRanked": "排名第一",
+      "viewDetails": "查看详情",
+      "getQuote": "获取报价"
+    },
+    "productDetail": {
+      "backToProducts": "返回产品列表",
+      "inquire": "立即咨询",
+      "viewMore": "查看更多产品",
+      "specifications": "产品规格",
+      "gallery": "产品展示",
+      "description": "产品描述"
+    },
+    "error": {
+      "notFound": "页面未找到",
+      "notFoundMessage": "抱歉，您访问的页面不存在或已被删除。",
+      "backHome": "返回首页"
+    },
+    "pagination": {
+      "prev": "« 上一页",
+      "next": "下一页 »"
+    },
+    "contact": {
+      "title1": "与我们互动",
+      "subtitle": "享受时光",
+      "title": "联系我们",
+      "subtitle": "欢迎咨询报价与合作",
+      "contactInfo": "联系方式",
+      "onlineInquiry": "在线咨询",
+      "address": "地址",
+      "phone": "电话",
+      "email": "邮箱",
+      "form": {
+        "name": "姓名",
+        "company": "公司名称",
+        "email": "邮箱",
+        "phone": "电话",
+        "product": "产品名称",
+        "quantity": "预计数量",
+        "message": "需求说明",
+        "submit": "发送询价"
+      },
+      "info": {
+        "address": "地址",
+        "phone": "电话",
+        "email": "邮箱"
+      }
+    },
+    "discover": {
+      "title": "探索电子烟",
+      "blog": "博客",
+      "news": "新闻",
+      "readMore": "阅读更多"
+    },
+    "news": {
+      "latest": "最新动态",
+      "title": "新闻动态",
+      "subtitle": "了解我们的最新新闻和公告",
+      "readMore": "查看详情",
+      "viewMore": "查看更多",
+      "more": "查看更多新闻",
+      "empty": "暂无新闻资讯",
+      "backToList": "返回新闻列表",
+      "tab": {
+        "all": "新闻资讯"
+      },
+      "moreNews": {
+        "title": "更多新闻",
+        "subtitle": "即将发布"
+      }
+    },
+    "footer": {
+      "product": {
+        "title": "产品",
+        "all": "全部产品",
+        "podSystem": "烟弹系统",
+        "boxMod": "主机设备",
+        "accessories": "配件",
+        "items": [
+          "全部产品",
+          "烟弹系统",
+          "配件"
+        ]
+      },
+      "about": {
+        "title": "关于我们",
+        "brandStory": "品牌故事",
+        "lab": "SMOANT 实验室",
+        "manufacturing": "智能制造",
+        "contact": "联系我们",
+        "items": [
+          "品牌故事",
+          "研发中心",
+          "智能制造"
+        ]
+      },
+      "community": {
+        "title": "社区",
+        "news": "新闻",
+        "video": "视频",
+        "gallery": "相册",
+        "items": [
+          "新闻",
+          "博客",
+          "视频"
+        ]
+      },
+      "contact": {
+        "title": "联系我们",
+        "tel": "电话：",
+        "email": "邮箱：",
+        "address": "地址：",
+        "emailPlaceholder": "请输入您的邮箱地址",
+        "subscribe": "订阅",
+        "afterSales": "售后服务："
+      },
+      "bottom": {
+        "sitemap": "网站地图",
+        "faq": "常见问题",
+        "privacy": "隐私政策",
+        "conditions": "条款政策",
+        "copyrightPrefix": "版权所有 ©",
+        "copyright": "版权所有 © 2025",
+        "allRights": "保留所有权利。"
+      },
+      "copyright": "版权所有"
+    }
+  },
+  "en": {
+    "title": "PASITO III - SMOANT® Electronic Cigarettes",
+    "warning": {
+      "label": "WARNING:",
+      "text": "This product contains nicotine. Nicotine is an addictive chemical. For ADULT use only"
+    },
+    "nav": {
+      "home": "HOME",
+      "product": "PRODUCT",
+      "aboutUs": "ABOUT US",
+      "community": "COMMUNITY",
+      "support": "SUPPORT",
+      "contact": "CONTACT",
+      "overview": "OVERVIEW",
+      "specs": "SPECS"
+    },
+    "about": {
+      "title": "About Us"
+    },
+    "hero": {
+      "title": "PASITO III",
+      "subtitle": "Is Here"
+    },
+    "video": {
+      "playButton": "PLAY"
+    },
+    "highlights": {
+      "title": "Highlights",
+      "items": [
+        {
+          "title": "100W Max Power Output",
+          "description": "Explosive upgrade"
+        },
+        {
+          "title": "Flavor Sharing",
+          "description": ""
+        },
+        {
+          "title": "4 Intelligent Output Modes",
+          "description": ""
+        },
+        {
+          "title": "2800mAh Battery & 4A Super Fast Charging",
+          "description": "Long-lasting battery ensure all-time stable vaping"
+        },
+        {
+          "title": "Compatible with K-Series Coils",
+          "description": ""
+        },
+        {
+          "title": "1.3-inch HD TFT Color Screen",
+          "description": "Multi-theme UI, upgraded interaction method"
+        }
+      ]
+    },
+    "power": {
+      "title": "5-100W",
+      "subtitle": "POWER OUTPUT"
+    },
+    "flavor": {
+      "title": "Share Your Flavor",
+      "description": "Experience the joy of sharing"
+    },
+    "kSeries": {
+      "title": "New Friends, K-SERIES",
+      "description": "Compatible with K-Series Coils for upgraded taste"
+    },
+    "battery": {
+      "title": "Super Fast Charging, Super Battery Life",
+      "features": [
+        {
+          "title": "2800mAh Large Capacity",
+          "description": "Long-lasting power for all-day vaping"
+        },
+        {
+          "title": "4A Super Fast Charging",
+          "description": "18W≈4A charging current"
+        },
+        {
+          "title": "Type-C Port",
+          "description": "Universal charging solution"
+        }
+      ]
+    },
+    "screen": {
+      "title": "1.3-inch HD TFT Color Screen",
+      "subtitle": "Upgraded Visual Experience",
+      "features": [
+        {
+          "title": "Three Theme Styles",
+          "description": "Choose your favorite theme"
+        },
+        {
+          "title": "24 Selectable Wallpapers",
+          "description": "Personalize your device"
+        },
+        {
+          "title": "User Activity Logs",
+          "description": "Track your vaping habits"
+        }
+      ]
+    },
+    "modes": {
+      "title": "4 Modes to Match Your Vaping Rhythm",
+      "items": [
+        {
+          "name": "STRONG MODE",
+          "description": "Instantly unleashes surging power"
+        },
+        {
+          "name": "NORM MODE",
+          "description": "Lab-grade precision output"
+        },
+        {
+          "name": "SOFT MODE",
+          "description": "Gentle and smooth experience"
+        },
+        {
+          "name": "DVW MODE",
+          "description": "Dynamic variable wattage"
+        }
+      ]
+    },
+    "design": {
+      "title": "The Familiar Design",
+      "description": "Classic airflow adjustment system"
+    },
+    "capacity": {
+      "title": "7ml Cartridge Capacity",
+      "description": "Extremely reduce the messy refilling times"
+    },
+    "classic": {
+      "title": "Respect the Classic, Become a Classic",
+      "description": "The Pasito III shows a thorough progression in aesthetics while carrying on the classical art of Pasito family design"
+    },
+    "colors": {
+      "title": "Choose your style",
+      "description": "Eight color options and upgraded leather wrap design provide a more comfortable grip",
+      "items": [
+        "Blue Azur",
+        "Space Gray",
+        "Blue Nuit",
+        "Camouflage Green",
+        "Classical Red",
+        "Rococo Purple",
+        "Matte Black",
+        "Pepper White"
+      ]
+    },
+    "components": {
+      "title": "Components"
+    },
+    "comparison": {
+      "title": "PASITO III vs PASITO II",
+      "pasito3": "PASITO III",
+      "pasito2": "PASITO II"
+    },
+    "specs": {
+      "title": "Technical Specifications",
+      "items": {
+        "capacity": {
+          "label": "CARTRIDGE CAPACITY",
+          "value": "7ml",
+          "compare": "6ml"
+        },
+        "screen": {
+          "label": "SCREEN",
+          "value": "1.3-inch",
+          "compare": "0.96-inch"
+        },
+        "battery": {
+          "label": "BATTERY CAPACITY",
+          "value": "2800mAh",
+          "compare": "2000mAh"
+        },
+        "mode": {
+          "label": "MODE",
+          "value": "4 intelligent Power Modes",
+          "compare": "2 modes"
+        },
+        "power": {
+          "label": "POWER OUTPUT",
+          "value": "5-100W",
+          "compare": "5-25W"
+        },
+        "charging": {
+          "label": "CHARGING CURRENT",
+          "value": "18W≈4A",
+          "compare": "15W"
+        },
+        "resistance": {
+          "label": "RESISTANCE RANGE",
+          "value": "0.1-3.0Ω",
+          "compare": "0.4-3.0Ω"
+        },
+        "voltage": {
+          "label": "VOLTAGE",
+          "value": "3.3-4.2V",
+          "compare": "3.0-4.2V"
+        },
+        "material": {
+          "label": "MATERIAL",
+          "value": "Zinc alloy + Leather",
+          "compare": "Zinc alloy"
+        },
+        "size": {
+          "label": "SIZE",
+          "value": "29.05×40.22×120.30mm",
+          "compare": "25.5×41×104mm"
+        }
+      }
+    },
+    "package": {
+      "title": "Package list",
+      "items": [
+        "1× Pasito III Mod",
+        "1× 0.2Ω Dual Mesh K-4 Coil",
+        "1× Cartridge (0.15Ω Mesh K-5 Coil Preinstalled)",
+        "1× Type-C Cable",
+        "1× User Manual (Warranty Card, Certificated Card)"
+      ]
+    },
+    "products": {
+      "title": "Products",
+      "allProducts": "All Products",
+      "noProducts": "No products available",
+      "hotSale": "HOT SALE PRODUCT",
+      "learnMore": "Learn More",
+      "moreSeries": "More series products",
+      "topRanked": "TOP RANKED",
+      "viewDetails": "View Details",
+      "getQuote": "Get Quote"
+    },
+    "productDetail": {
+      "backToProducts": "Back to Products",
+      "inquire": "Inquire Now",
+      "viewMore": "View More Products",
+      "specifications": "Specifications",
+      "gallery": "Gallery",
+      "description": "Description"
+    },
+    "error": {
+      "notFound": "Page Not Found",
+      "notFoundMessage": "Sorry, the page you are looking for does not exist or has been removed.",
+      "backHome": "Back to Home"
+    },
+    "pagination": {
+      "prev": "« Previous",
+      "next": "Next »"
+    },
+    "contact": {
+      "title1": "CONNECT WITH",
+      "subtitle": "TIME FOR JOY",
+      "title": "Contact Us",
+      "subtitle": "Welcome to inquire about quotes and cooperation",
+      "contactInfo": "Contact Information",
+      "onlineInquiry": "Online Inquiry",
+      "address": "Address",
+      "phone": "Phone",
+      "email": "Email",
+      "form": {
+        "name": "Name",
+        "company": "Company Name",
+        "email": "Email",
+        "phone": "Phone",
+        "product": "Product Name",
+        "quantity": "Estimated Quantity",
+        "message": "Requirements",
+        "submit": "Send Inquiry"
+      },
+      "info": {
+        "address": "Address",
+        "phone": "Phone",
+        "email": "Email"
+      }
+    },
+    "discover": {
+      "title": "DISCOVER VAPING",
+      "blog": "Blog",
+      "news": "News",
+      "readMore": "Read More"
+    },
+    "news": {
+      "latest": "LATEST NEWS",
+      "title": "News",
+      "subtitle": "Stay updated with our latest news and announcements",
+      "readMore": "Read More",
+      "viewMore": "View More",
+      "more": "More News",
+      "empty": "No news available",
+      "backToList": "BACK TO NEWS",
+      "tab": {
+        "all": "NEWS"
+      },
+      "moreNews": {
+        "title": "MORE NEWS",
+        "subtitle": "IS COMING"
+      }
+    },
+    "footer": {
+      "product": {
+        "title": "Product",
+        "all": "All Product",
+        "podSystem": "Pod System",
+        "boxMod": "Box Mod",
+        "accessories": "Accessories",
+        "items": [
+          "All Product",
+          "Pod Systems",
+          "Accessories"
+        ]
+      },
+      "about": {
+        "title": "About Smoant",
+        "brandStory": "Brand Story",
+        "lab": "SMOANT Lab",
+        "manufacturing": "Manufacturing",
+        "contact": "Contact Us",
+        "items": [
+          "Brand Story",
+          "R&D Center",
+          "Manufacturing"
+        ]
+      },
+      "community": {
+        "title": "Community",
+        "news": "News",
+        "video": "Video",
+        "gallery": "Gallery",
+        "items": [
+          "News",
+          "Blog",
+          "Videos"
+        ]
+      },
+      "contact": {
+        "title": "Contact Us",
+        "tel": "TEL:",
+        "email": "Email:",
+        "address": "Address:",
+        "emailPlaceholder": "Enter your email address",
+        "subscribe": "Subscribe",
+        "afterSales": "After Sales:"
+      },
+      "bottom": {
+        "sitemap": "Sitemap",
+        "faq": "FAQ",
+        "privacy": "Privacy Policy",
+        "conditions": "Conditions Policy",
+        "copyrightPrefix": "Copyright ©",
+        "copyright": "Copyright © 2025",
+        "allRights": "All rights reserved."
+      },
+      "copyright": "All rights reserved"
+    }
+  }  
+}

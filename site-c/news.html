@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" th:content="${siteSeo != null ? siteSeo.description : ''}" content="">
+    <meta name="keywords" th:content="${siteSeo != null ? siteSeo.keywords : ''}" content="">
+    <title th:text="${siteSeo != null ? siteSeo.title : site.name}">SMOANT - News</title>
+    <style>
+        /* 全局重置 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            --color-primary: #FEDA1C;
+        }
+        body {
+            background-color: #fff;
+            color: #000;
+            overflow-x: hidden;
+        }
+
+        /* 顶部警示条 */
+        .warning-bar {
+            width: 100%;
+            height: 25px;
+            background-color: #000;
+            color: #999;
+            font-size: 9px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            letter-spacing: 0.5px;
+            position: fixed;
+            top: 0;
+            z-index: 999;
+        }
+
+        /* 顶部导航栏 */
+        .top-nav {
+            width: 100%;
+            height: 60px;
+            background-color: #000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 5%;
+            position: fixed;
+            top: 0;
+            z-index: 998;
+        }
+        .logo {
+            color: var(--color-primary);
+            font-size: 20px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+        .nav-links {
+            display: flex;
+            gap: 39px;
+        }
+        .nav-links a {
+            color: #fff;
+            font-size: 14px;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.8;
+            transition: all 0.3s;
+            position: relative;
+        }
+        .nav-links a:hover {
+            opacity: 1;
+            color: var(--color-primary);
+        }
+        .nav-links a.active {
+            opacity: 1;
+            color: var(--color-primary);
+        }
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--color-primary);
+        }
+        .nav-actions {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        .nav-actions i {
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+        .nav-actions i:hover {
+            opacity: 1;
+        }
+        .lang-switcher {
+            display: flex;
+            gap: 5px;
+            margin-left: 10px;
+        }
+        .lang-btn {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #fff;
+            font-size: 12px;
+            padding: 6px 12px;
+            cursor: pointer;
+            border-radius: 3px;
+            transition: all 0.3s;
+            text-transform: uppercase;
+        }
+        .lang-btn:hover {
+            border-color: #fff;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .lang-btn.active {
+            background: #fff;
+            color: #000;
+            border-color: #fff;
+        }
+
+        /* 主体容器 */
+        .main-container {
+            margin-top: 60px;
+            /* padding: 80px 5%; */
+            min-height: 60vh;
+        }
+
+        /* Banner */
+        .banner {
+            background: #E0E0E0;
+            padding: 40px 0;
+            text-align: center;
+        }
+        .banner img {
+            max-width: 80%;
+            height: auto;
+        }
+
+        /* 标签切换 */
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 18px;
+            margin: 45px auto;
+            
+        }
+        .tab {
+            padding: 5px 22px;
+            border-radius: 18px;
+            font-size: 18px;
+            border: 1px solid #D9D9D9;
+            background: #FFF;
+            color: #666;
+            cursor: pointer;
+        }
+        .tab.active {
+            background: #FFD100;
+            color: #000;
+            border: none;
+            font-weight: 500;
+        }
+
+        /* 新闻网格 */
+        .news-grid-1 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin: 0 auto 30px auto;
+            width: 100%;
+            max-width: 1400px;
+            padding: 0 20px;
+        }
+        .news-grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 30px;
+            margin: 0 auto;
+            width: 100%;
+            max-width: 1400px;
+            padding: 0 20px;
+            margin-bottom: 60px;
+        }
+
+        /* NEWS ITEM 优化样式 */
+        .news-item {
+            background: #FFFFFF;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            position: relative;
+        }
+        .news-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--color-primary) 0%, #FFE566 100%);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+        .news-item:hover::before {
+            transform: scaleX(1);
+        }
+        .news-item:hover {
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            transform: translateY(-8px);
+        }
+
+        /* 图片容器 */
+        .news-item-image {
+            width: 100%;
+            height: 220px;
+            overflow: hidden;
+            background: #f5f5f5;
+            position: relative;
+        }
+        .news-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .news-item:hover img {
+            transform: scale(1.1);
+        }
+
+        /* 内容区域 */
+        .news-content {
+            padding: 24px 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        /* 日期样式 */
+        .news-date {
+            font-size: 13px;
+            color: #999;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .news-date::before {
+            content: '📅';
+            font-size: 14px;
+        }
+
+        /* 标题样式 */
+        .news-title {
+            font-size: 16px;
+            color: #1a1a1a;
+            font-weight: 600;
+            line-height: 1.5;
+            margin-bottom: 8px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            min-height: 48px;
+            transition: color 0.3s;
+        }
+        .news-item:hover .news-title {
+            color: var(--color-primary);
+        }
+
+        /* 按钮样式 */
+        .view-more {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            padding: 12px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 25px;
+            text-align: center;
+            font-size: 13px;
+            font-weight: 600;
+            color: #666;
+            text-decoration: none;
+            background: transparent;
+            margin-top: auto;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .view-more::after {
+            content: '→';
+            font-size: 16px;
+            transition: transform 0.3s ease;
+        }
+        .view-more:hover {
+            background: #000;
+            border-color: #000;
+            color: #fff;
+            transform: translateY(-2px);
+        }
+        .view-more:hover::after {
+            transform: translateX(4px);
+        }
+
+        /* 更多新闻卡片优化 */
+        .more-news {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .more-news::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transform: rotate(45deg);
+            animation: shimmer 3s infinite;
+        }
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+        .more-news:hover {
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+            transform: translateY(-4px);
+        }
+        .more-news-text {
+            text-align: center;
+            z-index: 1;
+            position: relative;
+        }
+        .more-news-text h3 {
+            font-size: 32px;
+            color: #333;
+            font-weight: 700;
+            margin-bottom: 8px;
+            letter-spacing: 2px;
+            background: linear-gradient(135deg, #333 0%, #666 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .more-news-text p {
+            font-size: 16px;
+            color: #666;
+            font-weight: 500;
+            letter-spacing: 1px;
+        }
+
+        /* 底部导航 */
+        .footer {
+            background-color: #000;
+            color: #fff;
+            padding: 60px 5% 30px;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr;
+            gap: 40px;
+            max-width: 1400px;
+            margin: 0 auto 40px;
+        }
+        .footer-logo-col {
+            max-width: 280px;
+        }
+        .footer-logo img {
+            /* filter: brightness(0) invert(1); */
+        }
+        .footer-col h5 {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+            color: var(--color-primary);
+        }
+        .footer-col ul {
+            list-style: none;
+        }
+        .footer-col ul li {
+            margin-bottom: 10px;
+        }
+        .footer-col ul li a {
+            color: #fff;
+            font-size: 11px;
+            text-decoration: none;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+        .footer-col ul li a:hover {
+            opacity: 1;
+            color: var(--color-primary);
+        }
+        .footer-col .contact-text {
+            font-size: 11px;
+            color: #999;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .social-links a {
+            color: #fff;
+            font-size: 14px;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+        .social-links a:hover {
+            opacity: 1;
+        }
+        .subscribe-form {
+            display: flex;
+        }
+        .subscribe-form input {
+            flex: 4;
+            padding: 8px;
+            border: none;
+            outline: none;
+            font-size: 11px;
+        }
+        .subscribe-form button {
+            flex: 1;
+            padding: 8px;
+            border: none;
+            background-color: #ffcc00;
+            color: #000;
+            font-size: 11px;
+            text-transform: uppercase;
+            cursor: pointer;
+        }
+        .footer-bottom {
+            text-align: center;
+            font-size: 9px;
+            color: #999;
+            padding-top: 30px;
+            border-top: 1px solid #333;
+        }
+        .footer-bottom-links {
+            margin-bottom: 10px;
+        }
+        .footer-bottom-links a {
+            color: #999;
+            text-decoration: none;
+            margin: 0 8px;
+            transition: color 0.3s;
+        }
+        .footer-bottom-links a:hover {
+            color: #fff;
+        }
+
+        /* 响应式适配 */
+        @media (max-width: 1200px) {
+            .news-grid-1 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            .news-grid-1 {
+                grid-template-columns: 1fr;
+            }
+            .news-grid-2 {
+                grid-template-columns: 1fr;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    <!-- 引入图标库 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- 顶部导航 -->
+    <nav class="top-nav">
+        <a th:href="@{'/' + ${lang} + '/'}" class="logo">
+            <img th:if="${site.logo}" th:src="${site.logo}" th:alt="${site.name}" style="height: 40px; margin-right: 10px; vertical-align: middle;">
+            <span th:text="${site.name}"></span>
+        </a>
+        <div class="nav-links">
+            <a th:each="menu : ${menus}"
+               th:href="@{'/' + ${lang} + '/' + ${menu.target_url}}"
+               th:text="${menu.menu_name}"
+               th:attr="data-url=${'/'+lang + '/' + menu.target_url}"
+            >菜单</a>
+        </div>
+        <div class="nav-actions">
+            <!-- 语言切换器 -->
+            <div class="lang-switcher" style="display: flex; gap: 5px; margin-left: 10px;">
+                <button class="lang-btn" th:classappend="${lang == 'zh'} ? 'active'" data-lang="zh"
+                        onclick="switchLanguage('zh')">中文</button>
+                <button class="lang-btn" th:classappend="${lang == 'en'} ? 'active'" data-lang="en"
+                        onclick="switchLanguage('en')">EN</button>
+            </div>
+        </div>
+    </nav>
+    <main class="main-container">
+        <!-- Banner区 -->
+        <section class="banner">
+            <img src="https://picsum.photos/1200/400?random=1" alt="SMOANT Banner">
+        </section>
+        <div >
+            <!-- 标签切换 - 保留UI但暂无分类功能 -->
+            <div class="tabs">
+                <button class="tab active" data-i18n="news.tab.all">NEWS</button>
+            </div>
+    
+            <!-- 第一行：3个新闻卡片 -->
+            <div class="news-grid-1">
+                <div class="news-item"
+                     th:each="newsItem, iterStat : ${newsList}"
+                     th:if="${iterStat.index < 3}"
+                     th:onclick="'window.location.href=\'' + @{'/' + ${lang} + '/news/' + ${newsItem.id}} + '\''">
+                    <div class="news-item-image">
+                        <img th:if="${newsItem.cover_image}"
+                             th:src="${newsItem.cover_image}"
+                             th:alt="${newsItem.title}"
+                             alt="News">
+                        <img th:unless="${newsItem.cover_image}"
+                             src="https://via.placeholder.com/600x400/f5f5f5/999999?text=News"
+                             alt="News">
+                    </div>
+                    <div class="news-content">
+                        <span class="news-date" th:if="${newsItem.publish_time}">
+                            <span th:text="${#temporals.format(newsItem.publish_time, 'yyyy.MM.dd')}">2023.10.20</span>
+                        </span>
+                        <span class="news-title" th:text="${newsItem.title}">NEWS TITLE</span>
+                        <a th:href="@{'/' + ${lang} + '/news/' + ${newsItem.id}}"
+                           class="view-more"
+                           data-i18n="news.viewMore"
+                           onclick="event.stopPropagation()">View More</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 第二行：1个新闻卡片 + MORE NEWS卡片 -->
+            <div class="news-grid-2">
+                <!-- 第4个新闻 -->
+                <div class="news-item"
+                     th:if="${news != null && newsList.length > 3}"
+                     th:with="newsItem=${newsList[3]}"
+                     th:onclick="'window.location.href=\'' + @{'/' + ${lang} + '/news/' + ${newsItem.id}} + '\''">
+                    <div class="news-item-image">
+                        <img th:if="${newsItem.cover_image}"
+                             th:src="${newsItem.cover_image}"
+                             th:alt="${newsItem.title}"
+                             alt="News">
+                        <img th:unless="${newsItem.cover_image}"
+                             src="https://via.placeholder.com/600x400/f5f5f5/999999?text=News"
+                             alt="News">
+                    </div>
+                    <div class="news-content">
+                        <span class="news-date" th:if="${newsItem.publish_time}">
+                            <span th:text="${#temporals.format(newsItem.publish_time, 'yyyy.MM.dd')}">2023.10.20</span>
+                        </span>
+                        <span class="news-title" th:text="${newsItem.title}">NEWS TITLE</span>
+                        <a th:href="@{'/' + ${lang} + '/news/' + ${newsItem.id}}"
+                           class="view-more"
+                           data-i18n="news.viewMore"
+                           onclick="event.stopPropagation()">View More</a>
+                    </div>
+                </div>
+    
+                <!-- MORE NEWS 卡片 -->
+                <div class="more-news" th:if="${newsList.size() == 0}">
+                    <div class="more-news-text">
+                        <h3 data-i18n="news.moreNews.title">MORE NEWS</h3>
+                        <p data-i18n="news.moreNews.subtitle">IS COMING</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 底部导航 -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <!-- Logo 和公司简介 -->
+            <div class="footer-col footer-logo-col">
+                <div class="footer-logo">
+                    <img th:if="${site.logo}"
+                         th:src="${site.logo}"
+                         th:alt="${site.name}"
+                         style="height: 50px; margin-bottom: 15px;">
+                    <h3 th:text="${siteI18n != null ? siteI18n.site_name : site.name}">ManufacturePro</h3>
+                    <p th:text="${siteI18n != null ? siteI18n.description : ''}">我们是一家专业的制造企业，拥有完善的生产设施和质量管理体系，致力于为全球客户提供高品质的产品和定制化服务。</p>
+                </div>
+            </div>
+
+            <!-- 产品分类 -->
+            <div class="footer-col">
+                <h5 data-i18n="footer.product.title">Product</h5>
+                <ul>
+                    <li><a th:href="@{'/' + ${lang} + '/products'}" data-i18n="footer.product.all">All Product</a></li>
+                    <!-- 动态加载产品分类 -->
+                    <li th:each="category, iterStat : ${categories}" th:if="${iterStat.index < 3 }">
+                        <a th:href="@{'/' + ${lang} + '/products?category=' + ${category.id}}"
+                           th:text="${category.name}">分类名称</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- 关于我们 -->
+            <div class="footer-col">
+                <h5 data-i18n="footer.about.title">About Us</h5>
+                <ul>
+                    <li><a th:href="@{'/' + ${lang} + '/contact'}" data-i18n="footer.about.contact">Contact Us</a></li>
+                </ul>
+            </div>
+            <!-- 社区 -->
+            <div class="footer-col">
+                <h5 data-i18n="footer.community.title">Community</h5>
+                <ul>
+                    <li><a th:href="@{'/' + ${lang} + '/news'}" data-i18n="footer.community.news">News</a></li>
+                </ul>
+            </div>
+            <!-- 联系我们 -->
+            <div class="footer-col" th:if="${contact}">
+                <h5 data-i18n="footer.contact.title">Contact Us</h5>
+                <p class="contact-text">
+                    <span data-i18n="footer.contact.tel">TEL:</span> <span th:text="${contact.phone}">+86-755-86568800</span><br>
+                    <span data-i18n="footer.contact.email">Email:</span> <span th:text="${contact.email}">support@smoant.com</span><br>
+                    <span data-i18n="footer.contact.address">Address:</span> <span th:text="${contact.address}">Shenzhen, China</span>
+                </p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="footer-bottom-links">
+                <a href="#" data-i18n="footer.bottom.faq">FAQ</a>
+                <a href="#" data-i18n="footer.bottom.privacy">Privacy Policy</a>
+                <a href="#" data-i18n="footer.bottom.conditions">Conditions Policy</a>
+            </div>
+            <p><span data-i18n="footer.bottom.copyrightPrefix">Copyright ©</span> <span class="year"></span> <span th:text="${site.name}">SMOANT</span> <span data-i18n="footer.bottom.allRights">All rights reserved.</span></p>
+        </div>
+    </footer>
+
+    <script>
+            // 语言切换函数
+        function switchLanguage(lang) {
+            const pathParts = window.location.pathname.split('/');
+            pathParts[1] = lang;
+            const newUrl = pathParts.join('/');
+            window.location.href = newUrl;
+        }
+
+        window.onload = function () {
+            // 设置年份
+            const yearElements = document.getElementsByClassName('year');
+            if (yearElements.length > 0) {
+                yearElements[0].innerHTML = new Date().getFullYear();
+            }
+
+            // 导航高亮
+            const currentPath = window.location.pathname;
+            const navLinks = document.querySelectorAll('.nav-links a');
+            navLinks.forEach(link => {
+                const targetUrl = link.getAttribute('data-url');
+                if (targetUrl == currentPath) {
+                    link.classList.add('active');
+                }
+            });
+        }
+    </script>
+
+    <!-- 国际化脚本 -->
+    <script th:src="@{'/js/i18n.js'}"></script>
+</body>
+</html>

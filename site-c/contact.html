@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" th:content="${siteSeo != null ? siteSeo.description : ''}" content="">
+    <meta name="keywords" th:content="${siteSeo != null ? siteSeo.keywords : ''}" content="">
+    <title th:text="${siteSeo != null ? siteSeo.title : site.name}">Contact Us - SMOANT</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            --color-primary: #FEDA1C;
+        }
+        body {
+            background-color: #fff;
+            color: #000;
+            overflow-x: hidden;
+        }
+
+        /* 顶部导航栏 */
+        .top-nav {
+            width: 100%;
+            height: 60px;
+            background-color: #000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 5%;
+            position: fixed;
+            top: 0;
+            z-index: 998;
+        }
+        .logo {
+            color: var(--color-primary);
+            font-size: 20px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+        .nav-links {
+            display: flex;
+            gap: 39px;
+        }
+        .nav-links a {
+            color: #fff;
+            font-size: 14px;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.8;
+            transition: all 0.3s;
+            position: relative;
+        }
+        .nav-links a:hover {
+            opacity: 1;
+            color: var(--color-primary);
+        }
+        .nav-links a.active {
+            opacity: 1;
+            color: var(--color-primary);
+        }
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--color-primary);
+        }
+        .nav-actions {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        .lang-switcher {
+            display: flex;
+            gap: 5px;
+            margin-left: 10px;
+        }
+        .lang-btn {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #fff;
+            font-size: 12px;
+            padding: 6px 12px;
+            cursor: pointer;
+            border-radius: 3px;
+            transition: all 0.3s;
+            text-transform: uppercase;
+        }
+        .lang-btn:hover {
+            border-color: #fff;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .lang-btn.active {
+            background: #fff;
+            color: #000;
+            border-color: #fff;
+        }
+
+        /* 主体容器 */
+        .main-container {
+            margin-top: 60px;
+            padding: 80px 5%;
+            min-height: 60vh;
+        }
+
+        /* 联系页面样式 */
+        .contact-content {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .contact-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
+            text-align: center;
+            color: #000;
+        }
+        .contact-form {
+            background: #f5f5f5;
+            padding: 3rem;
+            border-radius: 8px;
+            margin-bottom: 3rem;
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--color-primary);
+        }
+        .form-group textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        .form-row .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .submit-btn {
+            background: #000;
+            color: #fff;
+            padding: 12px 40px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .submit-btn:hover {
+            background: var(--color-primary);
+            color: #000;
+        }
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        .info-card {
+            background: #f5f5f5;
+            padding: 2rem;
+            border-radius: 8px;
+        }
+        .info-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: #000;
+        }
+        .info-card p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 0.5rem;
+        }
+
+        /* 底部导航 */
+        .footer {
+            background-color: #000;
+            color: #fff;
+            padding: 60px 5% 30px;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr;
+            gap: 40px;
+            max-width: 1400px;
+            margin: 0 auto 40px;
+        }
+        .footer-logo-col {
+            max-width: 280px;
+        }
+        .footer-col h5 {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+            color: var(--color-primary);
+        }
+        .footer-col ul {
+            list-style: none;
+        }
+        .footer-col ul li {
+            margin-bottom: 10px;
+        }
+        .footer-col ul li a {
+            color: #fff;
+            font-size: 11px;
+            text-decoration: none;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+        .footer-col ul li a:hover {
+            opacity: 1;
+            color: var(--color-primary);
+        }
+        .footer-col .contact-text {
+            font-size: 11px;
+            color: #999;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        .footer-bottom {
+            text-align: center;
+            font-size: 9px;
+            color: #999;
+            padding-top: 30px;
+            border-top: 1px solid #333;
+        }
+        .footer-bottom-links {
+            margin-bottom: 10px;
+        }
+        .footer-bottom-links a {
+            color: #999;
+            text-decoration: none;
+            margin: 0 8px;
+            transition: color 0.3s;
+        }
+        .footer-bottom-links a:hover {
+            color: #fff;
+        }
+
+        /* 响应式适配 */
+        @media (max-width: 1200px) {
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+            .contact-title {
+                font-size: 2rem;
+            }
+            .contact-form {
+                padding: 2rem;
+            }
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部导航 -->
+    <nav class="top-nav">
+        <a th:href="@{'/' + ${lang} + '/'}" class="logo">
+            <img th:if="${site.logo}" th:src="${site.logo}" th:alt="${site.name}" style="height: 40px; margin-right: 10px; vertical-align: middle;">
+            <span th:text="${site.name}"></span>
+        </a>
+        <div class="nav-links">
+            <a th:each="menu : ${menus}"
+               th:href="@{'/' + ${lang} + '/' + ${menu.target_url}}"
+               th:text="${menu.menu_name}"
+               th:attr="data-url=${'/'+lang + '/' + menu.target_url}"
+            >菜单</a>
+        </div>
+        <div class="nav-actions">
+            <!-- 语言切换器 -->
+            <div class="lang-switcher" style="display: flex; gap: 5px; margin-left: 10px;">
+                <button class="lang-btn" th:classappend="${lang == 'zh'} ? 'active'" data-lang="zh"
+                        onclick="switchLanguage('zh')">中文</button>
+                <button class="lang-btn" th:classappend="${lang == 'en'} ? 'active'" data-lang="en"
+                        onclick="switchLanguage('en')">EN</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主体内容 -->
+    <div class="main-container">
+        <div class="contact-content">
+            <h1 class="contact-title" data-i18n="contact.title">联系我们</h1>
+
+            <!-- 联系表单 -->
+            <div class="contact-form">
+                <form id="contactForm" th:action="@{'/' + ${lang} + '/inquiry'}" method="post">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="name" data-i18n="contact.form.name">姓名</label>
+                            <input type="text" id="name" name="name" placeholder="姓名" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="company" data-i18n="contact.form.company">公司名称</label>
+                            <input type="text" id="company" name="company" placeholder="公司名称" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="email" data-i18n="contact.form.email">邮箱</label>
+                            <input type="email" id="email" name="email" placeholder="邮箱" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone" data-i18n="contact.form.phone">电话</label>
+                            <input type="tel" id="phone" name="phone" placeholder="电话" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="product" data-i18n="contact.form.product">产品名称</label>
+                            <input type="text" id="product" name="product" placeholder="产品名称">
+                        </div>
+                        <div class="form-group">
+                            <label for="quantity" data-i18n="contact.form.quantity">预计数量</label>
+                            <input type="text" id="quantity" name="quantity" placeholder="预计数量">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message" data-i18n="contact.form.message">需求说明</label>
+                        <textarea id="message" name="message" placeholder="需求说明" required></textarea>
+                    </div>
+
+                    <div style="text-align: center;">
+                        <button type="submit" class="submit-btn" data-i18n="contact.form.submit">发送询价</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- 联系信息 -->
+            <div class="contact-info">
+                <div class="info-card" th:if="${contact}">
+                    <h3 data-i18n="contact.info.address">地址</h3>
+                    <p th:text="${contact.address}">中国广东省深圳市</p>
+                </div>
+                <div class="info-card" th:if="${contact}">
+                    <h3 data-i18n="contact.info.phone">电话</h3>
+                    <p th:text="${contact.phone}">+86 755-1234-5678</p>
+                </div>
+                <div class="info-card" th:if="${contact}">
+                    <h3 data-i18n="contact.info.email">邮箱</h3>
+                    <p th:text="${contact.email}">sales@company.com</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部导航 -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <!-- Logo 和公司简介 -->
+            <div class="footer-col footer-logo-col">
+                <div class="footer-logo">
+                    <img th:if="${site.logo}"
+                         th:src="${site.logo}"
+                         th:alt="${site.name}"
+                         style="height: 50px; margin-bottom: 15px;">
+                    <h3 th:text="${siteI18n != null ? siteI18n.site_name : site.name}">ManufacturePro</h3>
+                    <p th:text="${siteI18n != null ? siteI18n.description : ''}">我们是一家专业的制造企业，拥有完善的生产设施和质量管理体系，致力于为全球客户提供高品质的产品和定制化服务。</p>
+                </div>
+            </div>
+
+            <!-- 产品分类 -->
+            <div class="footer-col">
+                <h5 data-i18n="footer.product.title">Product</h5>
+                <ul>
+                    <li><a th:href="@{'/' + ${lang} + '/products'}" data-i18n="footer.product.all">All Product</a></li>
+                    <!-- 动态加载产品分类 -->
+                    <li th:each="category, iterStat : ${categories}" th:if="${iterStat.index < 3 }">
+                        <a th:href="@{'/' + ${lang} + '/products?category=' + ${category.id}}"
+                           th:text="${category.name}">分类名称</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- 关于我们 -->
+            <div class="footer-col">
+                <h5 data-i18n="footer.about.title">About Us</h5>
+                <ul>
+                    <li><a th:href="@{'/' + ${lang} + '/contact'}" data-i18n="footer.about.contact">Contact Us</a></li>
+                </ul>
+            </div>
+            <!-- 社区 -->
+            <div class="footer-col">
+                <h5 data-i18n="footer.community.title">Community</h5>
+                <ul>
+                    <li><a th:href="@{'/' + ${lang} + '/news'}" data-i18n="footer.community.news">News</a></li>
+                </ul>
+            </div>
+            <!-- 联系我们 -->
+            <div class="footer-col" th:if="${contact}">
+                <h5 data-i18n="footer.contact.title">Contact Us</h5>
+                <p class="contact-text">
+                    <span data-i18n="footer.contact.tel">TEL:</span> <span th:text="${contact.phone}">+86-755-86568800</span><br>
+                    <span data-i18n="footer.contact.email">Email:</span> <span th:text="${contact.email}">support@smoant.com</span><br>
+                    <span data-i18n="footer.contact.address">Address:</span> <span th:text="${contact.address}">Shenzhen, China</span>
+                </p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="footer-bottom-links">
+                <a href="#" data-i18n="footer.bottom.faq">FAQ</a>
+                <a href="#" data-i18n="footer.bottom.privacy">Privacy Policy</a>
+                <a href="#" data-i18n="footer.bottom.conditions">Conditions Policy</a>
+            </div>
+            <p><span data-i18n="footer.bottom.copyrightPrefix">Copyright ©</span> <span class="year"></span> <span th:text="${site.name}">SMOANT</span> <span data-i18n="footer.bottom.allRights">All rights reserved.</span></p>
+        </div>
+    </footer>
+
+    <!-- 国际化脚本 -->
+    <script th:src="@{'/js/i18n.js'}"></script>
+    <script>
+        // 语言切换函数
+        function switchLanguage(lang) {
+            const pathParts = window.location.pathname.split('/');
+            pathParts[1] = lang;
+            const newUrl = pathParts.join('/');
+            window.location.href = newUrl;
+        }
+
+        window.onload = function () {
+            // 设置年份
+            const yearElements = document.getElementsByClassName('year');
+            if (yearElements.length > 0) {
+                yearElements[0].innerHTML = new Date().getFullYear();
+            }
+
+            // 导航高亮
+            const currentPath = window.location.pathname;
+            const navLinks = document.querySelectorAll('.nav-links a');
+            navLinks.forEach(link => {
+                const targetUrl = link.getAttribute('data-url');
+                if (targetUrl == currentPath) {
+                    link.classList.add('active');
+                }
+            });
+        }
+
+        // 表单提交处理
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // 在实际应用中，表单会通过 POST 提交到后端处理
+            console.log('Form submitted');
+            alert('感谢您的留言！我们会尽快与您联系。');
+            this.reset();
+        });
+    </script>
+</body>
+</html>

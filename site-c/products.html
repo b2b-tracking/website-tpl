@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" th:content="${siteSeo != null ? siteSeo.description : ''}" content="">
+    <meta name="keywords" th:content="${siteSeo != null ? siteSeo.keywords : ''}" content="">
+    <title th:text="${siteSeo != null ? siteSeo.title : site.name}">SMOANT - Products</title>
+    <!-- 引入Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 自定义配置：匹配参考图的黑黄主题 -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        smoant: {
+                            black: '#000000',     // 主黑色（导航/页脚）
+                            yellow: '#F9D100',    // 主黄色（品牌标/按钮）
+                            gray: '#888888',      // 次要文字色
+                            light: '#F5F5F5',     // 产品卡片背景
+                            darkgray: '#333333'   // 页脚文字色
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Arial', 'Helvetica', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .product-card {
+                @apply bg-smoant-light p-4 text-center hover:shadow-md transition-shadow duration-200;
+            }
+            .nav-link {
+                @apply text-white hover:text-smoant-yellow transition-colors duration-200;
+            }
+            .category-tab {
+                @apply px-3 py-1 hover:text-smoant-yellow cursor-pointer transition-colors duration-200 text-smoant-black no-underline inline-block;
+            }
+            .category-tab.active {
+                @apply text-smoant-yellow border-b-2 border-smoant-yellow;
+            }
+        }
+    </style>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            --color-primary: #FEDA1C;
+        }
+        body {
+            background-color: #fff;
+            color: #000;
+            overflow-x: hidden;
+        }
+
+        /* 顶部导航栏 */
+        .top-nav {
+            width: 100%;
+            height: 60px;
+            background-color: #000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 5%;
+            position: fixed;
+            top: 0;
+            z-index: 998;
+        }
+        .logo {
+            color: var(--color-primary);
+            font-size: 20px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+        .nav-links {
+            display: flex;
+            gap: 39px;
+        }
+        .nav-links a {
+            color: #fff;
+            font-size: 14px;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.8;
+            transition: all 0.3s;
+            position: relative;
+        }
+        .nav-links a:hover {
+            opacity: 1;
+            color: var(--color-primary);
+        }
+        .nav-links a.active {
+            opacity: 1;
+            color: var(--color-primary);
+        }
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--color-primary);
+        }
+        .nav-actions {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        .nav-actions i {
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+        .nav-actions i:hover {
+            opacity: 1;
+        }
+        .main-container{
+            width: 85%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .lang-switcher {
+            display: flex;
+            gap: 5px;
+            margin-left: 10px;
+        }
+        .lang-btn {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #fff;
+            font-size: 12px;
+            padding: 6px 12px;
+            cursor: pointer;
+            border-radius: 3px;
+            transition: all 0.3s;
+            text-transform: uppercase;
+        }
+        .lang-btn:hover {
+            border-color: #fff;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .lang-btn.active {
+            background: #fff;
+            color: #000;
+            border-color: #fff;
+        }
+
+        /* 底部导航 */
+        .footer {
+            background-color: #000;
+            color: #fff;
+            padding: 60px 5% 30px;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr;
+            gap: 40px;
+            max-width: 1400px;
+            margin: 0 auto 40px;
+        }
+        .footer-logo-col {
+            max-width: 280px;
+        }
+        .footer-logo img {
+            /* filter: brightness(0) invert(1); */
+        }
+        .footer-col h5 {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+            color: var(--color-primary);
+        }
+        .footer-col ul {
+            list-style: none;
+        }
+        .footer-col ul li {
+            margin-bottom: 10px;
+        }
+        .footer-col ul li a {
+            color: #fff;
+            font-size: 11px;
+            text-decoration: none;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+        .footer-col ul li a:hover {
+            opacity: 1;
+            color: var(--color-primary);
+        }
+        .footer-col .contact-text {
+            font-size: 11px;
+            color: #999;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .social-links a {
+            color: #fff;
+            font-size: 14px;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+        .social-links a:hover {
+            opacity: 1;
+        }
+        .subscribe-form {
+            display: flex;
+        }
+        .subscribe-form input {
+            flex: 4;
+            padding: 8px;
+            border: none;
+            outline: none;
+            font-size: 11px;
+        }
+        .subscribe-form button {
+            flex: 1;
+            padding: 8px;
+            border: none;
+            background-color: #ffcc00;
+            color: #000;
+            font-size: 11px;
+            text-transform: uppercase;
+            cursor: pointer;
+        }
+        .footer-bottom {
+            text-align: center;
+            font-size: 9px;
+            color: #999;
+            padding-top: 30px;
+            border-top: 1px solid #333;
+        }
+        .footer-bottom-links {
+            margin-bottom: 10px;
+        }
+        .footer-bottom-links a {
+            color: #999;
+            text-decoration: none;
+            margin: 0 8px;
+            transition: color 0.3s;
+        }
+        .footer-bottom-links a:hover {
+            color: #fff;
+        }
+
+        /* 响应式适配 */
+        @media (max-width: 1200px) {
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* 分页样式 */
+        .pagination-btn {
+            padding: 0.75rem 1.25rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            text-decoration: none;
+            color: #333;
+            background: white;
+            transition: all 0.3s ease;
+            min-width: 45px;
+            text-align: center;
+            display: inline-block;
+            font-weight: 500;
+            font-size: 14px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            margin: 0 3px;
+        }
+        .pagination-btn:hover {
+            background: var(--color-primary);
+            color: #000;
+            border-color: var(--color-primary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(254, 218, 28, 0.3);
+        }
+        .pagination-btn.active {
+            background: var(--color-primary);
+            color: #000;
+            border-color: var(--color-primary);
+            font-weight: bold;
+            box-shadow: 0 4px 12px rgba(254, 218, 28, 0.4);
+            cursor: default;
+        }
+        .pagination-btn.active:hover {
+            transform: none;
+        }
+        .pagination-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.3rem;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+        }
+
+        /* 产品卡片点击效果 */
+        .product-card {
+            cursor: pointer;
+            transition: all 0.3s;
+            border-radius: 0.3vw;
+        }
+        .product-card img:hover {
+            transition: all 0.5s;
+            transform: scale(1.1);
+        }
+    </style>
+    <!-- 引入图标库 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-white font-sans">
+    <!-- 顶部导航 -->
+    <nav class="top-nav">
+        <!-- <a th:href="@{'/' + ${lang} + '/'}" class="logo" th:text="${site.name}">SMOANT</a> -->
+        <a th:href="@{'/' + ${lang} + '/'}" class="logo">
+            <img th:if="${site.logo}" th:src="${site.logo}" th:alt="${site.name}" style="height: 40px; margin-right: 10px; vertical-align: middle;">
+            <span  th:text="${site.name}"></span>
+        </a>
+        <div class="nav-links">
+            <a th:each="menu : ${menus}"
+               th:href="@{'/' + ${lang} + '/' + ${menu.target_url}}"
+               th:text="${menu.menu_name}"
+               th:attr="data-url=${'/'+lang + '/' + menu.target_url}"
+            >菜单</a>
+        </div>
+        <div class="nav-actions">
+            <!-- 语言切换器 -->
+            <div class="lang-switcher" style="display: flex; gap: 5px; margin-left: 10px;">
+                <button class="lang-btn" th:classappend="${lang == 'zh'} ? 'active'" data-lang="zh"
+                        onclick="switchLanguage('zh')">中文</button>
+                <button class="lang-btn" th:classappend="${lang == 'en'} ? 'active'" data-lang="en"
+                        onclick="switchLanguage('en')">EN</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 产品标题 + 二级类别标签 -->
+    <div class="main-container  mx-auto px-4 py-8" style="margin-top: 60px;min-height: 60vh;">
+        <h1 class="text-2xl font-bold text-smoant-black mb-6" data-i18n="products.title">SMOANT PRODUCT</h1>
+
+        <!-- 二级类别标签栏（动态数据） -->
+        <div class="flex flex-wrap gap-2 mb-8 text-sm border-b pb-2">
+            <a th:href="@{'/' + ${lang} + '/products'}"
+               th:classappend="${selectedCategory == null} ? 'category-tab active' : 'category-tab'"
+               class="category-tab"
+               data-i18n="products.allProducts">
+                All
+            </a>
+            <a th:each="cat : ${categories}"
+               th:href="@{'/' + ${lang} + '/products?category=' + ${cat.id}}"
+               th:classappend="${selectedCategory != null && selectedCategory == cat.id} ? 'category-tab active' : 'category-tab'"
+               class="category-tab"
+               th:text="${cat.name}">
+                分类
+            </a>
+        </div>
+
+        <!-- 产品网格列表（动态数据） -->
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+            <div th:each="product, iterStat : ${products}"
+                 class="product-card"
+                 th:onclick="'window.location.href=\'' + @{'/' + ${lang} + '/products/' + ${product.id}} + '\''">
+                <img th:if="${product.mainImage}"
+                     th:src="@{${product.mainImage}}"
+                     th:alt="${product.name}"
+                     class="mx-auto mb-3"
+                     style="max-width: 120px; height: auto;">
+                <div th:unless="${product.mainImage}"
+                     class="mx-auto mb-3"
+                     style="width: 120px; height: 150px; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%); border-radius: 8px;">
+                    <span style="font-size: 48px;">📦</span>
+                </div>
+                <h3 class="text-sm font-medium mb-1" th:text="${product.name}">产品名称</h3>
+                <a th:href="@{'/' + ${lang} + '/products/' + ${product.id}}"
+                   class="text-xs text-smoant-gray hover:text-smoant-yellow"
+                   onclick="event.stopPropagation()"
+                   data-i18n="products.learnMore">Learn More +</a>
+            </div>
+        </div>
+
+        <!-- 空状态 -->
+        <div th:if="${products == null || products.isEmpty()}"
+             style="text-align: center; padding: 4rem 0;">
+            <p style="color: #888; font-size: 1.2rem;" data-i18n="products.noProducts">暂无产品</p>
+        </div>
+
+        <!-- 分页 -->
+        <div th:if="${totalPages > 1}" class="pagination-container">
+            <!-- 上一页 -->
+            <a th:if="${currentPage > 1}"
+               th:href="${selectedCategory != null} ? @{'/' + ${lang} + '/products?page=' + ${currentPage - 1} + '&category=' + ${selectedCategory}} : @{'/' + ${lang} + '/products?page=' + ${currentPage - 1}}"
+               class="pagination-btn">
+                <span data-i18n="pagination.prev">&laquo; 上一页</span>
+            </a>
+
+            <!-- 页码 -->
+            <span th:each="i : ${#numbers.sequence(1, totalPages)}"
+                  th:if="${i == 1 || i == totalPages || (i >= currentPage - 2 && i <= currentPage + 2)}">
+                <a th:if="${i != currentPage}"
+                   th:href="${selectedCategory != null} ? @{'/' + ${lang} + '/products?page=' + ${i} + '&category=' + ${selectedCategory}} : @{'/' + ${lang} + '/products?page=' + ${i}}"
+                   class="pagination-btn"
+                   th:text="${i}">1</a>
+                <span th:if="${i == currentPage}"
+                      class="pagination-btn active"
+                      th:text="${i}">1</span>
+            </span>
+
+            <!-- 下一页 -->
+            <a th:if="${currentPage < totalPages}"
+               th:href="${selectedCategory != null} ? @{'/' + ${lang} + '/products?page=' + ${currentPage + 1} + '&category=' + ${selectedCategory}} : @{'/' + ${lang} + '/products?page=' + ${currentPage + 1}}"
+               class="pagination-btn">
+                <span data-i18n="pagination.next">下一页 &raquo;</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- 底部导航 -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <!-- Logo 和公司简介 -->
+            <div class="footer-col footer-logo-col">
+                <div class="footer-logo">
+                    <img th:if="${site.logo}"
+                         th:src="${site.logo}"
+                         th:alt="${site.name}"
+                         style="height: 50px; margin-bottom: 15px;">
+                    <h3 th:text="${siteI18n != null ? siteI18n.site_name : site.name}">ManufacturePro</h3>
+                    <p th:text="${siteI18n != null ? siteI18n.description : ''}">我们是一家专业的制造企业，拥有完善的生产设施和质量管理体系，致力于为全球客户提供高品质的产品和定制化服务。</p>
+                </div>
+            </div>
+
+            <!-- 产品分类 -->
+            <div class="footer-col">
+                <h5 data-i18n="footer.product.title">Product</h5>
+                <ul>
+                    <li><a th:href="@{'/' + ${lang} + '/products'}" data-i18n="footer.product.all">All Product</a></li>
+                    <!-- 动态加载产品分类 -->
+                    <li th:each="category, iterStat : ${categories}" th:if="${iterStat.index < 3 }">
+                        <a th:href="@{'/' + ${lang} + '/products?category=' + ${category.id}}"
+                           th:text="${category.name}">分类名称</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- 关于我们 -->
+            <div class="footer-col">
+                <h5 data-i18n="footer.about.title">About Us</h5>
+                <ul>
+                    <!-- <li><a th:href="@{'/' + ${lang} + '/about'}" data-i18n="footer.about.brandStory">Brand Story</a></li>
+                    <li><a th:href="@{'/' + ${lang} + '/about'}" data-i18n="footer.about.manufacturing">Manufacturing</a></li> -->
+                    <li><a th:href="@{'/' + ${lang} + '/contact'}" data-i18n="footer.about.contact">Contact Us</a></li>
+                </ul>
+            </div>
+            <!-- 社区 -->
+            <div class="footer-col">
+                <h5 data-i18n="footer.community.title">Community</h5>
+                <ul>
+                    <li><a th:href="@{'/' + ${lang} + '/news'}" data-i18n="footer.community.news">News</a></li>
+                    <!-- <li><a href="#" data-i18n="footer.community.video">Video</a></li>
+                    <li><a href="#" data-i18n="footer.community.gallery">Gallery</a></li> -->
+                </ul>
+            </div>
+            <!-- 联系我们 -->
+            <div class="footer-col" th:if="${contact}">
+                <h5 data-i18n="footer.contact.title">Contact Us</h5>
+                <p class="contact-text">
+                    <span data-i18n="footer.contact.tel">TEL:</span> <span th:text="${contact.phone}">+86-755-86568800</span><br>
+                    <span data-i18n="footer.contact.email">Email:</span> <span th:text="${contact.email}">support@smoant.com</span><br>
+                    <span data-i18n="footer.contact.address">Address:</span> <span th:text="${contact.address}">Shenzhen, China</span>
+                </p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="footer-bottom-links">
+                <a href="#" data-i18n="footer.bottom.faq">FAQ</a>
+                <a href="#" data-i18n="footer.bottom.privacy">Privacy Policy</a>
+                <a href="#" data-i18n="footer.bottom.conditions">Conditions Policy</a>
+            </div>
+            <p><span data-i18n="footer.bottom.copyrightPrefix">Copyright ©</span> <span class="year"></span> <span th:text="${site.name}">SMOANT</span> <span data-i18n="footer.bottom.allRights">All rights reserved.</span></p>
+        </div>
+    </footer>
+
+    <!-- 国际化脚本 -->
+    <script th:src="@{'/js/i18n.js'}"></script>
+    <script>
+        // 语言切换函数
+        function switchLanguage(lang) {
+            // 获取当前 URL 的查询参数
+            const urlParams = new URLSearchParams(window.location.search);
+            const page = urlParams.get('page');
+            const category = urlParams.get('category');
+
+            // 构建新的 URL
+            let newUrl = '/' + lang + '/products';
+            const params = [];
+
+            if (page && page !== '1') {
+                params.push('page=' + page);
+            }
+            if (category) {
+                params.push('category=' + category);
+            }
+
+            if (params.length > 0) {
+                newUrl += '?' + params.join('&');
+            }
+
+            window.location.href = newUrl;
+        }
+
+        window.onload = function () {
+            // 设置年份
+            const yearElements = document.getElementsByClassName('year');
+            if (yearElements.length > 0) {
+                yearElements[0].innerHTML = new Date().getFullYear();
+            } else {
+                console.error('Year element not found!');
+            }
+
+            // 导航高亮
+            const currentPath = window.location.pathname;
+            const navLinks = document.querySelectorAll('.nav-links a');
+            console.log(navLinks);
+            navLinks.forEach(link => {
+                const targetUrl = link.getAttribute('data-url');
+                const href = link.getAttribute('href');
+                if (targetUrl == currentPath) {
+                    link.classList.add('active');
+                }
+            });
+        }
+    </script>
+    <!-- 引入Font Awesome图标 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"></script>
+</body>
+</html>

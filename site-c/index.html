@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" th:content="${siteSeo != null ? siteSeo.description : ''}" content="">
+    <meta name="keywords" th:content="${siteSeo != null ? siteSeo.keywords : ''}" content="">
+    <title th:text="${siteSeo != null ? siteSeo.title : site.name}">SMOANT - Official Website</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            --color-primary: #FEDA1C;
+        }
+        body {
+            background-color: #fff;
+            color: #000;
+            overflow-x: hidden;
+        }
+
+        /* 顶部警示条 */
+        .warning-bar {
+            width: 100%;
+            height: 25px;
+            background-color: #000;
+            color: #999;
+            font-size: 9px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            letter-spacing: 0.5px;
+            position: fixed;
+            top: 0;
+            z-index: 999;
+        }
+
+        /* 顶部导航栏 */
+        .top-nav {
+            width: 100%;
+            height: 60px;
+            background-color: #000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 5%;
+            position: fixed;
+            top: 0;
+            z-index: 998;
+        }
+        .logo {
+            color: var(--color-primary);
+            font-size: 20px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+        .nav-links {
+            display: flex;
+            gap: 39px;
+        }
+        .nav-links a {
+            color: #fff;
+            font-size: 14px;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.8;
+            transition: all 0.3s;
+            position: relative;
+        }
+        .nav-links a:hover {
+            opacity: 1;
+            color: var(--color-primary);
+        }
+        .nav-links a.active {
+            opacity: 1;
+            color: var(--color-primary);
+        }
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--color-primary);
+        }
+        .nav-actions {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        .nav-actions i {
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+        .nav-actions i:hover {
+            opacity: 1;
+        }
+        .lang-switcher {
+            display: flex;
+            gap: 5px;
+            margin-left: 10px;
+        }
+        .lang-btn {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #fff;
+            font-size: 12px;
+            padding: 6px 12px;
+            cursor: pointer;
+            border-radius: 3px;
+            transition: all 0.3s;
+            text-transform: uppercase;
+        }
+        .lang-btn:hover {
+            border-color: #fff;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .lang-btn.active {
+            background: #fff;
+            color: #000;
+            border-color: #fff;
+        }
+
+        /* 主体容器 */
+        .main-container {
+            /* padding-top: 60px; */
+        }
+
+        /* Banner轮播区 */
+        .banner-slider {
+            width: 100%;
+            height: calc(100vh - 250px);
+            position: relative;
+            overflow: hidden;
+            margin-top: 60px;
+        }
+        .banner-slide {
+            width: 100%;
+            /* height: 100%; */
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+            background-size: cover;
+            background-position: center;
+            width: 1857px; 
+            margin-right: 10px;
+            background-repeat: no-repeat;
+        }
+        .banner-slide.active {
+            opacity: 1;
+        }
+        .banner-slide .slide-img {
+            flex: 1;
+            height: max-content;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .banner-slide .slide-img img {
+            max-height: 80%;
+            width: auto;
+        }
+        .banner-slide .slide-text {
+            flex: 1;
+            text-align: left;
+            padding-left: 50px;
+            position: absolute;
+            z-index: 1;
+            left: 60%;
+        }
+        .banner-slide .slide-text.img-right{
+            left: 10%;
+        }
+        .banner-slide .slide-text h1 {
+            font-size: 42px;
+            font-weight: 400;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+        }
+        .banner-slide .slide-text p {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 30px;
+        }
+        .banner-slide .slide-text .btn {
+            font-size: 12px;
+            color: #000;
+            text-decoration: none;
+            border: 1px solid #000;
+            padding: 10px 25px;
+            display: inline-block;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: background 0.3s;
+        }
+        .banner-slide .slide-text .btn:hover {
+            background-color: #f5f5f5;
+        }
+        /* Banner轮播控制按钮 */
+        .banner-controls {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+        }
+        .banner-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #ccc;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .banner-dot.active {
+            background-color: #000;
+        }
+
+        /* 热卖产品区 */
+        .hot-products {
+            padding: 80px 5%;
+            text-align: center;
+        }
+        .section-title {
+            font-size: 2.3vw;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 4vw;
+            position: relative;
+            display: inline-block;
+        }
+        .section-title::after {
+            content: '';
+            width: 60px;
+            height: 1px;
+            background-color: #000;
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            max-width: 1400px;
+            margin: 0 auto 60px;
+        }
+        .product-card {
+            text-align: center;
+            transition: all 0.3s;
+            background-color: #f5f5f5;
+            border-radius: 0.5rem;
+            padding: 3vw 1vw 1vw 1vw;
+        }
+        .product-card img:hover{
+            transform: scale(1.1);
+        }
+        .product-card img {
+            max-width: 120px;
+            height: auto;
+            margin-bottom: 15px;
+        }
+        .product-card h4 {
+            font-size: 1.3vw;
+            font-weight: 500;
+            margin-bottom: 10px;
+            color: #000;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+
+        }
+        .product-card .btn {
+            font-size: 0.9vw;
+            color: #666;
+            text-decoration: none;
+            padding-bottom: 2px;
+            font-weight: 300;
+            line-height: 1.6;
+            transition: color 0.3s;
+        }
+        .product-card .btn:hover {
+            color: #000;
+        }
+        .more-products-btn {
+            font-size: 12px;
+            color: #000;
+            text-decoration: none;
+            border: 1px solid #000;
+            padding: 10px 30px;
+            display: inline-block;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: background 0.3s;
+        }
+        .more-products-btn:hover {
+            background-color: #f5f5f5;
+        }
+
+        /* 排名第一产品模块 */
+        .top-product-section {
+            padding: 6vw 5%;
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            position: relative;
+        }
+        .top-product-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+        }
+        .top-product-badge {
+            position: absolute;
+            top: -20px;
+            left: 50px;
+            z-index: 10;
+            text-align: center;
+        }
+        .badge-number {
+            font-size: 80px;
+            font-weight: 700;
+            color: #000;
+            line-height: 1;
+            text-shadow: 3px 3px 0px rgba(255, 204, 0, 0.3);
+        }
+        .badge-text {
+            font-size: 14px;
+            font-weight: 600;
+            color: #ffcc00;
+            letter-spacing: 3px;
+            margin-top: -10px;
+        }
+        .top-product-content {
+            display: flex;
+            align-items: center;
+            gap: 80px;
+            background: #fff;
+            border-radius: 20px;
+            padding: 60px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            margin-top: 40px;
+        }
+        .top-product-image {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 400px;
+        }
+        .top-product-image img {
+            max-width: 100%;
+            max-height: 450px;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            transition: transform 0.5s ease;
+        }
+        .top-product-image img:hover {
+            transform: scale(1.05);
+        }
+        .top-product-info {
+            flex: 1;
+            padding: 20px 0;
+        }
+        .top-product-title {
+            font-size: 48px;
+            font-weight: 700;
+            color: #000;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            line-height: 1.2;
+        }
+        .top-product-description {
+            font-size: 18px;
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 40px;
+        }
+        .top-product-actions {
+            display: flex;
+            gap: 20px;
+        }
+        .top-product-btn {
+            padding: 15px 40px;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            display: inline-block;
+            text-align: center;
+        }
+        .top-product-btn.primary {
+            background: #000;
+            color: #fff;
+            border: 2px solid #000;
+        }
+        .top-product-btn.primary:hover {
+            background: #ffcc00;
+            border-color: #ffcc00;
+            color: #000;
+        }
+        .top-product-btn.secondary {
+            background: transparent;
+            color: #000;
+            border: 2px solid #000;
+        }
+        .top-product-btn.secondary:hover {
+            background: #000;
+            color: #fff;
+        }
+
+        /* 品牌互动轮播区 */
+        .connect-section {
+            padding: 4vw 5%;
+            background-color: #f9f9f9;
+            position: relative;
+        }
+        .connect-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto 40px;
+        }
+        .connect-title {
+            font-size: 2.3vw;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .connect-title-icon{
+            width: auto;
+            height: 35px;
+        }
+        .connect-title span {
+            color: #ffcc00;
+            font-weight: 700;
+        }
+        .connect-subtitle {
+            font-size: 22px;
+            margin-top: 5px;
+        }
+        .connect-slider {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            overflow: hidden;
+            position: relative;
+            margin-bottom: 20px;
+        }
+        .connect-slide-wrapper {
+            display: flex;
+            transition: transform 0.5s ease;
+            gap: 30px;
+        }
+        .connect-slide {
+            min-width: 100%;
+            display: flex;
+            gap: 20px;
+        }
+        /* 产品滑动卡片 */
+        .product-slide-card {
+            min-width: calc(25% - 22.5px);
+            flex-shrink: 0;
+        }
+        .product-slide-content {
+            background-color: #fff;
+            border-radius: 0.5rem;
+            padding: 3vw 1vw 1vw 1vw;
+            text-align: center;
+            transition: all 0.3s;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .product-slide-content:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .product-slide-content img {
+            max-width: 120px;
+            height: auto;
+            margin-bottom: 15px;
+            transition: transform 0.3s;
+        }
+        .product-slide-content img:hover {
+            transform: scale(1.1);
+        }
+        .product-slide-content h4 {
+            font-size: 1.3vw;
+            font-weight: 500;
+            margin-bottom: 10px;
+            color: #000;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .product-slide-content .btn {
+            font-size: 0.9vw;
+            color: #666;
+            text-decoration: none;
+            padding-bottom: 2px;
+            font-weight: 300;
+            line-height: 1.6;
+            transition: color 0.3s;
+        }
+        .product-slide-content .btn:hover {
+            color: #000;
+        }
+        .connect-slide-item {
+            flex: 1;
+            height: 400px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+        }
+        .connect-slide-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        .connect-slide-item:hover img {
+            transform: scale(1.05);
+        }
+        /* 互动轮播控制按钮 */
+        .connect-controls {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+            max-width: 1400px;
+            margin: 30px auto 0;
+        }
+        .connect-control-btn {
+            width: 50px;
+            height: 50px;
+            border: 2px solid #000;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #fff;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .connect-control-btn:hover {
+            background-color: #000;
+        }
+        .connect-control-btn:hover i {
+            color: #fff;
+        }
+        .connect-control-btn i {
+            font-size: 16px;
+            color: #000;
+            transition: color 0.3s;
+        }
+
+        /* 资讯区 */
+        .discover-section {
+            padding: 80px 5%;
+            text-align: center;
+        }
+        .discover-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .discover-card {
+            position: relative;
+            height: 400px;
+            overflow: hidden;
+            cursor: pointer;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: box-shadow 0.3s;
+        }
+        .discover-card:hover {
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        .discover-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        .discover-card:hover img {
+            transform: scale(1.05);
+        }
+        .discover-card .card-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 25px;
+            background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.7) 100%);
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .discover-card .card-info h4 {
+            font-size: 18px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            margin-bottom: 5px;
+            line-height: 1.4;
+        }
+        .news-summary {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+            margin-bottom: 10px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .news-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+        }
+        .news-date {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        .discover-card .card-info .btn {
+            font-size: 12px;
+            color: #ffcc00;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .discover-card .card-info .btn:hover {
+            color: #fff;
+        }
+
+        /* 底部导航 */
+        .footer {
+            background-color: #000;
+            color: #fff;
+            padding: 60px 5% 30px;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr;
+            gap: 40px;
+            max-width: 1400px;
+            margin: 0 auto 40px;
+        }
+        .footer-logo-col {
+            max-width: 280px;
+        }
+        .footer-logo img {
+            /* filter: brightness(0) invert(1); */
+        }
+        .footer-col h5 {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+            color: var(--color-primary);
+        }
+        .footer-col ul {
+            list-style: none;
+        }
+        .footer-col ul li {
+            margin-bottom: 10px;
+        }
+        .footer-col ul li a {
+            color: #fff;
+            font-size: 11px;
+            text-decoration: none;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+        .footer-col ul li a:hover {
+            opacity: 1;
+            color: var(--color-primary);
+        }
+        .footer-col .contact-text {
+            font-size: 11px;
+            color: #999;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .social-links a {
+            color: #fff;
+            font-size: 14px;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+        .social-links a:hover {
+            opacity: 1;
+        }
+        .subscribe-form {
+            display: flex;
+        }
+        .subscribe-form input {
+            flex: 4;
+            padding: 8px;
+            border: none;
+            outline: none;
+            font-size: 11px;
+        }
+        .subscribe-form button {
+            flex: 1;
+            padding: 8px;
+            border: none;
+            background-color: #ffcc00;
+            color: #000;
+            font-size: 11px;
+            text-transform: uppercase;
+            cursor: pointer;
+        }
+        .footer-bottom {
+            text-align: center;
+            font-size: 9px;
+            color: #999;
+            padding-top: 30px;
+            border-top: 1px solid #333;
+        }
+        .footer-bottom-links {
+            margin-bottom: 10px;
+        }
+        .footer-bottom-links a {
+            color: #999;
+            text-decoration: none;
+            margin: 0 8px;
+            transition: color 0.3s;
+        }
+        .footer-bottom-links a:hover {
+            color: #fff;
+        }
+
+        /* 响应式适配 */
+        @media (max-width: 1200px) {
+            .products-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .top-product-content {
+                gap: 40px;
+                padding: 40px;
+            }
+            .top-product-title {
+                font-size: 36px;
+            }
+        }
+        @media (max-width: 992px) {
+            .banner-slide {
+                flex-direction: column;
+                justify-content: center;
+                text-align: center;
+                padding: 50px 5%;
+            }
+            .banner-slide .slide-text {
+                padding-left: 0;
+                margin-top: 30px;
+            }
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .connect-slide {
+                flex-direction: column;
+            }
+            .connect-slide-item {
+                height: 250px;
+            }
+            .discover-grid {
+                grid-template-columns: 1fr;
+            }
+            .top-product-content {
+                flex-direction: column;
+                gap: 30px;
+                padding: 40px 30px;
+            }
+            .top-product-image {
+                min-height: 300px;
+            }
+            .top-product-title {
+                font-size: 32px;
+            }
+            .top-product-badge {
+                left: 20px;
+            }
+            .badge-number {
+                font-size: 60px;
+            }
+            .discover-card {
+                height: 350px;
+            }
+            .discover-card .card-info {
+                padding: 20px;
+            }
+            .discover-card .card-info h4 {
+                font-size: 16px;
+            }
+        }
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+            .top-product-section {
+                padding: 40px 5%;
+            }
+            .top-product-content {
+                padding: 30px 20px;
+            }
+            .top-product-title {
+                font-size: 28px;
+            }
+            .top-product-description {
+                font-size: 16px;
+            }
+            .top-product-actions {
+                flex-direction: column;
+            }
+            .top-product-btn {
+                width: 100%;
+            }
+            .badge-number {
+                font-size: 50px;
+            }
+            .badge-text {
+                font-size: 12px;
+            }
+            .discover-card {
+                height: 300px;
+            }
+            .discover-card .card-info h4 {
+                font-size: 15px;
+            }
+            .news-summary {
+                font-size: 12px;
+                -webkit-line-clamp: 1;
+            }
+        }
+    </style>
+    <!-- 引入图标库 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- 顶部导航 -->
+    <nav class="top-nav">
+        <!-- <a th:href="@{'/' + ${lang} + '/'}" class="logo" th:text="${site.name}">SMOANT</a> -->
+        <a th:href="@{'/' + ${lang} + '/'}" class="logo">
+            <img th:if="${site.logo}" th:src="${site.logo}" th:alt="${site.name}" style="height: 40px; margin-right: 10px; vertical-align: middle;">
+            <span  th:text="${site.name}"></span>
+        </a>
+        <div class="nav-links">
+            <a th:each="menu : ${menus}"
+               th:href="@{'/' + ${lang} + '/' + ${menu.target_url}}"
+               th:text="${menu.menu_name}"
+               th:attr="data-url=${'/'+lang + '/' + menu.target_url}"
+            >菜单</a>
+        </div>
+        <div class="nav-actions">
+            <!-- 语言切换器 -->
+            <div class="lang-switcher" style="display: flex; gap: 5px; margin-left: 10px;">
+                <button class="lang-btn" th:classappend="${lang == 'zh'} ? 'active'" data-lang="zh"
+                        th:onclick="'window.location.href=\'' + @{'/zh/'} + '\''">中文</button>
+                <button class="lang-btn" th:classappend="${lang == 'en'} ? 'active'" data-lang="en"
+                        th:onclick="'window.location.href=\'' + @{'/en/'} + '\''">EN</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主体内容 -->
+    <div class="main-container">
+        <!-- Banner轮播区 -->
+        <div class="banner-slider">
+            <!-- 动态生成 Banner 幻灯片 -->
+            <div th:each="banner, iterStat : ${banners}"
+                 class="banner-slide"
+                 th:classappend="${iterStat.first} ? 'active' : ''"
+                 th:attr="data-index=${iterStat.index}">
+                <div class="slide-img" th:if="${banner.image_url}" >
+                    <img th:src="${banner.image_url}" th:alt="${banner.title}" alt="Banner Image">
+                </div>
+                <div class="slide-text" th:classappend="${iterStat.index  == 2 ? 'img-right' : ''}" th:title="${iterStat}">
+                    <h1 th:text="${banner.title}">Banner标题</h1>
+                    <p th:if="${banner.subtitle}" th:text="${banner.subtitle}"></p>
+                </div>
+            </div>
+
+            <!-- Banner轮播控制点 -->
+            <div class="banner-controls" th:if="${#lists.size(banners) > 1}">
+                <div th:each="banner, iterStat : ${banners}"
+                     class="banner-dot"
+                     th:classappend="${iterStat.first} ? 'active' : ''"
+                     th:attr="data-index=${iterStat.index}"></div>
+            </div>
+        </div>
+
+        <!-- 排名第一产品模块 -->
+        <section class="top-product-section" th:if="${products != null && !products.isEmpty()}">
+            <div class="top-product-container" th:with="topProduct=${products[0]}">
+                <div class="top-product-badge">
+                    <div class="badge-number">01</div>
+                    <div class="badge-text" data-i18n="products.topRanked">TOP RANKED</div>
+                </div>
+                <div class="top-product-content">
+                    <div class="top-product-image">
+                        <img th:if="${topProduct.mainImage}"
+                             th:src="@{${topProduct.mainImage}}"
+                             th:alt="${topProduct.name}"
+                             alt="Top Product">
+                    </div>
+                    <div class="top-product-info">
+                        <h2 class="top-product-title" th:text="${topProduct.name}">PRODUCT NAME</h2>
+                        <p class="top-product-description" th:text="${topProduct.sku}">Product description goes here</p>
+                        <div class="top-product-actions">
+                            <a th:href="@{'/' + ${lang} + '/products/' + ${topProduct.id}}" class="top-product-btn primary">
+                                <span data-i18n="products.viewDetails">View Details</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 品牌互动轮播区 -->
+        <section class="connect-section">
+            <div class="connect-header">
+                <div>
+                    <h2 class="connect-title" data-i18n="products.hotSale">HOT SALE PRODUCT</h2>
+                </div>
+                <div>
+                    <img class="connect-title-icon" th:src="@{'/js/icon-1.png'}" alt="">
+                    
+                </div>
+            </div>
+
+            <div class="connect-slider">
+                <div class="connect-slide-wrapper" id="productSlideWrapper">
+                    <!-- 动态生成产品卡片 -->
+                    <div class="connect-slide-item product-slide-card" th:each="product : ${products}" th:if="${product != null}">
+                        <div class="product-slide-content">
+                            <img th:if="${product.mainImage}"
+                                 th:src="@{${product.mainImage}}"
+                                 th:alt="${product.name}"
+                                 alt="Product">
+                            <h4 th:text="${product.name}">PRODUCT NAME</h4>
+                            <a th:href="@{'/' + ${lang} + '/products/' + ${product.id}}" class="btn">
+                                <span data-i18n="products.learnMore">Learn More</span> »
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 轮播控制按钮 -->
+            <div class="connect-controls">
+                <div class="connect-control-btn prev-btn-product">
+                    <i class="fas fa-chevron-left"></i>
+                </div>
+                <div class="connect-control-btn next-btn-product">
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+            </div>
+        </section>
+
+        <!-- 资讯区 -->
+        <section class="discover-section">
+            <h2 class="section-title" data-i18n="news.latest">LATEST NEWS</h2>
+            <div class="discover-grid">
+                <!-- 动态加载新闻 -->
+                <div class="discover-card" th:each="newsItem, iterStat : ${news}"
+                    th:if="${iterStat.index  < 2}"
+                     th:onclick="'window.location.href=\'' + @{'/' + ${lang} + '/news/' + ${newsItem.id}} + '\''">
+                    <img th:if="${newsItem.cover_image}"
+                         th:src="@{${newsItem.cover_image}}"
+                         th:alt="${newsItem.title}"
+                         alt="News">
+                    <img th:unless="${newsItem.cover_image}"
+                         src="https://via.placeholder.com/700x350/000000/ffffff?text=News"
+                         alt="News">
+                    <div class="card-info">
+                        <h4 th:text="${newsItem.title}">News Title</h4>
+                        <p class="news-summary" th:text="${newsItem.summary}">News summary goes here...</p>
+                        <div class="news-meta">
+                            <span class="news-date" th:if="${newsItem.publish_time}">
+                                📅 <span th:text="${#temporals.format(newsItem.publish_time, 'yyyy-MM-dd')}">2026-01-01</span>
+                            </span>
+                            <a th:href="@{'/' + ${lang} + '/news/' + ${newsItem.id}}" class="btn" data-i18n="discover.readMore">Read More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 查看更多按钮 -->
+            <div style="text-align: center; margin-top: 3rem;">
+                <a th:href="@{'/' + ${lang} + '/news'}" class="more-products-btn" data-i18n="news.more">More News</a>
+            </div>
+        </section>
+    </div>
+
+    <!-- 底部导航 -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <!-- Logo 和公司简介 -->
+            <div class="footer-col footer-logo-col">
+                <div class="footer-logo">
+                    <img th:if="${site.logo}"
+                         th:src="${site.logo}"
+                         th:alt="${site.name}"
+                         style="height: 50px; margin-bottom: 15px;">
+                    <h3 th:text="${siteI18n != null ? siteI18n.site_name : site.name}">ManufacturePro</h3>
+                    <p th:text="${siteI18n != null ? siteI18n.description : ''}">我们是一家专业的制造企业，拥有完善的生产设施和质量管理体系，致力于为全球客户提供高品质的产品和定制化服务。</p>
+                </div>
+            </div>
+
+            <!-- 产品分类 -->
+            <div class="footer-col">
+                <h5 data-i18n="footer.product.title">Product</h5>
+                <ul>
+                    <li><a th:href="@{'/' + ${lang} + '/products'}" data-i18n="footer.product.all">All Product</a></li>
+                    <!-- 动态加载产品分类 -->
+                    <li th:each="category, iterStat : ${categories}"  th:if="${iterStat.index < 3 }">
+                        <a th:href="@{'/' + ${lang} + '/products?category=' + ${category.id}}"
+                           th:text="${category.name}">分类名称</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- 关于我们 -->
+            <div class="footer-col">
+                <h5 data-i18n="footer.about.title">About Us</h5>
+                <ul>
+                    <!-- <li><a th:href="@{'/' + ${lang} + '/about'}" data-i18n="footer.about.brandStory">Brand Story</a></li>
+                    <li><a th:href="@{'/' + ${lang} + '/about'}" data-i18n="footer.about.manufacturing">Manufacturing</a></li> -->
+                    <li><a th:href="@{'/' + ${lang} + '/contact'}" data-i18n="footer.about.contact">Contact Us</a></li>
+                </ul>
+            </div>
+            <!-- 社区 -->
+            <div class="footer-col">
+                <h5 data-i18n="footer.community.title">Community</h5>
+                <ul>
+                    <li><a th:href="@{'/' + ${lang} + '/news'}" data-i18n="footer.community.news">News</a></li>
+                    <!-- <li><a href="#" data-i18n="footer.community.video">Video</a></li>
+                    <li><a href="#" data-i18n="footer.community.gallery">Gallery</a></li> -->
+                </ul>
+            </div>
+            <!-- 联系我们 -->
+            <div class="footer-col" th:if="${contact}">
+                <h5 data-i18n="footer.contact.title">Contact Us</h5>
+                <p class="contact-text">
+                    <span data-i18n="footer.contact.tel">TEL:</span> <span th:text="${contact.phone}">+86-755-86568800</span><br>
+                    <span data-i18n="footer.contact.email">Email:</span> <span th:text="${contact.email}">support@smoant.com</span><br>
+                    <span data-i18n="footer.contact.address">Address:</span> <span th:text="${contact.address}">Shenzhen, China</span>
+                </p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="footer-bottom-links">
+                <a href="#" data-i18n="footer.bottom.faq">FAQ</a>
+                <a href="#" data-i18n="footer.bottom.privacy">Privacy Policy</a>
+                <a href="#" data-i18n="footer.bottom.conditions">Conditions Policy</a>
+            </div>
+            <p><span data-i18n="footer.bottom.copyrightPrefix">Copyright ©</span> <span class="year"></span> <span th:text="${site.name}">SMOANT</span> <span data-i18n="footer.bottom.allRights">All rights reserved.</span></p>
+        </div>
+    </footer>
+
+    <script>
+        window.onload = function () {
+            // 设置年份
+            const yearElements = document.getElementsByClassName('year');
+            if (yearElements.length > 0) {
+                yearElements[0].innerHTML = new Date().getFullYear();
+            } else {
+                console.error('Year element not found!');
+            }
+
+            // 导航高亮
+            // 导航高亮
+            const currentPath = window.location.pathname;
+            const navLinks = document.querySelectorAll('.nav-links a');
+            console.log(navLinks);
+            navLinks.forEach(link => {
+                
+                const targetUrl = link.getAttribute('data-url');
+                const href = link.getAttribute('href');
+                if (targetUrl == currentPath) {
+                    link.classList.add('active');
+                }
+            });
+        }
+
+        // 1. Banner轮播功能
+        const bannerSlides = document.querySelectorAll('.banner-slide');
+        const bannerDots = document.querySelectorAll('.banner-dot');
+        let currentBannerIndex = 0;
+
+        // 切换Banner
+        function switchBanner(index) {
+            // 移除所有active状态
+            bannerSlides.forEach(slide => slide.classList.remove('active'));
+            bannerDots.forEach(dot => dot.classList.remove('active'));
+            
+            // 添加active状态到目标
+            bannerSlides[index].classList.add('active');
+            bannerDots[index].classList.add('active');
+            currentBannerIndex = index;
+        }
+
+        // 点击圆点切换Banner
+        bannerDots.forEach((dot, index) => {
+            dot.addEventListener('click', () => switchBanner(index));
+        });
+
+        // 自动轮播Banner
+        setInterval(() => {
+            let nextIndex = (currentBannerIndex + 1) % bannerSlides.length;
+            switchBanner(nextIndex);
+        }, 5000);
+
+        // 2. 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+
+    <!-- 国际化脚本 -->
+    <script th:src="@{'/js/i18n.js'}"></script>
+    <!-- 产品轮播脚本 -->
+    <script th:src="@{'/js/product-slider.js'}"></script>
+</body>
+</html>
