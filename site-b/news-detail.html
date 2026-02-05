@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" th:content="${news.summary}" content="新闻详情">
   <title th:text="${ news.title + ' - ' + site.name }">新闻详情</title>
+  <link rel="icon" th:if="${site.favicon}" th:href="@{${site.favicon}}" type="image/x-icon">
   <link rel="stylesheet" th:href="@{'/css/style.css'}">
   <link rel="stylesheet" th:href="@{'/css/widget-posts.min.css'}">
   <link rel="stylesheet" th:href="@{'/css/navbar-footer.css'}">
@@ -386,7 +387,7 @@
       <div class="news-detail-header">
         <h1 class="news-detail-title" th:text="${news.title}">新闻标题</h1>
         <div class="news-detail-meta">
-          <span>📅 <span th:text="${#temporals.format(news.publish_time, 'yyyy-MM-dd')}">2024-09-27</span></span>
+          <span>📅 <span class="utc-date" th:attr="data-utc=${news.publish_time}" th:text="${#temporals.format(news.publish_time, 'yyyy-MM-dd')}">2024-09-27</span></span>
           <span th:if="${news.view_count != null}">👁️ <span data-i18n="news.views">阅读量</span>: <span th:text="${news.view_count}">0</span></span>
         </div>
       </div>

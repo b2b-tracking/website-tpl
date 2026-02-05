@@ -6,6 +6,7 @@
   <meta name="description" th:content="${siteSeo != null ? siteSeo.description : ''}" content="了解我们的公司文化、愿景和使命">
   <meta name="keywords" th:content="${siteSeo != null ? siteSeo.keywords : ''}" content="">
   <title th:text="${siteSeo != null ? siteSeo.title : site.name}">关于我们 - ManufacturePro</title>
+  <link rel="icon" th:if="${site.favicon}" th:href="@{${site.favicon}}" type="image/x-icon">
   <link rel="stylesheet" th:href="@{'/css/style.css'}">
 </head>
 <body>
@@ -36,16 +37,14 @@
   <section class="container" style="margin-top: 6rem;">
     <div style="max-width: 900px; margin: 0 auto;">
       <h2 class="section-title" data-i18n="about.title">公司简介</h2>
-      <p style="text-align: center; color: var(--text-light); line-height: 1.8; margin-bottom: 3rem;" th:utext="${about.company_intro}">
+      <div th:if="${aboutUs}" style="text-align: center; color: var(--text-light); line-height: 1.8; margin-bottom: 3rem;" th:utext="${aboutUs.content}">
         ManufacturePro成立于2015年，是一家专注于智能科技产品研发、生产和销售的创新型企业。
         我们拥有一支经验丰富的研发团队，始终坚持以技术创新为核心，以用户需求为导向，
         不断推出满足市场需求的优质产品。公司产品远销全球50多个国家和地区，
         赢得了广大客户的信赖和好评。
-      </p>
-
-      <!-- 公司图片 -->
-      <div th:if="${aboutUs.imageUrl}" style="margin-top: 3rem; text-align: center;">
-        <img th:src="@{${aboutUs.imageUrl}}" alt="Company Image" style="max-width: 100%; border-radius: 12px; box-shadow: var(--shadow);">
+      </div>
+      <div th:unless="${aboutUs}" style="text-align: center; color: var(--text-light); padding: 3rem 0;">
+        <p>暂无内容</p>
       </div>
     </div>
   </section>

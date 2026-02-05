@@ -7,6 +7,7 @@
   <meta name="description" th:content="${siteSeo != null ? siteSeo.description : ''}" content="公司新闻和行业资讯">
   <meta name="keywords" th:content="${siteSeo != null ? siteSeo.keywords : ''}" content="">
   <title th:text="${siteSeo != null ? siteSeo.title : site.name}">新闻资讯</title>
+  <link rel="icon" th:if="${site.favicon}" th:href="@{${site.favicon}}" type="image/x-icon">
   <link rel="stylesheet" th:href="@{'/css/style.css'}">
   <link rel="stylesheet" th:href="@{'/css/widget-posts.min.css'}">
   <link rel="stylesheet" th:href="@{'/css/navbar-footer.css'}">
@@ -260,7 +261,7 @@
               <a th:href="@{'/' + ${lang} + '/news/' + ${newsItem.id}}" th:text="${newsItem.title}">新闻标题</a>
             </h3>
             <div class="elementor-post__meta-data">
-              <span class="elementor-post-date"
+              <span class="elementor-post-date utc-date" th:attr="data-utc=${newsItem.publish_time},data-format='yyyy.MM.dd'"
                 th:text="${#strings.replace(#temporals.format(newsItem.publish_time, 'yyyy-MM-dd'), '-', '.')}">2024.09.27</span>
             </div>
             <div class="elementor-post__read-more-wrapper">

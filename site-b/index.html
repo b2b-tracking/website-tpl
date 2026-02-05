@@ -6,6 +6,7 @@
   <meta name="description" th:content="${siteSeo.description ?: ''}" content="专业电子雾化设备制造商">
   <meta name="keywords" th:content="${siteSeo.keywords ?: ''}" content="">
   <title th:text="${siteSeo.title ?: site.name}">专业制造 - 品质为先</title>
+  <link rel="icon" th:if="${site.favicon}" th:href="@{${site.favicon}}" type="image/x-icon">
   <link rel="stylesheet" th:href="@{'/css/style.css'}">
   <link rel="stylesheet" th:href="@{'/css/navbar-footer.css'}">
   <link rel="stylesheet" th:href="@{'/css/animations.css'}">
@@ -763,7 +764,7 @@
             <h3 class="news-title" th:text="${newsItem.title}">新闻标题</h3>
             <p class="news-excerpt" th:text="${newsItem.summary}">新闻摘要内容</p>
             <div class="news-meta">
-              <span class="news-date">📅 <span th:text="${#temporals.format(newsItem.publish_time, 'yyyy-MM-dd')}">2026-01-10</span></span>
+              <span class="news-date">📅 <span class="utc-date" th:attr="data-utc=${newsItem.publish_time}" th:text="${#temporals.format(newsItem.publish_time, 'yyyy-MM-dd')}">2026-01-10</span></span>
               <a th:href="@{'/' + ${lang} + '/news/' + ${newsItem.id}}" class="news-read-more" data-i18n="news.readMore">查看更多</a>
             </div>
           </div>

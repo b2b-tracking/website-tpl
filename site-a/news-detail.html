@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" th:content="${news.summary}" content="新闻详情">
   <title th:text="${news.title} + ' - ' + ${site.name}">新闻详情 - ManufacturePro</title>
+  <link rel="icon" th:if="${site.favicon}" th:href="@{${site.favicon}}" type="image/x-icon">
   <link rel="stylesheet" th:href="@{'/css/style.css'}">
 </head>
 <body>
@@ -44,7 +45,7 @@
 
       <!-- 元信息 -->
       <div style="text-align: center; color: var(--text-light); margin-bottom: 2rem;">
-        <span>📅 <span th:text="${#temporals.format(news.publish_time, 'yyyy-MM-dd')}">2026-01-10</span></span>
+        <span>📅 <span class="utc-date" th:attr="data-utc=${news.publish_time}" th:text="${#temporals.format(news.publish_time, 'yyyy-MM-dd')}">2026-01-10</span></span>
         <span th:if="${news.view_count != null}" style="margin-left: 2rem;">👁️ 阅读量: <span th:text="${news.view_count}">1258</span></span>
       </div>
 
@@ -54,7 +55,7 @@
       </div>
 
       <!-- 新闻内容 -->
-      <div style="color: var(--text-light); line-height: 1.8; margin-top: 3rem;" th:utext="${news.content}">
+      <div class="news-detail-content" style="color: var(--text-light); line-height: 1.8; margin-top: 3rem;" th:utext="${news.content}">
         <p>新闻内容...</p>
       </div>
     </div>

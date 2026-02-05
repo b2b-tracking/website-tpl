@@ -1,5 +1,8 @@
 // 主要交互功能 - site-b
 document.addEventListener('DOMContentLoaded', function() {
+  // UTC时间转换为本地时间
+  convertUTCDates();
+
   // 移动端菜单切换
   const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
   const navMenu = document.querySelector('.nav-menu');
@@ -274,3 +277,33 @@ class BannerSlider {
 document.addEventListener('DOMContentLoaded', function() {
   const bannerSlider = new BannerSlider();
 });
+
+// UTC时间转换为本地时间
+function convertUTCDates() {
+  document.querySelectorAll('.utc-date').forEach(element => {
+    const utcDateStr = element.getAttribute('data-utc');
+    const format = element.getAttribute('data-format') || 'yyyy-MM-dd';
+
+    if (utcDateStr) {
+      try {
+        const utcDate = new Date(utcDateStr);
+        const localDateStr = formatDate(utcDate, format);
+        element.textContent = localDateStr;
+      } catch (error) {
+        console.error('Date conversion error:', error);
+      }
+    }
+  });
+}
+
+function formatDate(date, format) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+
+  if (format === 'yyyy.MM.dd') {
+    return `${year}.${month}.${day}`;
+  }
+
+  return `${year}-${month}-${day}`;
+}

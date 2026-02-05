@@ -60,6 +60,7 @@
       "backToProducts": "返回产品列表",
       "inquire": "立即询价",
       "gallery": "产品图册",
+      "description": "产品详情",
       "viewMore": "查看更多产品"
     },
     "news": {
@@ -142,6 +143,7 @@
       "backToProducts": "Back to Products",
       "inquire": "Request Quote",
       "gallery": "Product Gallery",
+      "description": "Product Details",
       "viewMore": "View More Products"
     },
     "news": {

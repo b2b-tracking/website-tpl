@@ -7,6 +7,7 @@
   <meta name="description" th:content="${siteSeo != null ? siteSeo.description : ''}" content="了解我们的公司文化、愿景和使命">
   <meta name="keywords" th:content="${siteSeo != null ? siteSeo.keywords : ''}" content="">
   <title th:text="${siteSeo != null ? siteSeo.title : site.name}">关于我们</title>
+  <link rel="icon" th:if="${site.favicon}" th:href="@{${site.favicon}}" type="image/x-icon">
   <link rel="stylesheet" th:href="@{'/css/style.css'}">
   <link rel="stylesheet" th:href="@{'/css/widget-posts.min.css'}">
   <link rel="stylesheet" th:href="@{'/css/navbar-footer.css'}">
@@ -237,16 +238,14 @@
     <!-- <h2 class="about-title" data-i18n="nav.about">关于我们</h2> -->
 
     <!-- 公司介绍文本 -->
-    <div th:if="${about}" class="about-intro slide-up" th:utext="${about.company_intro}">
+    <div th:if="${aboutUs}" class="about-intro slide-up" th:utext="${aboutUs.content}">
       公司介绍文本
     </div>
-
-    <!-- 公司图片 -->
-    <div th:if="${aboutUs.imageUrl}" class="about-image fade-in delay-200">
-      <img th:src="@{${aboutUs.imageUrl}}" alt="公司图片" loading="lazy">
+    <div th:unless="${aboutUs}" class="about-intro slide-up" style="text-align: center; color: #999;">
+      暂无内容
     </div>
 
-  
+
   </section>
 
   <!-- 页脚 -->

@@ -6,6 +6,7 @@
   <meta name="description" th:content="${siteSeo != null ? siteSeo.description : ''}" content="公司新闻和行业资讯">
   <meta name="keywords" th:content="${siteSeo != null ? siteSeo.keywords : ''}" content="">
   <title th:text="${siteSeo != null ? siteSeo.title : site.name}">新闻资讯 - ManufacturePro</title>
+  <link rel="icon" th:if="${site.favicon}" th:href="@{${site.favicon}}" type="image/x-icon">
   <link rel="stylesheet" th:href="@{'/css/style.css'}">
 </head>
 <body>
@@ -55,7 +56,7 @@
             新闻摘要...
           </p>
           <div class="news-meta">
-            <span class="news-date" th:text="'📅 ' + ${#temporals.format(newsItem.publish_time, 'yyyy-MM-dd')}">📅 2026-01-10</span>
+            <span class="news-date">📅 <span class="utc-date" th:attr="data-utc=${newsItem.publish_time}" th:text="${#temporals.format(newsItem.publish_time, 'yyyy-MM-dd')}">2026-01-10</span></span>
             <span class="news-views" th:if="${newsItem.view_count != null}" th:text="'👁 ' + ${newsItem.view_count}">👁 1258</span>
           </div>
         </div>
