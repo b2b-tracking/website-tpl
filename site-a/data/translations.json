@@ -11,7 +11,8 @@
       "learnMore": "了解更多"
     },
     "about":{
-      "title":"公司简介"
+      "title":"公司简介",
+      "noData":"暂无内容"
     },
     "manufacturing": {
       "title": "制造优势",
@@ -91,7 +92,8 @@
       "contact": "Contact"
     },
     "about":{
-      "title": "Company Profile"
+      "title": "Company Profile",
+      "noData": "No content"
     },
     "hero": {
       "learnMore": "Learn More"

@@ -228,8 +228,8 @@
   <!-- Hero Banner -->
   <section class="about-banner">
     <div class="about-banner-content">
-      <h1 class="about-banner-title" data-i18n="nav.about">关于我们</h1>
-      <p class="about-banner-subtitle" data-i18n="footer.companyProfile">公司简介</p>
+      <h1 class="about-banner-title" data-i18n="nav.about"></h1>
+      <p class="about-banner-subtitle" data-i18n="footer.companyProfile"></p>
     </div>
   </section>
 
@@ -239,10 +239,10 @@
 
     <!-- 公司介绍文本 -->
     <div th:if="${aboutUs}" class="about-intro slide-up" th:utext="${aboutUs.content}">
-      公司介绍文本
+      
     </div>
     <div th:unless="${aboutUs}" class="about-intro slide-up" style="text-align: center; color: #999;">
-      暂无内容
+      <p data-i18n="about.noData"></p>
     </div>
 
 

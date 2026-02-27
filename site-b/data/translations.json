@@ -15,6 +15,9 @@
       "innovation": "科创动态",
       "technology": "技术方案"
     },
+    "about":{
+      "noData": "暂无内容"
+    },
     "hero": {
       "learnMore": "探索更多",
       "details": "查看详情",
@@ -216,6 +219,9 @@
       "contact": "Contact",
       "innovation": "Innovation",
       "technology": "Technology"
+    },
+    "about":{
+      "noData": "No content"
     },
     "hero": {
       "learnMore": "Discover More",

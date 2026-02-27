@@ -14,6 +14,15 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
+  // 标记当前页面对应的导航项为选中状态
+  const currentPath = window.location.pathname.replace(/\/$/, '');
+  document.querySelectorAll('.nav-link').forEach(link => {
+    const linkPath = link.getAttribute('href').replace(/\/$/, '');
+    if (linkPath && currentPath.endsWith(linkPath)) {
+      link.classList.add('active');
+    }
+  });
+
   // 点击导航链接时关闭移动菜单
   document.querySelectorAll('.nav-link').forEach(link => {
     link.addEventListener('click', () => {
