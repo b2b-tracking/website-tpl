@@ -1,0 +1,104 @@
+{
+  "site": {
+    "name": "东莞华瑞展示制品有限公司",
+    "name_en": "Dongguan HuaRui Display Products Co., Ltd.",
+    "logo": "https://p6-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/3b9e0716fa914c42a9bacdaec7adf86e.png",
+    "favicon": "",
+    "icpNumber": ""
+  },
+  "menus": [
+    { "menu_name": "首页",    "target_url": "#"         },
+    { "menu_name": "关于我们", "target_url": "#about"    },
+    { "menu_name": "产品中心", "target_url": "#products" },
+    { "menu_name": "新闻资讯", "target_url": "#news"     },
+    { "menu_name": "招贤纳士", "target_url": "#career"   },
+    { "menu_name": "在线留言", "target_url": "#message"  },
+    { "menu_name": "联系我们", "target_url": "#contact"  }
+  ],
+  "banners": [
+    {
+      "subtitle":    "我们的优势",
+      "title":       "丰富的展架制作经验",
+      "desc":        "大大减少您项目的时间和成本",
+      "image_left":  "https://picsum.photos/280/240?random=100",
+      "image_right": "https://picsum.photos/280/240?random=101"
+    },
+    {
+      "subtitle":    "15年定制经验",
+      "title":       "承接内贸/外贸订单",
+      "desc":        "创意设计 · 快速报价 · 精准打样",
+      "image_left":  "https://picsum.photos/280/240?random=102",
+      "image_right": "https://picsum.photos/280/240?random=103"
+    },
+    {
+      "subtitle":    "实力工厂",
+      "title":       "3000㎡生产基地",
+      "desc":        "严选材质 · 精益生产 · 品质无忧",
+      "image_left":  "https://picsum.photos/280/240?random=104",
+      "image_right": "https://picsum.photos/280/240?random=105"
+    }
+  ],
+  "about": {
+    "description1": "东莞华瑞展示制品有限公司（简称：华瑞展示）作为国内大型综合性的展示制品公司，在产品与服务同质化的今天，品牌形象及售后服务已成为企业决胜的关键，相信华瑞是您市场战略联盟的优秀合作伙伴。",
+    "description2": "公司拥有厂房占地面积3000多平方米，全职人员60多名，具备目前行业中完善先进的机器设备，拥有大批从事多年展示行业的技术精英及工程开发研究人员，是目前国内设计开发亚克力展示架、亚克力灯箱、LED超薄灯箱、LED导光板、磁吸展示架、亚克力展示盒、防盗展架、亚克力钟表等综合实力强劲的展示制品生产基地。",
+    "images": [
+      "https://picsum.photos/300/160?random=20",
+      "https://picsum.photos/300/160?random=21",
+      "https://picsum.photos/300/160?random=22",
+      "https://picsum.photos/300/160?random=23"
+    ],
+    "icons": [
+      { "label": "企业文化", "image": "https://picsum.photos/30/30?random=30" },
+      { "label": "企业历程", "image": "https://picsum.photos/30/30?random=31" },
+      { "label": "专业团队", "image": "https://picsum.photos/30/30?random=32" },
+      { "label": "生产环境", "image": "https://picsum.photos/30/30?random=33" }
+    ]
+  },
+  "products": [
+    { "id": 1, "name": "Led灯箱",    "mainImage": "https://picsum.photos/280/220?random=10", "shortDescription": "超薄导光板，均匀发光效果" },
+    { "id": 2, "name": "Led展示牌",  "mainImage": "https://picsum.photos/280/220?random=11", "shortDescription": "高亮度LED，视觉冲击力强" },
+    { "id": 3, "name": "包装展示盒", "mainImage": "https://picsum.photos/280/220?random=12", "shortDescription": "亚克力材质，透明度高" },
+    { "id": 4, "name": "数码展架",   "mainImage": "https://picsum.photos/280/220?random=13", "shortDescription": "适配多种数码产品，定制化强" },
+    { "id": 5, "name": "台卡展示牌", "mainImage": "https://picsum.photos/280/220?random=14", "shortDescription": "桌面摆放，稳固美观" },
+    { "id": 6, "name": "文具展示",   "mainImage": "https://picsum.photos/280/220?random=15", "shortDescription": "多格分类，整洁陈列" },
+    { "id": 7, "name": "烟架展示",   "mainImage": "https://picsum.photos/280/220?random=16", "shortDescription": "防盗设计，安全展示" },
+    { "id": 8, "name": "相框系列",   "mainImage": "https://picsum.photos/280/220?random=17", "shortDescription": "多种尺寸，精美装裱" }
+  ],
+  "news": [
+    {
+      "id": 1,
+      "title":        "复工复课如何解决隔离问题？桌面隔离板帮到您！！！",
+      "summary":      "作为相关负责人，您是不是为您的隔离感想方设法呢？在用餐、办公、上课方面如何创造出相对独立的空间？桌面隔离板可以帮您创造出相对独立的空间哦！！！",
+      "cover_image":  "https://picsum.photos/300/120?random=40",
+      "publish_time": "2024-09-01"
+    },
+    {
+      "id": 2,
+      "title":        "2017年4月25-28日第二十五届中国（深圳）国际礼品、工艺品、钟表及家庭用品展览会现场",
+      "summary":      "2017年4月25-28号二十五届中国（深圳）国际礼品及家庭用品展览会于4月28日圆满落幕。公司全体同仁，对展会期间莅临我司展位的广大国内外人士表示深深的感谢！",
+      "cover_image":  "https://picsum.photos/300/120?random=41",
+      "publish_time": "2017-04-28"
+    }
+  ],
+  "news_list": [
+    { "date": "2024-09", "title": "亚克力的特性" },
+    { "date": "2024-09", "title": "亚克力产品展示架优势" },
+    { "date": "2024-09", "title": "什么是亚克力灯箱？" },
+    { "date": "2024-09", "title": "什么是亚克力？" },
+    { "date": "2015-10", "title": "2015年10月18-21日(香港-亚洲国际博览馆)国际礼品展圆满结束" },
+    { "date": "2015-10", "title": "2015年10月20-23号二十三届中国（深圳）国际礼品展圆满落幕" }
+  ],
+  "service": {
+    "items": [
+      { "title": "实力生产", "desc": "提供全方位的资源服务<br>精心推荐适合的产品",   "image": "https://picsum.photos/50/50?random=50" },
+      { "title": "专业服务", "desc": "专业解决方案<br>快速响应设计需要",            "image": "https://picsum.photos/50/50?random=51" },
+      { "title": "质量保证", "desc": "严格的质检程序<br>保证产品质量交货及时",     "image": "https://picsum.photos/50/50?random=52" },
+      { "title": "咨询电话", "desc": "0755-29665112<br>为您提供高质量的产品",     "image": "https://picsum.photos/50/50?random=53" }
+    ]
+  },
+  "contact": {
+    "address": "广东省东莞市大岭山镇环莞路36号科创园5号楼5楼（A区）",
+    "phone":   "13823327100 / 13632596616",
+    "email":   ""
+  }
+}

@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" th:content="${siteSeo != null ? siteSeo.description : ''}" content="专业展示制品制造，提供亚克力展示架、LED灯箱等高品质产品">
+    <meta name="keywords" th:content="${siteSeo != null ? siteSeo.keywords : ''}" content="">
+    <title th:text="${siteSeo != null ? siteSeo.title : site.name + ' - 专业展示制品制造商'}">华瑞展示-首页（差异化标题头版）</title>
+    <link rel="icon" th:if="${site.favicon}" th:href="@{${site.favicon}}" type="image/x-icon">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "微软雅黑", "Microsoft Yahei", sans-serif;
+        }
+        body {
+            background: #fff;
+            color: #333;
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        ul {
+            list-style: none;
+        }
+        /* 版心：匹配截图的居中宽度，和原图一致 */
+        .container {
+            width: 1200px;
+            margin: 0 auto;
+        }
+        /* 头部导航：精准还原截图的导航样式、高度、配色 */
+        .header {
+            height: 80px;
+            line-height: 80px;
+            border-bottom: 2px solid #E60012;
+            background: #fff;
+        }
+        .header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo img {
+            height: 60px;
+            display: block;
+        }
+        .nav ul {
+            display: flex;
+            gap: 40px;
+        }
+        .nav ul li a {
+            font-size: 16px;
+            font-weight: 500;
+            color: #333;
+        }
+        .nav ul li a:hover, .nav ul li.active a {
+            color: #E60012;
+            border-bottom: 3px solid #E60012;
+            padding-bottom: 5px;
+        }
+        /* 轮播Banner：完全匹配截图的全屏轮播，支持多图轮播 */
+        .banner {
+            width: 100%;
+            height: 450px;
+            overflow: hidden;
+            position: relative;
+        }
+        .banner-container {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+            height: 100%;
+        }
+        .banner-item {
+            min-width: 100%;
+            height: 100%;
+        }
+        .banner-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        /* 轮播左右切换按钮 */
+        .banner-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 80px;
+            background: rgba(0, 0, 0, 0.3);
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            font-size: 24px;
+            transition: background 0.3s;
+            z-index: 10;
+        }
+        .banner-btn:hover {
+            background: rgba(230, 0, 18, 0.8);
+        }
+        .banner-btn-prev {
+            left: 0;
+        }
+        .banner-btn-next {
+            right: 0;
+        }
+        /* 轮播导航点 */
+        .banner-dots {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 10;
+        }
+        .banner-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            border: 2px solid #fff;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .banner-dot.active {
+            background: #E60012;
+            border-color: #E60012;
+        }
+        /* 差异化模块标题：核心修改部分——三个模块标题样式完全不同，协调统一 */
+        /* 1. 产品中心标题：红色竖条+白底文字，醒目直观 */
+        .product-title {
+            height: 40px;
+            line-height: 40px;
+            display: flex;
+            align-items: center;
+            margin: 30px 0 20px;
+            background: #F5F5F5;
+            padding: 0 20px;
+        }
+        .product-title .red-bar {
+            width: 4px;
+            height: 20px;
+            background: #E60012;
+            margin-right: 15px;
+        }
+        .product-title .cn {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin-right: 20px;
+        }
+        .product-title .en {
+            font-size: 14px;
+            color: #666;
+        }
+        /* 2. 关于我们标题：红色边框+浅灰底，稳重柔和 */
+        .about-title {
+            height: 40px;
+            line-height: 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 0 0 20px;
+            border: 1px solid #E60012;
+            background: #F5F5F5;
+            padding: 0 25px;
+        }
+        .about-title .cn {
+            font-size: 18px;
+            font-weight: bold;
+            color: #E60012;
+        }
+        .about-title .en {
+            font-size: 14px;
+            color: #666;
+        }
+        /* 3. 新闻资讯标题：红底白字+细红线分隔+英文，有层次 */
+        .news-title {
+            height: 40px;
+            line-height: 40px;
+            display: flex;
+            align-items: center;
+            margin: 30px 0 20px;
+        }
+        .news-title .red-bg {
+            background: #E60012;
+            color: #fff;
+            font-size: 18px;
+            font-weight: bold;
+            padding: 0 25px;
+            margin-right: 10px;
+        }
+        .news-title .line {
+            flex: 1;
+            height: 1px;
+            background: #E60012;
+            margin-right: 10px;
+        }
+        .news-title .en {
+            font-size: 14px;
+            color: #666;
+            white-space: nowrap;
+        }
+        /* 产品中心：匹配截图的4列2行、卡片无圆角、边框样式 */
+        .product {
+            margin-bottom: 40px;
+        }
+        .product-list {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+        .product-item {
+            text-align: center;
+            padding: 15px 10px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .product-item:hover {
+            transform: translateY(-5px);
+        }
+        .product-item img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            margin-bottom: 10px;
+            display: block;
+            border: 2px solid #E0E0E0;
+            transition: border-color 0.3s;
+        }
+        .product-item:hover img {
+            border-color: #E60012;
+        }
+        .product-item p {
+            font-size: 14px;
+            color: #333;
+            line-height: 24px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            padding: 0 5px;
+        }
+        /* 关于我们：匹配截图的「左4图+右文字」布局、图片2x2排列、文字排版 */
+        .about {
+            margin-bottom: 40px;
+            background: #F9F9F9;
+            padding: 30px 0;
+        }
+        .about .container {
+            display: flex;
+            gap: 30px;
+        }
+        .about-left {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+        .about-left img {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            display: block;
+            border: 1px solid #E0E0E0;
+        }
+        .about-right {
+            flex: 1;
+        }
+        .about-right h3 {
+            font-size: 22px;
+            color: #333;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed #E0E0E0;
+        }
+        .about-right p {
+            font-size: 14px;
+            color: #666;
+            line-height: 2;
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+        .about-feature {
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+        }
+        .about-feature-item img {
+            width: 50px;
+            height: 50px;
+            margin-bottom: 10px;
+        }
+        .about-feature-item p {
+            font-size: 14px;
+            color: #333;
+            font-weight: 500;
+        }
+        /* 新闻资讯：匹配截图的「上2张大卡+下6张小卡」布局、卡片样式 */
+        .news {
+            margin-bottom: 40px;
+        }
+        .news-top {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .news-card {
+            flex: 1;
+            border: 1px solid #E0E0E0;
+            padding: 10px;
+        }
+        .news-card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            display: block;
+            margin-bottom: 10px;
+        }
+        .news-card h4 {
+            font-size: 16px;
+            color: #333;
+            line-height: 1.5;
+            margin-bottom: 10px;
+            padding: 0 5px;
+        }
+        .news-card .more {
+            font-size: 14px;
+            color: #E60012;
+            text-align: right;
+            display: block;
+            padding-right: 5px;
+        }
+        .news-bottom {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+        .news-item {
+            border: 1px solid #E0E0E0;
+            padding: 15px;
+        }
+        .news-item .date {
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 8px;
+            display: block;
+        }
+        .news-item h5 {
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        .news-item p {
+            font-size: 12px;
+            color: #666;
+            line-height: 1.8;
+            text-align: justify;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+        }
+        /* 一站式服务：匹配截图的「深色背景+白色文字+圆形图标」样式，4列布局 */
+        .service {
+            background: #2B2B2B;
+            color: #fff;
+            padding: 40px 0;
+            text-align: center;
+            margin-bottom: 0;
+        }
+        .service h3 {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+        .service p {
+            font-size: 14px;
+            color: #ccc;
+            margin-bottom: 30px;
+        }
+        .service-list {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+        .service-item {
+            flex: 1;
+            max-width: 250px;
+        }
+        .service-icon {
+            width: 90px;
+            height: 90px;
+            border: 2px solid #fff;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .service-icon img {
+            width: 45px;
+            height: 45px;
+            display: block;
+        }
+        .service-item h4 {
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+        .service-item p {
+            font-size: 12px;
+            color: #ccc;
+            line-height: 1.8;
+            margin-bottom: 0;
+        }
+        /* 底部：匹配截图的「深灰背景+白色文字+三列布局」，版权栏单独样式 */
+        .footer {
+            background: #222;
+            color: #fff;
+            padding: 40px 0 0;
+        }
+        .footer .container {
+            display: flex;
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+        .footer-col {
+            flex: 1;
+        }
+        .footer-col h4 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #444;
+        }
+        .footer-col p {
+            font-size: 14px;
+            color: #ccc;
+            line-height: 2;
+        }
+        .footer-col ul {
+            font-size: 14px;
+            color: #ccc;
+            line-height: 2.5;
+            
+        }
+        .footer-col ul li{
+            float: left;
+            margin-left: 20px;
+        }
+        .footer-col ul li a:hover {
+            color: #E60012;
+        }
+        .qrcode {
+            width: 120px;
+            height: 120px;
+            background: #fff;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .qrcode img {
+            width: 100px;
+            height: 100px;
+        }
+        .qrcode+p {
+            text-align: center;
+            margin-top: 10px;
+        }
+        .copyright {
+            background: #111;
+            text-align: center;
+            padding: 20px 0;
+            font-size: 12px;
+            color: #999;
+            line-height: 2;
+        }
+        /* 通用更多按钮：匹配截图的红色背景、居中样式 */
+        .more-btn {
+            display: block;
+            width: 130px;
+            height: 35px;
+            line-height: 35px;
+            background: #E60012;
+            color: #fff;
+            text-align: center;
+            font-size: 14px;
+            margin: 30px auto 0;
+            border: none;
+            cursor: pointer;
+        }
+        .more-btn:hover {
+            background: #C80010;
+        }
+        /* 语言切换按钮 */
+        .lang-switcher {
+            display: flex;
+            gap: 5px;
+            align-items: center;
+        }
+        .lang-btn {
+            padding: 5px 12px;
+            border: 1px solid #E0E0E0;
+            background: #fff;
+            color: #666;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        .lang-btn:hover {
+            border-color: #E60012;
+            color: #E60012;
+        }
+        .lang-btn.active {
+            background: #E60012;
+            border-color: #E60012;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <!-- 头部导航：和截图1:1匹配 -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <a th:href="@{'/' + ${lang} + '/'}">
+                    <img th:if="${site.logo}" th:src="@{${site.logo}}" th:alt="${site.name}" alt="网站logo">
+                    <span th:unless="${site.logo}" th:text="${site.name}">华瑞展示</span>
+                </a>
+            </div>
+            <nav class="nav">
+                <ul>
+                    <li th:each="menu : ${menus}">
+                        <a th:href="@{'/' + ${lang} + '/' + ${menu.target_url}}" th:text="${menu.menu_name}">菜单</a>
+                    </li>
+                    <li class="lang-switcher">
+                        <button class="lang-btn" th:classappend="${lang == 'zh'} ? 'active'" data-lang="zh"
+                                th:onclick="'window.location.href=\'' + @{'/zh/'} + '\''">中文</button>
+                        <button class="lang-btn" th:classappend="${lang == 'en'} ? 'active'" data-lang="en"
+                                th:onclick="'window.location.href=\'' + @{'/en/'} + '\''">EN</button>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 轮播Banner：全屏宽度，高度匹配截图，支持多图轮播 -->
+    <section class="banner">
+        <div class="banner-container">
+            <!-- 动态轮播图 -->
+            <div th:each="banner, iterStat : ${banners}" class="banner-item"
+                 th:classappend="${iterStat.first} ? 'active' : ''">
+                <img th:if="${banner.image_url}" th:src="@{${banner.image_url}}" th:alt="${banner.title}" alt="轮播图">
+                <img th:unless="${banner.image_url}" th:src="'https://picsum.photos/1920/450?random=' + ${iterStat.index + 1}" alt="默认轮播图">
+            </div>
+            <!-- 静态默认轮播图（当无后端数据时显示） -->
+            <div th:if="${banners == null || #lists.isEmpty(banners)}" class="banner-item active">
+                <img src="https://picsum.photos/1920/450?random=1" alt="默认轮播图1">
+            </div>
+            <div th:if="${banners == null || #lists.isEmpty(banners)}" class="banner-item">
+                <img src="https://picsum.photos/1920/450?random=2" alt="默认轮播图2">
+            </div>
+            <div th:if="${banners == null || #lists.isEmpty(banners)}" class="banner-item">
+                <img src="https://picsum.photos/1920/450?random=3" alt="默认轮播图3">
+            </div>
+            <div th:if="${banners == null || #lists.isEmpty(banners)}" class="banner-item">
+                <img src="https://picsum.photos/1920/450?random=4" alt="默认轮播图4">
+            </div>
+        </div>
+        <!-- 左右切换按钮 -->
+        <button class="banner-btn banner-btn-prev" onclick="moveBanner(-1)">‹</button>
+        <button class="banner-btn banner-btn-next" onclick="moveBanner(1)">›</button>
+        <!-- 导航点 -->
+        <div class="banner-dots" id="bannerDots">
+            <!-- 动态导航点 -->
+            <span th:each="banner, iterStat : ${banners}" class="banner-dot"
+                  th:classappend="${iterStat.first} ? 'active' : ''"
+                  th:onclick="'showBanner(' + ${iterStat.index} + ')'"></span>
+            <!-- 静态默认导航点 -->
+            <span th:if="${banners == null || #lists.isEmpty(banners)}" class="banner-dot active" onclick="showBanner(0)"></span>
+            <span th:if="${banners == null || #lists.isEmpty(banners)}" class="banner-dot" onclick="showBanner(1)"></span>
+            <span th:if="${banners == null || #lists.isEmpty(banners)}" class="banner-dot" onclick="showBanner(2)"></span>
+            <span th:if="${banners == null || #lists.isEmpty(banners)}" class="banner-dot" onclick="showBanner(3)"></span>
+        </div>
+    </section>
+
+    <!-- 产品中心：专属标题① 红色竖条+白底文字 -->
+    <section class="product container">
+        <div class="product-title">
+            <div class="red-bar"></div>
+            <div class="cn" data-i18n="products.title">产品中心</div>
+            <div class="en">PRODUCT CENTER</div>
+        </div>
+        <div class="product-list">
+            <div th:each="product, iterStat : ${products}" class="product-item"
+                 th:attr="data-product-id=${product.id}"
+                 th:if="${iterStat.index < 8}"
+                 th:onclick="'window.location.href=\'' + @{'/' + ${lang} + '/products/' + ${product.id}} + '\''">
+                <img th:if="${product.mainImage}" th:src="@{${product.mainImage}}" th:alt="${product.name}" alt="产品图片">
+                <img th:unless="${product.mainImage}" th:src="'https://picsum.photos/280/180?random=' + ${iterStat.index + 2}" alt="默认产品图">
+                <p th:text="${product.name}">产品名称</p>
+            </div>
+        </div>
+        <button class="more-btn" th:onclick="'window.location.href=\'' + @{'/' + ${lang} + '/products'} + '\''"><span data-i18n="products.more">了解更多</span></button>
+    </section>
+
+    <!-- 关于我们：专属标题② 红色边框+浅灰底 -->
+    <section class="about">
+        <div class="container">
+            <div class="about-left">
+                <img src="https://picsum.photos/280/160?random=10" alt="办公环境">
+                <img src="https://picsum.photos/280/160?random=11" alt="生产车间">
+                <img src="https://picsum.photos/280/160?random=12" alt="团队风采">
+                <img src="https://picsum.photos/280/160?random=13" alt="设备展示">
+            </div>
+            <div class="about-right">
+                <div class="about-title">
+                    <div class="cn" data-i18n="about.title">关于我们</div>
+                    <div class="en">ABOUT US</div>
+                </div>
+                <p th:text="${siteI18n != null ? siteI18n.description : ''}">
+                    东莞华瑞展示制品有限公司（简称：华瑞展示）作为国内大型综合性的展示制品公司，在产品与服务同质化的今天，品牌形象及售后服务已成为企业决胜的关键，相信华瑞是您市场战略联盟的优秀合作伙伴。公司拥有厂房占地面积3000多平方米，全职人员60多名，具备目前行业中完善先进的机器设备，拥有大批从事多年展示行业的技术精英及工程开发研究人员，是目前国内设计开发亚克力展示架、亚克力灯箱、LED超薄灯箱、LED导光板、磁吸展示架、亚克力展示盒、防盗展架、亚克力钟表等综合实力强劲的展示制品生产基地。
+                </p>
+                <div class="about-feature">
+                    <div class="about-feature-item">
+                        <img src="https://picsum.photos/50/50?random=14" alt="企业文化">
+                        <p data-i18n="about.culture">企业文化</p>
+                    </div>
+                    <div class="about-feature-item">
+                        <img src="https://picsum.photos/50/50?random=15" alt="企业历程">
+                        <p data-i18n="about.history">企业历程</p>
+                    </div>
+                    <div class="about-feature-item">
+                        <img src="https://picsum.photos/50/50?random=16" alt="专业团队">
+                        <p data-i18n="about.team">专业团队</p>
+                    </div>
+                    <div class="about-feature-item">
+                        <img src="https://picsum.photos/50/50?random=17" alt="生产环境">
+                        <p data-i18n="about.facility">生产环境</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 新闻资讯：专属标题③ 红底白字+细红线分隔+英文 -->
+    <section class="news container">
+        <div class="news-title">
+            <div class="red-bg" data-i18n="news.title">新闻资讯</div>
+            <div class="line"></div>
+            <div class="en">NEWS INFORMATION</div>
+        </div>
+        <div class="news-top">
+            <div th:each="newsItem, iterStat : ${news}" th:if="${iterStat.index < 2}" class="news-card"
+                 th:onclick="'window.location.href=\'' + @{'/' + ${lang} + '/news/' + ${newsItem.id}} + '\''">
+                <img th:if="${newsItem.cover_image}" th:src="@{${newsItem.cover_image}}" th:alt="${newsItem.title}" alt="新闻封面">
+                <img th:unless="${newsItem.cover_image}" th:src="'https://picsum.photos/580/150?random=' + ${iterStat.index + 18}" alt="默认新闻图">
+                <h4 th:text="${newsItem.title}">新闻标题</h4>
+                <a th:href="@{'/' + ${lang} + '/news/' + ${newsItem.id}}" class="more"><span data-i18n="news.more">MORE</span> >></a>
+            </div>
+        </div>
+        <div class="news-bottom">
+            <div th:each="newsItem, iterStat : ${news}" th:if="${iterStat.index >= 2 && iterStat.index < 8}" class="news-item"
+                 th:onclick="'window.location.href=\'' + @{'/' + ${lang} + '/news/' + ${newsItem.id}} + '\''">
+                <span class="date utc-date" th:attr="data-utc=${newsItem.publish_time}" th:text="${#temporals.format(newsItem.publish_time, 'yyyy-MM-dd')}">2024-09-10</span>
+                <h5 th:text="${newsItem.title}">新闻标题</h5>
+                <p th:text="${newsItem.summary}">新闻摘要</p>
+            </div>
+        </div>
+        <button class="more-btn" th:onclick="'window.location.href=\'' + @{'/' + ${lang} + '/news'} + '\''"><span data-i18n="news.viewMore">了解更多</span></button>
+    </section>
+
+    <!-- 一站式服务：无额外标题，保持原有样式 -->
+    <section class="service">
+        <h3 data-i18n="service.title">选择华瑞 品质保障</h3>
+        <p>PROFESSIONAL MANUFACTURER YOU CAN TRUST</p>
+        <div class="service-list container">
+            <div class="service-item">
+                <div class="service-icon">
+                    <img src="https://picsum.photos/45/45?random=20" alt="规模实力">
+                </div>
+                <h4 data-i18n="service.scale">规模实力</h4>
+                <p data-i18n="service.scaleDesc">3000平方米现代化厂房，60余名专业技术人员，配备行业先进的生产设备，具备大批量生产交付能力</p>
+            </div>
+            <div class="service-item">
+                <div class="service-icon">
+                    <img src="https://picsum.photos/45/45?random=21" alt="技术研发">
+                </div>
+                <h4 data-i18n="service.tech">技术研发</h4>
+                <p data-i18n="service.techDesc">资深设计团队，多年展示行业经验积累，提供从设计开发到打样生产的一站式解决方案</p>
+            </div>
+            <div class="service-item">
+                <div class="service-icon">
+                    <img src="https://picsum.photos/45/45?random=22" alt="品质管控">
+                </div>
+                <h4 data-i18n="service.quality">品质管控</h4>
+                <p data-i18n="service.qualityDesc">ISO质量管理体系认证，每道工序严格把关，原材料精选优质供应商，确保产品品质稳定可靠</p>
+            </div>
+            <div class="service-item">
+                <div class="service-icon">
+                    <img src="https://picsum.photos/45/45?random=23" alt="售后服务">
+                </div>
+                <h4 data-i18n="service.support">售后服务</h4>
+                <p>
+                    <span data-i18n="service.supportDesc">专属客户经理一对一服务</span><br>
+                    <span data-i18n="service.hotline">咨询热线</span>：<span th:if="${contact != null && contact.phone}" th:text="${contact.phone}">0755-29665112</span><span th:unless="${contact != null && contact.phone}">0755-29665112</span><br>
+                    段小姐：13823327100<br>
+                    隆先生：13632596616
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 底部：保持原有复刻样式 -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-col">
+                <h4 data-i18n="footer.contactUs">联系我们</h4>
+                <p th:text="${siteI18n != null ? siteI18n.site_name : site.name}">东莞华瑞展示制品有限公司</p>
+                <p th:if="${contact != null && contact.address}">
+                    <span data-i18n="footer.address">地址</span>：<span th:text="${contact.address}">广东省东莞市大岭山镇环莞路36号科创园5号楼5楼（A区）</span>
+                </p>
+                <p th:unless="${contact != null && contact.address}">
+                    <span data-i18n="footer.address">地址</span>：广东省东莞市大岭山镇环莞路36号科创园5号楼5楼（A区）
+                </p>
+                <p th:if="${contact != null && contact.phone}">
+                    <span data-i18n="footer.phone">电话</span>：<span th:text="${contact.phone}">0755-29665112</span>
+                </p>
+                <p th:unless="${contact != null && contact.phone}">
+                    <span data-i18n="footer.phone">电话</span>：0755-29665112
+                </p>
+                <p>
+                    <span data-i18n="footer.mobile">手机</span>：段小姐 13823327100<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;隆先生 13632596616
+                </p>
+            </div>
+            <div class="footer-col">
+                <h4 data-i18n="footer.quickNav">快速导航</h4>
+                <ul>
+                    <li th:each="menu : ${menus}">
+                        <a th:href="@{'/' + ${lang} + '/' + ${menu.target_url}}" th:text="${menu.menu_name}">菜单</a>
+                    </li>
+                </ul>
+            </div>
+          
+        </div>
+        <div class="copyright">
+            <span data-i18n="footer.copyright">版权所有</span> © <span th:text="${site.name}">东莞华瑞展示制品有限公司</span>  All Rights Reserved |
+            <span data-i18n="footer.address">地址</span>：<span th:if="${contact != null && contact.address}" th:text="${contact.address}">广东省东莞市大岭山镇环莞路36号科创园5号楼5楼（A区）</span><span th:unless="${contact != null && contact.address}">广东省东莞市大岭山镇环莞路36号科创园5号楼5楼（A区）</span> |
+            <span data-i18n="footer.contactPhone">联系电话</span>：<span th:if="${contact != null && contact.phone}" th:text="${contact.phone}">0755-29665112</span><span th:unless="${contact != null && contact.phone}">0755-29665112</span>
+            <span th:if="${site.icpNumber}" th:text="' | ' + ${site.icpNumber}"></span>
+        </div>
+    </footer>
+
+    <script>
+        // Banner轮播功能 - 等待 DOM 加载完成
+        window.addEventListener('DOMContentLoaded', function() {
+            initBannerSlider();
+        });
+
+        // 如果 DOMContentLoaded 已经触发，直接初始化
+        if (document.readyState === 'loading') {
+            // 文档还在加载中，等待 DOMContentLoaded
+        } else {
+            // DOMContentLoaded 已经触发
+            initBannerSlider();
+        }
+
+        function initBannerSlider() {
+            let currentBannerIndex = 0;
+            const bannerContainer = document.querySelector('.banner-container');
+            const bannerItems = document.querySelectorAll('.banner-item');
+            const totalBanners = bannerItems.length;
+            let autoPlayInterval;
+
+            // 检查是否有轮播项
+            if (!bannerContainer || totalBanners === 0) {
+                console.warn('No banner items found');
+                return;
+            }
+
+            console.log(`✅ Banner initialized with ${totalBanners} items`);
+
+            // 显示指定索引的banner
+            window.showBanner = function(index) {
+                // 处理索引边界
+                if (index >= totalBanners) {
+                    currentBannerIndex = 0;
+                } else if (index < 0) {
+                    currentBannerIndex = totalBanners - 1;
+                } else {
+                    currentBannerIndex = index;
+                }
+
+                // 移动容器
+                const translateX = -currentBannerIndex * 100;
+                bannerContainer.style.transform = `translateX(${translateX}%)`;
+
+                // 更新导航点状态
+                const bannerDots = document.querySelectorAll('.banner-dot');
+                bannerDots.forEach((dot, i) => {
+                    dot.classList.toggle('active', i === currentBannerIndex);
+                });
+            };
+
+            // 移动banner（-1向左，1向右）
+            window.moveBanner = function(direction) {
+                window.showBanner(currentBannerIndex + direction);
+                resetAutoPlay();
+            };
+
+            // 自动播放
+            function autoPlayBanner() {
+                if (totalBanners <= 1) return; // 只有一张图时不自动播放
+                autoPlayInterval = setInterval(() => {
+                    window.showBanner(currentBannerIndex + 1);
+                }, 4000); // 每4秒切换一次
+            }
+
+            // 重置自动播放（用户手动操作后）
+            function resetAutoPlay() {
+                clearInterval(autoPlayInterval);
+                autoPlayBanner();
+            }
+
+            // 初始化轮播
+            if (totalBanners > 1) {
+                autoPlayBanner();
+
+                // 鼠标悬停时暂停自动播放
+                const banner = document.querySelector('.banner');
+                if (banner) {
+                    banner.addEventListener('mouseenter', () => {
+                        clearInterval(autoPlayInterval);
+                    });
+                    banner.addEventListener('mouseleave', () => {
+                        autoPlayBanner();
+                    });
+                }
+            }
+        }
+    </script>
+
+    <!-- 国际化脚本 -->
+    <script th:src="@{'/js/i18n.js'}"></script>
+</body>
+</html>

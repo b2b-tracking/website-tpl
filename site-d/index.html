@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>华瑞展示-官方首页</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "微软雅黑", "Microsoft Yahei", sans-serif;
+}
+body {
+  background: #fff;
+  color: #333;
+}
+a {
+  text-decoration: none;
+  color: inherit;
+}
+ul {
+  list-style: none;
+}
+.container {
+  width: 1200px;
+  margin: 0 auto;
+}
+
+/* 顶部导航 */
+.header {
+  height: 70px;
+  background: #fff;
+  border-bottom: 1px solid #e0e0e0;
+}
+.header .container {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+.logo {
+  margin-right: 30px;
+}
+.logo img {
+  height: 45px;
+}
+.nav-top {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+}
+.nav-top ul {
+  display: flex;
+  height: 70px;
+}
+.nav-top ul li {
+  width: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  color: #666;
+  text-align: center;
+}
+.nav-top ul li a {
+  line-height: 1.5;
+}
+.nav-top ul li.active {
+  background: #E60012;
+  color: #fff;
+}
+
+/* Banner轮播 */
+.banner {
+  height: 400px;
+  position: relative;
+  overflow: hidden;
+}
+.banner-slider {
+  width: 300%;
+  height: 100%;
+  display: flex;
+  transition: transform 0.5s ease;
+}
+.banner-slide {
+  width: 100%;
+  height: 100%;
+  background: #000;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.banner-slide .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 1200px;
+}
+.banner-img {
+  width: 280px;
+  height: 240px;
+  object-fit: contain;
+}
+.banner-text {
+  text-align: center;
+}
+.banner-text h2 {
+  font-size: 32px;
+  margin-bottom: 15px;
+}
+.banner-text h1 {
+  font-size: 42px;
+  margin-bottom: 15px;
+}
+.banner-text p {
+  font-size: 20px;
+}
+.banner-dots {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 10;
+}
+.banner-dots span {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.5);
+  cursor: pointer;
+}
+.banner-dots span.active {
+  background: #fff;
+}
+
+/* 模块标题通用样式 */
+.section-title {
+  height: 50px;
+  display: flex;
+  margin: 50px 0 30px;
+  font-weight: bold;
+}
+.title-cn {
+  background: #E60012;
+  color: #fff;
+  font-size: 20px;
+  padding: 0 40px;
+  display: flex;
+  align-items: center;
+}
+.title-en {
+  background: #E5E5E5;
+  color: #333;
+  font-size: 18px;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  padding-left: 15px;
+}
+
+/* 产品中心 */
+.product {
+  margin-bottom: 60px;
+}
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 25px;
+}
+.product-item {
+  text-align: center;
+}
+.product-item img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border: 1px solid #e0e0e0;
+  margin-bottom: 12px;
+}
+.product-item p {
+  font-size: 16px;
+  color: #666;
+}
+.btn-red {
+  width: 130px;
+  height: 40px;
+  line-height: 40px;
+  background: #E60012;
+  color: #fff;
+  text-align: center;
+  font-size: 16px;
+  margin: 40px auto 0;
+  border: none;
+  cursor: pointer;
+  border-radius: 3px;
+  display: block;
+}
+
+/* 关于我们 —— 1:1 还原图片 */
+.about {
+  background: linear-gradient(to bottom, #f0f0f0, #fff);
+  padding: 50px 0;
+  margin-bottom: 50px;
+  position: relative;
+}
+.about::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400"><path d="M0,200 Q300,0 600,200 T1200,200" fill="none" stroke="%23e0e0e0" stroke-width="2"/><path d="M0,250 Q300,50 600,250 T1200,250" fill="none" stroke="%23e0e0e0" stroke-width="2"/><path d="M0,300 Q300,100 600,300 T1200,300" fill="none" stroke="%23e0e0e0" stroke-width="2"/></svg>') no-repeat center top;
+  background-size: cover;
+  opacity: 0.3;
+  z-index: 0;
+}
+.about .container {
+  position: relative;
+  z-index: 1;
+}
+.about .section-title {
+  margin: 0 auto 30px;
+  width: 200px;
+  text-align: center;
+  background: none;
+  height: auto;
+}
+.about .section-title .title-cn {
+  background: none;
+  color: #333;
+  font-size: 18px;
+  padding: 0;
+  display: block;
+  justify-content: center;
+}
+.about .section-title .title-en {
+  background: none;
+  color: #999;
+  font-size: 14px;
+  padding: 0;
+  display: block;
+  margin-top: 5px;
+  justify-content: center;
+}
+.about-content {
+  display: flex;
+  gap: 30px;
+}
+.about-left {
+  width: 50%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+.about-left img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border: 1px solid #e0e0e0;
+}
+.about-right {
+  width: 50%;
+}
+.about-right p {
+  font-size: 13px;
+  color: #666;
+  line-height: 1.8;
+  margin-bottom: 20px;
+  text-align: justify;
+}
+.about-icons {
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+  margin-top: 20px;
+}
+.about-icon-item {
+  width: 22%;
+}
+.about-icon-item img {
+  width: 30px;
+  height: 30px;
+  margin-bottom: 8px;
+}
+.about-icon-item p {
+  font-size: 12px;
+  color: #333;
+  margin-bottom: 0;
+}
+
+/* 新闻资讯 —— 1:1 还原图片 */
+.news {
+  margin-bottom: 50px;
+}
+.news-top {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+.news-card {
+  border: 1px solid #e0e0e0;
+  padding: 15px;
+  display: flex;
+  gap: 15px;
+  position: relative;
+}
+.news-card::before {
+  content: '头条';
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: #E60012;
+  color: #fff;
+  font-size: 12px;
+  padding: 2px 8px;
+}
+.news-card img {
+  width: 30%;
+  height: 120px;
+  object-fit: cover;
+}
+.news-card-content {
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.news-card h4 {
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 10px;
+  color: #333;
+}
+.news-card p {
+  font-size: 12px;
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 10px;
+}
+.news-card .btn-more {
+  align-self: flex-start;
+  font-size: 12px;
+  color: #666;
+  border: 1px solid #ccc;
+  padding: 2px 10px;
+  background: #f5f5f5;
+}
+.news-bottom {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+}
+.news-item {
+  font-size: 12px;
+  line-height: 1.6;
+  padding: 10px;
+  border: 1px solid #f0f0f0;
+  position: relative;
+}
+.news-item::before {
+  content: '06';
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: #E60012;
+  color: #fff;
+  font-size: 10px;
+  padding: 2px 6px;
+}
+.news-item .date {
+  color: #999;
+  font-size: 11px;
+  margin-bottom: 5px;
+  display: block;
+}
+
+/* 一站式服务 */
+.service {
+  padding: 80px 0;
+  color: #fff;
+  text-align: center;
+  background: #333;
+}
+.service h3 {
+  font-size: 30px;
+  margin-bottom: 15px;
+}
+.service p {
+  font-size: 18px;
+  margin-bottom: 60px;
+}
+.service-grid {
+  display: flex;
+  justify-content: center;
+  gap: 80px;
+}
+.service-icon {
+  width: 110px;
+  height: 110px;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  margin: 0 auto 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.service-icon img {
+  width: 50px;
+  height: 50px;
+  filter: invert(1);
+}
+
+/* 底部 */
+.footer {
+  background: #222;
+  color: #ccc;
+  padding: 70px 0 40px;
+}
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 40px;
+  border-bottom: 1px solid #333;
+}
+.footer-col {
+  width: 31%;
+}
+.footer-col h4 {
+  font-size: 18px;
+  margin-bottom: 25px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #444;
+}
+.qrcode {
+  width: 120px;
+  height: 120px;
+  background: #fff;
+  margin: 0 auto;
+}
+.qrcode img {
+  width: 100%;
+  height: 100%;
+}
+.copyright {
+  text-align: center;
+  padding-top: 40px;
+  font-size: 14px;
+  color: #999;
+}
+</style>
+</head>
+<body>
+
+<!-- 导航 -->
+<header class="header">
+  <div class="container">
+    <div class="logo">
+      <img src="https://p6-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/3b9e0716fa914c42a9bacdaec7adf86e.png" alt="logo">
+    </div>
+    <nav class="nav-top">
+      <ul>
+        <li class="active"><a href="#">HOME<br>首页</a></li>
+        <li><a href="#">ABOUT US<br>关于我们</a></li>
+        <li><a href="#">PRODUCT<br>产品中心</a></li>
+        <li><a href="#">NEWS<br>新闻资讯</a></li>
+        <li><a href="#">CAREER<br>招贤纳士</a></li>
+        <li><a href="#">MESSAGE<br>在线留言</a></li>
+        <li><a href="#">CONTACT<br>联系我们</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<!-- Banner轮播 -->
+<section class="banner" id="banner">
+  <div class="banner-slider">
+    <div class="banner-slide">
+      <div class="container">
+        <img src="https://picsum.photos/280/240?random=100" class="banner-img">
+        <div class="banner-text">
+          <h2>我们的优势</h2>
+          <h1>丰富的展架制作经验</h1>
+          <p>大大减少您项目的时间和成本</p>
+        </div>
+        <img src="https://picsum.photos/280/240?random=101" class="banner-img">
+      </div>
+    </div>
+    <div class="banner-slide">
+      <div class="container">
+        <img src="https://picsum.photos/280/240?random=102" class="banner-img">
+        <div class="banner-text">
+          <h2>15年定制经验</h2>
+          <h1>承接内贸/外贸订单</h1>
+          <p>创意设计 · 快速报价 · 精准打样</p>
+        </div>
+        <img src="https://picsum.photos/280/240?random=103" class="banner-img">
+      </div>
+    </div>
+    <div class="banner-slide">
+      <div class="container">
+        <img src="https://picsum.photos/280/240?random=104" class="banner-img">
+        <div class="banner-text">
+          <h2>实力工厂</h2>
+          <h1>3000㎡生产基地</h1>
+          <p>严选材质 · 精益生产 · 品质无忧</p>
+        </div>
+        <img src="https://picsum.photos/280/240?random=105" class="banner-img">
+      </div>
+    </div>
+  </div>
+  <div class="banner-dots">
+    <span class="active"></span>
+    <span></span>
+    <span></span>
+  </div>
+</section>
+
+<!-- 产品中心 -->
+<section class="product container">
+  <div class="section-title">
+    <div class="title-cn">产品中心</div>
+    <div class="title-en">Product</div>
+  </div>
+  <div class="product-grid">
+    <div class="product-item"><img src="https://picsum.photos/280/220?random=10"><p>Led灯箱</p></div>
+    <div class="product-item"><img src="https://picsum.photos/280/220?random=11"><p>Led展示牌</p></div>
+    <div class="product-item"><img src="https://picsum.photos/280/220?random=12"><p>包装展示盒</p></div>
+    <div class="product-item"><img src="https://picsum.photos/280/220?random=13"><p>数码展架</p></div>
+    <div class="product-item"><img src="https://picsum.photos/280/220?random=14"><p>台卡展示牌</p></div>
+    <div class="product-item"><img src="https://picsum.photos/280/220?random=15"><p>文具展示</p></div>
+    <div class="product-item"><img src="https://picsum.photos/280/220?random=16"><p>烟架展示</p></div>
+    <div class="product-item"><img src="https://picsum.photos/280/220?random=17"><p>相框系列</p></div>
+  </div>
+  <button class="btn-red">了解更多</button>
+</section>
+
+<!-- 关于我们 -->
+<section class="about">
+  <div class="container">
+    <div class="section-title">
+      <div class="title-cn">关于我们</div>
+      <div class="title-en">About Us</div>
+    </div>
+    <div class="about-content">
+      <div class="about-left">
+        <img src="https://picsum.photos/300/160?random=20" alt="公司前台">
+        <img src="https://picsum.photos/300/160?random=21" alt="生产车间">
+        <img src="https://picsum.photos/300/160?random=22" alt="生产车间">
+        <img src="https://picsum.photos/300/160?random=23" alt="生产设备">
+      </div>
+      <div class="about-right">
+        <p>东莞华瑞展示制品有限公司（简称：华瑞展示）作为国内大型综合性的展示制品公司，在产品与服务同质化的今天，品牌形象及售后服务已成为企业决胜的关键，相信华瑞是您市场战略联盟的优秀合作伙伴。</p>
+        <p>公司拥有厂房占地面积3000多平方米，全职人员60多名，具备目前行业中完善先进的机器设备，拥有大批从事多年展示行业的技术精英及工程开发研究人员，是目前国内设计开发亚克力展示架、亚克力灯箱、LED超薄灯箱、LED导光板、磁吸展示架、亚克力展示盒、防盗展架、亚克力钟表等综合实力强劲的展示制品生产基地。</p>
+        <div class="about-icons">
+          <div class="about-icon-item">
+            <img src="https://picsum.photos/30/30?random=30" alt="企业文化">
+            <p>企业文化</p>
+          </div>
+          <div class="about-icon-item">
+            <img src="https://picsum.photos/30/30?random=31" alt="企业历程">
+            <p>企业历程</p>
+          </div>
+          <div class="about-icon-item">
+            <img src="https://picsum.photos/30/30?random=32" alt="专业团队">
+            <p>专业团队</p>
+          </div>
+          <div class="about-icon-item">
+            <img src="https://picsum.photos/30/30?random=33" alt="生产环境">
+            <p>生产环境</p>
+          </div>
+        </div>
+        <button class="btn-red" style="margin: 20px 0 0;">了解更多 +</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 新闻资讯 -->
+<section class="news container">
+  <div class="section-title">
+    <div class="title-cn">新闻资讯</div>
+    <div class="title-en">News</div>
+  </div>
+  <div class="news-top">
+    <div class="news-card">
+      <img src="https://picsum.photos/300/120?random=40" alt="头条新闻1">
+      <div class="news-card-content">
+        <h4>复工复课如何解决隔离问题？桌面隔离板帮到您！！！</h4>
+        <p>作为相关负责人，您是不是为您的隔离感想方设法呢？在用餐、办公、上课方面如何创造出相对独立的空间头？，包所在的工厂/单位/学校是否已经做好安全有效的控制呢？桌面隔离板可以帮您创造出相对独立的空间哦！！！</p>
+        <a href="#" class="btn-more">MORE >></a>
+      </div>
+    </div>
+    <div class="news-card">
+      <img src="https://picsum.photos/300/120?random=41" alt="头条新闻2">
+      <div class="news-card-content">
+        <h4>2017年4月25-28日第二十五届中国（深圳）国际礼品、工艺品、钟表及家庭用品展览会现场</h4>
+        <p>2017年4月25-28号二十五届中国（深圳）国际礼品及家庭用品展览会于4月28日圆满落幕。谨于此，公司全体同仁，对展会期间莅临我司展位的广大国内外广告人士表示深深的感谢和崇高的敬意！ ..</p>
+        <a href="#" class="btn-more">MORE >></a>
+      </div>
+    </div>
+  </div>
+  <div class="news-bottom">
+    <div class="news-item">
+      <span class="date">2024-09</span>
+      亚克力的特性
+    </div>
+    <div class="news-item">
+      <span class="date">2024-09</span>
+      亚克力产品展示架优势
+    </div>
+    <div class="news-item">
+      <span class="date">2024-09</span>
+      什么是亚克力灯箱？
+    </div>
+    <div class="news-item">
+      <span class="date">2024-09</span>
+      什么是亚克力？
+    </div>
+    <div class="news-item">
+      <span class="date">2015-10</span>
+      2015年10月18-21日(香港-亚洲国际博览馆)国际...
+    </div>
+    <div class="news-item">
+      <span class="date">2015-10</span>
+      2015年10月20-23号二十三届中国（深圳）国际礼...
+    </div>
+  </div>
+  <button class="btn-red">了解更多 +</button>
+</section>
+
+<!-- 一站式服务 -->
+<section class="service">
+  <h3>一站式服务 您信赖的选择</h3>
+  <p>WHY CHOOSE US</p>
+  <div class="service-grid">
+    <div class="service-item">
+      <div class="service-icon"><img src="https://picsum.photos/50/50?random=50"></div>
+      <h4>实力生产</h4>
+      <p>提供全方位的资源服务<br>精心推荐适合的产品</p>
+    </div>
+    <div class="service-item">
+      <div class="service-icon"><img src="https://picsum.photos/50/50?random=51"></div>
+      <h4>专业服务</h4>
+      <p>专业解决方案<br>快速响应设计需要</p>
+    </div>
+    <div class="service-item">
+      <div class="service-icon"><img src="https://picsum.photos/50/50?random=52"></div>
+      <h4>质量保证</h4>
+      <p>严格的质检程序<br>保证产品质量交货及时</p>
+    </div>
+    <div class="service-item">
+      <div class="service-icon"><img src="https://picsum.photos/50/50?random=53"></div>
+      <h4>咨询电话</h4>
+      <p>0755-29665112<br>为您提供高质量的产品</p>
+    </div>
+  </div>
+</section>
+
+<!-- 底部 -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-col">
+        <h4>联系我们</h4>
+        <p>东莞华瑞展示制品有限公司</p>
+        <p>地址：广东省东莞市大岭山镇环莞路36号科创园5号楼5楼（A区）</p>
+        <p>联系人：段小姐：13823327100</p>
+        <p>隆兴：13632596616</p>
+      </div>
+      <div class="footer-col">
+        <h4>快速导航</h4>
+        <ul>
+          <li><a href="#">首页</a></li>
+          <li><a href="#">关于我们</a></li>
+          <li><a href="#">产品中心</a></li>
+          <li><a href="#">新闻资讯</a></li>
+          <li><a href="#">招贤纳士</a></li>
+          <li><a href="#">在线留言</a></li>
+          <li><a href="#">联系我们</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>关注我们</h4>
+        <div class="qrcode"><img src="https://picsum.photos/120/120?random=60"></div>
+        <p style="text-align:center;margin-top:15px;">QR CODE</p>
+      </div>
+    </div>
+    <div class="copyright">版权所有 © 东莞华瑞展示制品有限公司  All Rights Reserved</div>
+  </div>
+</footer>
+
+<script>
+const banner = document.getElementById('banner');
+const slider = banner.querySelector('.banner-slider');
+const dots = banner.querySelectorAll('.banner-dots span');
+let currentIndex = 0;
+let timer;
+
+function goToSlide(index) {
+  if (index < 0) index = dots.length - 1;
+  if (index >= dots.length) index = 0;
+  currentIndex = index;
+  slider.style.transform = `translateX(-${currentIndex * 100 / 3}%)`;
+  dots.forEach((d, i) => d.classList.toggle('active', i === currentIndex));
+}
+
+dots.forEach((d, i) => d.onclick = () => goToSlide(i));
+
+function next() { goToSlide(currentIndex + 1); }
+function start() { timer = setInterval(next, 3000); }
+function stop() { clearInterval(timer); }
+
+start();
+banner.onmouseenter = stop;
+banner.onmouseleave = start;
+</script>
+</body>
+</html>
