@@ -71,7 +71,8 @@ body {
   font-size: 0.95rem;
 }
 
-.nav-link:hover {
+.nav-link:hover,
+.nav-link.active {
   color: var(--primary-blue);
 }
 

@@ -5,7 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" th:content="${siteSeo != null ? siteSeo.description : ''}" content="获取专业的技术支持服务">
   <meta name="keywords" th:content="${siteSeo != null ? siteSeo.keywords : ''}" content="">
-  <title th:text="${siteSeo != null ? siteSeo.title : (site != null ? site.name : 'Smoant')}">技术支持</title>
+  <title th:with="currentMenu=${menus != null ? menus.^[target_url == 'support'] : null}"
+         th:text="${(currentMenu != null ? currentMenu.menu_name + ' - ' : '') + (siteSeo != null ? siteSeo.title : (site != null ? site.name : 'Smoant'))}">技术支持</title>
   <link rel="icon" th:if="${site.favicon}" th:href="@{${site.favicon}}" type="image/x-icon">
   <link rel="stylesheet" th:href="@{'/css/style.css'}">
 </head>

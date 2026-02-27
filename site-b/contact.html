@@ -423,7 +423,7 @@
   <footer class="footer">
     <div class="footer-container">
       <div class="footer-column">
-        <h4 th:text="${site.name ?: 'CLOUPOR'}">CLOUPOR</h4>
+        <h4 th:text="${siteI18n != null ? siteI18n.site_name : site.name}">CLOUPOR</h4>
         <p th:text="${siteI18n != null ? siteI18n.description : ''}"></p>
       </div>
 
@@ -454,7 +454,7 @@
     </div>
 
     <div class="footer-bottom">
-      <p>&copy; <span class="year"></span> <span th:text="${site.name ?: 'CLOUPOR'}">CLOUPOR</span>. <span
+      <p>&copy; <span class="year"></span> <span th:text="${siteI18n != null ? siteI18n.site_name : site.name}">CLOUPOR</span>. <span
           data-i18n="footer.allRightsReserved">保留所有权利</span></p>
       <p th:if="${site.icpNumber}" th:text="${site.icpNumber}"></p>
     </div>
