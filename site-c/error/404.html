@@ -173,7 +173,7 @@
   <nav class="top-nav">
     <a th:href="@{'/' + ${lang} + '/'}" class="logo">
       <img th:if="${site.logo}" th:src="${site.logo}" th:alt="${site.name}" style="height: 40px; margin-right: 10px; vertical-align: middle;">
-      <span  th:text="${site.name}"></span>
+      <span  th:text="${siteI18n != null ? siteI18n.site_name : site.name}"></span>
     </a>
     <div class="nav-links">
       <a th:each="menu : ${menus}"

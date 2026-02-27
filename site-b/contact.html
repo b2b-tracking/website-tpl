@@ -384,36 +384,36 @@
         <form id="contact-form" th:action="@{'/' + ${lang} + '/inquiry'}" method="post">
           <div class="form-row">
             <div class="form-group">
-              <input type="text" id="name" name="name" data-i18n="contact.name" placeholder="姓名" required>
+              <input type="text" id="name" name="name" data-i18n="contact.name" placeholder="" required>
             </div>
             <div class="form-group">
-              <input type="text" id="company" name="company" data-i18n="contact.company" placeholder="公司名称" required>
-            </div>
-          </div>
-
-          <div class="form-row">
-            <div class="form-group">
-              <input type="email" id="email" name="email" data-i18n="contact.email" placeholder="邮箱" required>
-            </div>
-            <div class="form-group">
-              <input type="tel" id="phone" name="phone" data-i18n="contact.phone" placeholder="电话" required>
+              <input type="text" id="company" name="company" data-i18n="contact.company" placeholder="" required>
             </div>
           </div>
 
           <div class="form-row">
             <div class="form-group">
-              <input type="text" id="product" name="product" data-i18n="contact.product" placeholder="产品名称">
+              <input type="email" id="email" name="email" data-i18n="contact.email" placeholder="" required>
             </div>
             <div class="form-group">
-              <input type="text" id="quantity" name="quantity" data-i18n="contact.quantity" placeholder="预计数量">
+              <input type="tel" id="phone" name="phone" data-i18n="contact.phone" placeholder="" required>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <input type="text" id="product" name="product" data-i18n="contact.product" placeholder="">
+            </div>
+            <div class="form-group">
+              <input type="text" id="quantity" name="quantity" data-i18n="contact.quantity" placeholder="">
             </div>
           </div>
 
           <div class="form-group">
-            <textarea id="message" name="message" rows="4" data-i18n="contact.message" placeholder="需求说明" required></textarea>
+            <textarea id="message" name="message" rows="4" data-i18n="contact.message" placeholder="" required></textarea>
           </div>
 
-          <button type="submit" class="submit-btn" data-i18n="contact.submitMessage">发送询价</button>
+          <button type="submit" class="submit-btn" data-i18n="contact.submitMessage"></button>
         </form>
       </div>
     </div>

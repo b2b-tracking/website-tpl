@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" th:content="${siteSeo != null ? siteSeo.description : ''}" content="">
     <meta name="keywords" th:content="${siteSeo != null ? siteSeo.keywords : ''}" content="">
-    <title th:text="${siteSeo != null ? siteSeo.title : site.name}">Contact Us - SMOANT</title>
+    <title th:with="currentMenu=${menus != null ? menus.^[target_url == 'contact'] : null}"
+           th:text="${(currentMenu != null ? currentMenu.menu_name + ' - ' : '') + (siteSeo != null ? siteSeo.title : siteI18n.site_name)}">Contact Us - SMOANT</title>
     <style>
         * {
             margin: 0;
@@ -296,7 +297,7 @@
     <nav class="top-nav">
         <a th:href="@{'/' + ${lang} + '/'}" class="logo">
             <img th:if="${site.logo}" th:src="${site.logo}" th:alt="${site.name}" style="height: 40px; margin-right: 10px; vertical-align: middle;">
-            <span th:text="${site.name}"></span>
+            <span th:text="${siteI18n != null ? siteI18n.site_name : site.name}"></span>
         </a>
         <div class="nav-links">
             <a th:each="menu : ${menus}"
@@ -319,51 +320,51 @@
     <!-- 主体内容 -->
     <div class="main-container">
         <div class="contact-content">
-            <h1 class="contact-title" data-i18n="contact.title">联系我们</h1>
+            <h1 class="contact-title" data-i18n="contact.title"></h1>
 
             <!-- 联系表单 -->
             <div class="contact-form">
                 <form id="contactForm" th:action="@{'/' + ${lang} + '/inquiry'}" method="post">
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="name" data-i18n="contact.form.name">姓名</label>
-                            <input type="text" id="name" name="name" placeholder="姓名" required>
+                            <label for="name" data-i18n="contact.form.name"></label>
+                            <input type="text" id="name" name="name" placeholder="" data-i18n="contact.form.name" required>
                         </div>
                         <div class="form-group">
-                            <label for="company" data-i18n="contact.form.company">公司名称</label>
-                            <input type="text" id="company" name="company" placeholder="公司名称" required>
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="email" data-i18n="contact.form.email">邮箱</label>
-                            <input type="email" id="email" name="email" placeholder="邮箱" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="phone" data-i18n="contact.form.phone">电话</label>
-                            <input type="tel" id="phone" name="phone" placeholder="电话" required>
+                            <label for="company" data-i18n="contact.form.company"></label>
+                            <input type="text" id="company" name="company" placeholder="" data-i18n="contact.form.company" required>
                         </div>
                     </div>
 
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="product" data-i18n="contact.form.product">产品名称</label>
-                            <input type="text" id="product" name="product" placeholder="产品名称">
+                            <label for="email" data-i18n="contact.form.email"></label>
+                            <input type="email" id="email" name="email" placeholder="" data-i18n="contact.form.email" required>
                         </div>
                         <div class="form-group">
-                            <label for="quantity" data-i18n="contact.form.quantity">预计数量</label>
-                            <input type="text" id="quantity" name="quantity" placeholder="预计数量">
+                            <label for="phone" data-i18n="contact.form.phone"></label>
+                            <input type="tel" id="phone" name="phone" placeholder="" data-i18n="contact.form.phone" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="product" data-i18n="contact.form.product"></label>
+                            <input type="text" id="product" name="product" placeholder="" data-i18n="contact.form.product">
+                        </div>
+                        <div class="form-group">
+                            <label for="quantity" data-i18n="contact.form.quantity"></label>
+                            <input type="text" id="quantity" name="quantity" placeholder="" data-i18n="contact.form.quantity">
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="message" data-i18n="contact.form.message">需求说明</label>
-                        <textarea id="message" name="message" placeholder="需求说明" required></textarea>
+                        <label for="message" data-i18n="contact.form.message"></label>
+                        <textarea id="message" name="message" placeholder="" data-i18n="contact.form.message" required></textarea>
                     </div>
 
                     <div style="text-align: center;">
-                        <button type="submit" class="submit-btn" data-i18n="contact.form.submit">发送询价</button>
+                        <button type="submit" class="submit-btn" data-i18n="contact.form.submit"></button>
                     </div>
                 </form>
             </div>
@@ -371,15 +372,15 @@
             <!-- 联系信息 -->
             <div class="contact-info">
                 <div class="info-card" th:if="${contact}">
-                    <h3 data-i18n="contact.info.address">地址</h3>
+                    <h3 data-i18n="contact.info.address"></h3>
                     <p th:text="${contact.address}">中国广东省深圳市</p>
                 </div>
                 <div class="info-card" th:if="${contact}">
-                    <h3 data-i18n="contact.info.phone">电话</h3>
+                    <h3 data-i18n="contact.info.phone"></h3>
                     <p th:text="${contact.phone}">+86 755-1234-5678</p>
                 </div>
                 <div class="info-card" th:if="${contact}">
-                    <h3 data-i18n="contact.info.email">邮箱</h3>
+                    <h3 data-i18n="contact.info.email"></h3>
                     <p th:text="${contact.email}">sales@company.com</p>
                 </div>
             </div>
@@ -403,9 +404,9 @@
 
             <!-- 产品分类 -->
             <div class="footer-col">
-                <h5 data-i18n="footer.product.title">Product</h5>
+                <h5 data-i18n="footer.product.title"></h5>
                 <ul>
-                    <li><a th:href="@{'/' + ${lang} + '/products'}" data-i18n="footer.product.all">All Product</a></li>
+                    <li><a th:href="@{'/' + ${lang} + '/products'}" data-i18n="footer.product.all"></a></li>
                     <!-- 动态加载产品分类 -->
                     <li th:each="category, iterStat : ${categories}" th:if="${iterStat.index < 3 }">
                         <a th:href="@{'/' + ${lang} + '/products?category=' + ${category.id}}"
@@ -415,35 +416,35 @@
             </div>
             <!-- 关于我们 -->
             <div class="footer-col">
-                <h5 data-i18n="footer.about.title">About Us</h5>
+                <h5 data-i18n="footer.about.title"></h5>
                 <ul>
-                    <li><a th:href="@{'/' + ${lang} + '/contact'}" data-i18n="footer.about.contact">Contact Us</a></li>
+                    <li><a th:href="@{'/' + ${lang} + '/contact'}" data-i18n="footer.about.contact"></a></li>
                 </ul>
             </div>
             <!-- 社区 -->
             <div class="footer-col">
-                <h5 data-i18n="footer.community.title">Community</h5>
+                <h5 data-i18n="footer.community.title"></h5>
                 <ul>
-                    <li><a th:href="@{'/' + ${lang} + '/news'}" data-i18n="footer.community.news">News</a></li>
+                    <li><a th:href="@{'/' + ${lang} + '/news'}" data-i18n="footer.community.news"></a></li>
                 </ul>
             </div>
             <!-- 联系我们 -->
             <div class="footer-col" th:if="${contact}">
-                <h5 data-i18n="footer.contact.title">Contact Us</h5>
+                <h5 data-i18n="footer.contact.title"></h5>
                 <p class="contact-text">
-                    <span data-i18n="footer.contact.tel">TEL:</span> <span th:text="${contact.phone}">+86-755-86568800</span><br>
-                    <span data-i18n="footer.contact.email">Email:</span> <span th:text="${contact.email}">support@smoant.com</span><br>
-                    <span data-i18n="footer.contact.address">Address:</span> <span th:text="${contact.address}">Shenzhen, China</span>
+                    <span data-i18n="footer.contact.tel"></span> <span th:text="${contact.phone}">+86-755-86568800</span><br>
+                    <span data-i18n="footer.contact.email"></span> <span th:text="${contact.email}">support@smoant.com</span><br>
+                    <span data-i18n="footer.contact.address"></span> <span th:text="${contact.address}">Shenzhen, China</span>
                 </p>
             </div>
         </div>
         <div class="footer-bottom">
             <div class="footer-bottom-links">
-                <a href="#" data-i18n="footer.bottom.faq">FAQ</a>
-                <a href="#" data-i18n="footer.bottom.privacy">Privacy Policy</a>
-                <a href="#" data-i18n="footer.bottom.conditions">Conditions Policy</a>
+                <a href="#" data-i18n="footer.bottom.faq"></a>
+                <a href="#" data-i18n="footer.bottom.privacy"></a>
+                <a href="#" data-i18n="footer.bottom.conditions"></a>
             </div>
-            <p><span data-i18n="footer.bottom.copyrightPrefix">Copyright ©</span> <span class="year"></span> <span th:text="${site.name}">SMOANT</span> <span data-i18n="footer.bottom.allRights">All rights reserved.</span></p>
+            <p><span data-i18n="footer.bottom.copyrightPrefix"></span> <span class="year"></span> <span th:text="${siteI18n != null ? siteI18n.site_name : site.name}">SMOANT</span> <span data-i18n="footer.bottom.allRights"></span></p>
         </div>
     </footer>
 

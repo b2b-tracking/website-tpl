@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" th:content="${news.summary}" content="新闻详情">
-    <title th:text="${news.title} + ' - ' + ${site.name}">新闻详情 - SMOANT</title>
+    <title th:text="${news.title} + ' - ' + ${siteSeo != null ? siteSeo.title : siteI18n.site_name}">新闻详情 - SMOANT</title>
     <style>
         /* 全局重置 */
         * {
@@ -557,7 +557,7 @@
         <!-- <a th:href="@{'/' + ${lang} + '/'}" class="logo" th:text="${site.name}">SMOANT</a> -->
         <a th:href="@{'/' + ${lang} + '/'}" class="logo">
             <img th:if="${site.logo}" th:src="${site.logo}" th:alt="${site.name}" style="height: 40px; margin-right: 10px; vertical-align: middle;">
-            <span  th:text="${site.name}"></span>
+            <span  th:text="${siteI18n != null ? siteI18n.site_name : site.name}"></span>
         </a>
         <div class="nav-links">
             <a th:each="menu : ${menus}"
@@ -706,7 +706,7 @@
                 <a href="#" data-i18n="footer.bottom.privacy">Privacy Policy</a>
                 <a href="#" data-i18n="footer.bottom.conditions">Conditions Policy</a>
             </div>
-            <p><span data-i18n="footer.bottom.copyrightPrefix">Copyright ©</span> <span class="year"></span> <span th:text="${site.name}">SMOANT</span> <span data-i18n="footer.bottom.allRights">All rights reserved.</span></p>
+            <p><span data-i18n="footer.bottom.copyrightPrefix">Copyright ©</span> <span class="year"></span> <span th:text="${siteI18n != null ? siteI18n.site_name : site.name}">SMOANT</span> <span data-i18n="footer.bottom.allRights">All rights reserved.</span></p>
         </div>
     </footer>
 

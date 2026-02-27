@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" th:content="${siteSeo != null ? siteSeo.description : ''}" content="">
     <meta name="keywords" th:content="${siteSeo != null ? siteSeo.keywords : ''}" content="">
-    <title th:text="${siteSeo != null ? siteSeo.title : site.name}">SMOANT - Products</title>
+    <title th:with="currentMenu=${menus != null ? menus.^[target_url == 'products'] : null}"
+           th:text="${(currentMenu != null ? currentMenu.menu_name + ' - ' : '') + (siteSeo != null ? siteSeo.title : siteI18n.site_name)}">SMOANT - Products</title>
     <!-- 引入Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- 自定义配置：匹配参考图的黑黄主题 -->
@@ -339,7 +340,7 @@
         <!-- <a th:href="@{'/' + ${lang} + '/'}" class="logo" th:text="${site.name}">SMOANT</a> -->
         <a th:href="@{'/' + ${lang} + '/'}" class="logo">
             <img th:if="${site.logo}" th:src="${site.logo}" th:alt="${site.name}" style="height: 40px; margin-right: 10px; vertical-align: middle;">
-            <span  th:text="${site.name}"></span>
+            <span  th:text="${siteI18n != null ? siteI18n.site_name : site.name}"></span>
         </a>
         <div class="nav-links">
             <a th:each="menu : ${menus}"
@@ -500,7 +501,7 @@
                 <a href="#" data-i18n="footer.bottom.privacy">Privacy Policy</a>
                 <a href="#" data-i18n="footer.bottom.conditions">Conditions Policy</a>
             </div>
-            <p><span data-i18n="footer.bottom.copyrightPrefix">Copyright ©</span> <span class="year"></span> <span th:text="${site.name}">SMOANT</span> <span data-i18n="footer.bottom.allRights">All rights reserved.</span></p>
+            <p><span data-i18n="footer.bottom.copyrightPrefix">Copyright ©</span> <span class="year"></span> <span th:text="${siteI18n != null ? siteI18n.site_name : site.name}">SMOANT</span> <span data-i18n="footer.bottom.allRights">All rights reserved.</span></p>
         </div>
     </footer>
 
