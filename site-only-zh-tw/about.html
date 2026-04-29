@@ -26,8 +26,7 @@
     <div class="nav-container">
       <a th:href="@{'/' + ${lang} + '/'}" class="logo">        
         <img th:if="${site != null and site.logo != null and !site.logo.isEmpty()}" th:src="@{${site.logo}}" th:alt="${site.name}" style="height: 40px; vertical-align: middle;">
-        <img th:if="${site == null or site.logo == null or site.logo.isEmpty()}" src="./images/logo.png" th:src="@{/images/logo.png}" alt="logo" style="height: 40px; vertical-align: middle;">
-        <span th:unless="${site.logo}" th:text="${site.name}">ManufacturePro</span>
+        <img th:if="${site == null or site.logo == null or site.logo.isEmpty()}" src="/upload/images/2026/04/29/fdec45bb-4865-46c7-8f7c-f35a5f5375c4.png" th:src="@{/upload/images/2026/04/29/fdec45bb-4865-46c7-8f7c-f35a5f5375c4.png}" alt="logo" style="height: 40px; vertical-align: middle;">        <span th:unless="${site.logo}" th:text="${site.name}">ManufacturePro</span>
       </a>
       <button class="mobile-menu-toggle">☰</button>
       <ul class="nav-menu">
@@ -56,7 +55,8 @@
   <footer class="footer">
     <div class="footer-content">
       <div class="footer-section">
-        <h3 th:text="${siteI18n != null ? siteI18n.site_name : site.name}"></h3>
+        <img th:if="${site != null and site.logo != null and !site.logo.isEmpty()}" th:src="@{${site.logo}}" th:alt="${site.name}" style="height: 40px; vertical-align: middle;margin-bottom: 1rem;">
+        <img th:if="${site == null or site.logo == null or site.logo.isEmpty()}" src="/upload/images/2026/04/29/fdec45bb-4865-46c7-8f7c-f35a5f5375c4.png" th:src="@{/upload/images/2026/04/29/fdec45bb-4865-46c7-8f7c-f35a5f5375c4.png}" alt="logo" style="height: 40px; vertical-align: middle;">
         <p th:text="${siteI18n != null ? siteI18n.description : ''}"></p>
       </div>
 
