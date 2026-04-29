@@ -1,170 +1,170 @@
 {
   "zh": {
     "nav": {
-      "home": "首页",
-      "products": "产品中心",
-      "about": "关于我们",
-      "news": "新闻资讯",
-      "contact": "联系我们"
+      "home": "首頁",
+      "products": "產品中心",
+      "about": "關於我們",
+      "news": "新聞資訊",
+      "contact": "聯繫我們"
     },
     "hero": {
-      "learnMore": "了解更多"
+      "learnMore": "瞭解更多"
     },
     "about":{
-      "title":"公司简介",
-      "noData":"暂无内容"
+      "title":"公司簡介",
+      "noData":"暫無內容"
     },
     "manufacturing": {
-      "title": "制造优势",
-      "subtitle": "先进的生产设备与严格的质量管控",
-      "capacity": "生产能力",
-      "capacityText": "年产能超过100万件",
-      "equipment": "先进设备",
-      "equipmentText": "引进国际先进生产线",
-      "quality": "质量保证",
-      "qualityText": "ISO9001质量管理体系认证",
-      "delivery": "准时交付",
-      "deliveryText": "98%准时交付率",
-      "customization": "定制服务",
-      "customizationText": "支持OEM/ODM定制",
-      "experience": "丰富经验",
-      "experienceText": "10年以上制造经验"
+      "title": "我們的優勢",
+      "subtitle": "為企業客戶提供高品質家電產品及定制服務，助力業務成長",
+      "capacity": "強大的合作網絡",
+      "capacityText": "與國際知名品牌建立穩定合作關係，為企業客戶提供多樣化的家電產品來源，涵蓋冰箱、空調、洗衣機等。",
+      "equipment": "靈活的產品與服務方案",
+      "equipmentText": "根據企業需求，提供量身定制的產品選擇及服務方案，無論是家庭用途還是商業用途，都能滿足不同需求。",
+      "quality": "品質保證與信賴來源",
+      "qualityText": "所有產品均來自授權的國際品牌，符合全球認證標準，保證合作夥伴獲得高品質及可靠的產品。",
+      "delivery": "全球業務覆蓋與市場支持",
+      "deliveryText": "我們的業務遍及全球市場，專注於為企業客戶提供高效的供應鏈支持，助力客戶拓展業務。",
+      "customization": "專業定制與靈活合作模式",
+      "customizationText": "支持OEM與ODM合作，根據客戶需求提供定制服務，協助打造專屬產品，滿足多樣化需求。",
+      "experience": "深厚的行業經驗",
+      "experienceText": "擁有超過十年的製造經驗，與全球頂尖品牌保持長期B2B合作關係，為客戶提供卓越的解決方案。"
     },
     "products": {
-      "title": "产品中心",
-      "subtitle": "精密制造，质量可靠",
-      "viewDetails": "查看详情",
-      "allProducts": "全部产品",
-      "getQuote": "获取报价",
-      "noProducts": "暂无产品"
+      "title": "產品中心",
+      "subtitle": "多樣化高品質家電產品，滿足各行業需求",
+      "viewDetails": "查看詳情",
+      "allProducts": "全部產品",
+      "getQuote": "獲取報價",
+      "noProducts": "暫無產品"
     },
     "contact": {
-      "title": "联系我们",
-      "subtitle": "欢迎咨询报价与合作",
+      "title": "聯繫我們",
+      "subtitle": "歡迎諮詢報價與合作",
       "address": "地址",
-      "phone": "电话",
-      "email": "邮箱",
-      "submitMessage": "发送询价",
+      "phone": "電話",
+      "email": "郵箱",
+      "submitMessage": "發送詢價",
       "name": "姓名",
-      "company": "公司名称",
-      "message": "需求说明",
-      "quantity": "预计数量",
-      "product": "产品名称",
-      "contactInfo": "联系方式",
-      "onlineInquiry": "在线询价"
+      "company": "公司名稱",
+      "message": "需求說明",
+      "quantity": "預計數量",
+      "product": "產品名稱",
+      "contactInfo": "聯繫方式",
+      "onlineInquiry": "在線詢價"
     },
     "footer": {
-      "allRightsReserved": "保留所有权利",
-      "quickLinks": "快速链接"
+      "allRightsReserved": "保留所有權利",
+      "quickLinks": "快速鏈接"
     },
     "productDetail": {
-      "backToProducts": "返回产品列表",
-      "inquire": "立即询价",
-      "gallery": "产品图册",
-      "description": "产品详情",
-      "viewMore": "查看更多产品"
+      "backToProducts": "返回產品列表",
+      "inquire": "立即詢價",
+      "gallery": "產品圖冊",
+      "description": "產品詳情",
+      "viewMore": "查看更多產品"
     },
     "news": {
-      "title": "新闻资讯",
-      "latest": "最新动态",
-      "subtitle": "了解公司动态和行业资讯",
+      "title": "新聞資訊",
+      "latest": "最新動態",
+      "subtitle": "瞭解公司動態和行業資訊",
       "more": "查看更多",
-      "readMore": "阅读全文"
+      "readMore": "閱讀全文"
     },
     "stats": {
-      "yearsExperience": "年制造经验",
-      "annualCapacity": "年产能（件）",
-      "customers": "合作客户",
-      "onTimeDelivery": "准时交付率"
+      "yearsExperience": "年業界經驗",
+      "annualCapacity": "年供應量",
+      "customers": "長期合作夥伴",
+      "onTimeDelivery": "準時交付率"
     },
     "error": {
-      "notFound": "页面未找到",
-      "notFoundMessage": "抱歉，您访问的页面不存在或已被删除。",
-      "backHome": "返回首页"
+      "notFound": "頁面未找到",
+      "notFoundMessage": "抱歉，您訪問的頁面不存在或已被刪除。",
+      "backHome": "返回首頁"
     }
   },
   "en": {
     "nav": {
-      "home": "Home",
-      "products": "Products",
-      "about": "About Us",
-      "news": "News",
-      "contact": "Contact"
-    },
-    "about":{
-      "title": "Company Profile",
-      "noData": "No content"
+      "home": "首頁",
+      "products": "產品中心",
+      "about": "關於我們",
+      "news": "新聞資訊",
+      "contact": "聯繫我們"
     },
     "hero": {
-      "learnMore": "Learn More"
+      "learnMore": "瞭解更多"
+    },
+    "about":{
+      "title":"公司簡介",
+      "noData":"暫無內容"
     },
     "manufacturing": {
-      "title": "Manufacturing Advantages",
-      "subtitle": "Advanced Equipment & Strict Quality Control",
-      "capacity": "Production Capacity",
-      "capacityText": "Annual capacity over 1 million units",
-      "equipment": "Advanced Equipment",
-      "equipmentText": "International advanced production lines",
-      "quality": "Quality Assurance",
-      "qualityText": "ISO9001 certified quality system",
-      "delivery": "On-Time Delivery",
-      "deliveryText": "98% on-time delivery rate",
-      "customization": "Custom Service",
-      "customizationText": "OEM/ODM customization available",
-      "experience": "Rich Experience",
-      "experienceText": "Over 10 years of manufacturing"
+      "title": "我們的優勢",
+      "subtitle": "為企業客戶提供高品質家電產品及定制服務，助力業務成長",
+      "capacity": "強大的合作網絡",
+      "capacityText": "與國際知名品牌建立穩定合作關係，為企業客戶提供多樣化的家電產品來源，涵蓋冰箱、空調、洗衣機等。",
+      "equipment": "靈活的產品與服務方案",
+      "equipmentText": "根據企業需求，提供量身定制的產品選擇及服務方案，無論是家庭用途還是商業用途，都能滿足不同需求。",
+      "quality": "品質保證與信賴來源",
+      "qualityText": "所有產品均來自授權的國際品牌，符合全球認證標準，保證合作夥伴獲得高品質及可靠的產品。",
+      "delivery": "全球業務覆蓋與市場支持",
+      "deliveryText": "我們的業務遍及全球市場，專注於為企業客戶提供高效的供應鏈支持，助力客戶拓展業務。",
+      "customization": "專業定制與靈活合作模式",
+      "customizationText": "支持OEM與ODM合作，根據客戶需求提供定制服務，協助打造專屬產品，滿足多樣化需求。",
+      "experience": "深厚的行業經驗",
+      "experienceText": "擁有超過十年的製造經驗，與全球頂尖品牌保持長期B2B合作關係，為客戶提供卓越的解決方案。"
     },
     "products": {
-      "title": "Products",
-      "subtitle": "Precision Manufacturing, Reliable Quality",
-      "viewDetails": "View Details",
-      "allProducts": "All Products",
-      "getQuote": "Get Quote",
-      "noProducts": "No products available"
+      "title": "產品中心",
+      "subtitle": "多樣化高品質家電產品，滿足各行業需求",
+      "viewDetails": "查看詳情",
+      "allProducts": "全部產品",
+      "getQuote": "獲取報價",
+      "noProducts": "暫無產品"
     },
     "contact": {
-      "title": "Contact Us",
-      "subtitle": "Welcome to Inquire for Quotation",
-      "address": "Address",
-      "phone": "Phone",
-      "email": "Email",
-      "submitMessage": "Send Inquiry",
-      "name": "Name",
-      "company": "Company",
-      "message": "Requirements",
-      "quantity": "Estimated Quantity",
-      "product": "Product Name",
-      "contactInfo": "Contact Information",
-      "onlineInquiry": "Online Inquiry"
+      "title": "聯繫我們",
+      "subtitle": "歡迎諮詢報價與合作",
+      "address": "地址",
+      "phone": "電話",
+      "email": "郵箱",
+      "submitMessage": "發送詢價",
+      "name": "姓名",
+      "company": "公司名稱",
+      "message": "需求說明",
+      "quantity": "預計數量",
+      "product": "產品名稱",
+      "contactInfo": "聯繫方式",
+      "onlineInquiry": "在線詢價"
     },
     "footer": {
-      "allRightsReserved": "All Rights Reserved",
-      "quickLinks": "Quick Links"
+      "allRightsReserved": "保留所有權利",
+      "quickLinks": "快速鏈接"
     },
     "productDetail": {
-      "backToProducts": "Back to Products",
-      "inquire": "Request Quote",
-      "gallery": "Product Gallery",
-      "description": "Product Details",
-      "viewMore": "View More Products"
+      "backToProducts": "返回產品列表",
+      "inquire": "立即詢價",
+      "gallery": "產品圖冊",
+      "description": "產品詳情",
+      "viewMore": "查看更多產品"
     },
     "news": {
-      "title": "News & Updates",
-      "subtitle": "Company News and Industry Information",
-      "latest": "Latest News",
-      "more": "View More",
-      "readMore": "Read More"
+      "title": "新聞資訊",
+      "latest": "最新動態",
+      "subtitle": "瞭解公司動態和行業資訊",
+      "more": "查看更多",
+      "readMore": "閱讀全文"
     },
     "stats": {
-      "yearsExperience": "Years of Manufacturing Experience",
-      "annualCapacity": "Annual Production Capacity (Units)",
-      "customers": "Partner Customers",
-      "onTimeDelivery": "On-Time Delivery Rate"
+      "yearsExperience": "年業界經驗",
+      "annualCapacity": "年供應量",
+      "customers": "長期合作夥伴",
+      "onTimeDelivery": "準時交付率"
     },
     "error": {
-      "notFound": "Page Not Found",
-      "notFoundMessage": "Sorry, the page you are looking for does not exist or has been removed.",
-      "backHome": "Back to Home"
+      "notFound": "頁面未找到",
+      "notFoundMessage": "抱歉，您訪問的頁面不存在或已被刪除。",
+      "backHome": "返回首頁"
     }
   }
 }

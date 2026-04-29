@@ -1,4 +1,4 @@
-/* 全局样式重置 */
+/* 全局樣式重置 */
 * {
   margin: 0;
   padding: 0;
@@ -26,7 +26,7 @@ body {
   padding: 0;
 }
 
-/* 导航栏样式 */
+/* 導航欄樣式 */
 .navbar {
   position: fixed;
   top: 0;
@@ -108,7 +108,7 @@ body {
   color: var(--text-color);
 }
 
-/* Hero 区域 */
+/* Hero 區域 */
 .hero {
   margin-top: 70px;
   height: calc(100vh - 70px);
@@ -193,7 +193,7 @@ body {
   font-size: 0.9rem;
 }
 
-/* 内容区域通用样式 */
+/* 內容區域通用樣式 */
 .container {
   max-width: 1200px;
   margin: 0 auto;
@@ -214,7 +214,7 @@ body {
   margin-bottom: 3rem;
 }
 
-/* 产品网格 */
+/* 產品網格 */
 .products-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -283,7 +283,7 @@ body {
   margin-bottom: 1rem;
 }
 
-/* 关于我们区域 */
+/* 關於我們區域 */
 .about-section {
   background: var(--bg-light);
 }
@@ -325,7 +325,7 @@ body {
   margin-bottom: 1rem;
 }
 
-/* 产品详情页 */
+/* 產品詳情頁 */
 .product-detail {
   margin-top: 90px;
   padding: 2rem 0;
@@ -411,7 +411,7 @@ body {
   gap: 1rem;
 }
 
-/* 页脚 */
+/* 頁腳 */
 .footer {
   background: var(--text-color);
   color: white;
@@ -452,7 +452,7 @@ body {
   color: rgba(255, 255, 255, 0.5);
 }
 
-/* 动画 */
+/* 動畫 */
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -475,7 +475,7 @@ body {
   }
 }
 
-/* 响应式设计 */
+/* 響應式設計 */
 @media (max-width: 768px) {
   .mobile-menu-toggle {
     display: block;
@@ -549,12 +549,12 @@ body {
   }
 }
 
-/* 加载动画 */
+/* 加載動畫 */
 .fade-in {
   animation: fadeInUp 0.6s ease;
 }
 
-/* 返回顶部按钮 */
+/* 返回頂部按鈕 */
 .back-to-top {
   position: fixed;
   bottom: 2rem;
@@ -584,7 +584,7 @@ body {
   transform: translateY(-5px);
 }
 
-/* 轮播Banner样式 */
+/* 輪播Banner樣式 */
 .banner-slider {
   position: relative;
   width: 100%;
@@ -667,7 +667,7 @@ body {
   animation: fadeInUp 0.8s ease 0.4s backwards;
 }
 
-/* 轮播导航点 */
+/* 輪播導航點 */
 .banner-dots {
   position: absolute;
   bottom: 2rem;
@@ -698,7 +698,7 @@ body {
   background: rgba(255, 255, 255, 0.8);
 }
 
-/* 轮播箭头 */
+/* 輪播箭頭 */
 .banner-arrow {
   position: absolute;
   top: 50%;
@@ -752,7 +752,7 @@ body {
   }
 }
 
-/* 新闻资讯样式 */
+/* 新聞資訊樣式 */
 .news-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
@@ -858,7 +858,7 @@ body {
   text-decoration: underline;
 }
 
-/* 新闻详情页样式 */
+/* 新聞詳情頁樣式 */
 .news-detail {
   margin-top: 90px;
   padding: 2rem 0;
@@ -941,7 +941,7 @@ body {
   margin-bottom: 0.5rem;
 }
 
-/* 响应式：轮播和新闻 */
+/* 響應式：輪播和新聞 */
 @media (max-width: 768px) {
   .banner-slider {
     min-height: 400px;
@@ -1007,14 +1007,14 @@ body {
 }
 
 
-/* 修复图片显示被切割问题 */
+/* 修復圖片顯示被切割問題 */
 img {
   max-width: 100%;
   height: auto;
   object-fit: contain;
 }
 
-/* 修复商品和新闻图片显示 */
+/* 修復商品和新聞圖片顯示 */
 .product-image,
 .news-image,
 .product-card-image,

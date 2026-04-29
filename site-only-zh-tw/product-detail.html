@@ -3,41 +3,42 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" th:content="${product.shortDescription}" content="产品详细信息">
-  <title th:text="${product.name} + ' - ' + ${siteSeo != null ? siteSeo.title : site.name}">产品详情 - ManufacturePro</title>
+  <meta name="description" th:content="${product.shortDescription}" content="產品詳細信息">
+  <title th:text="${product.name} + ' - ' + ${siteSeo != null ? siteSeo.title : site.name}">產品詳情 - ManufacturePro</title>
   <link rel="icon" th:if="${site.favicon}" th:href="@{${site.favicon}}" type="image/x-icon">
   <link rel="stylesheet" th:href="@{'/css/style.css'}">
 </head>
 <body>
-  <!-- 导航栏 -->
+  <!-- 導航欄 -->
   <nav class="navbar">
     <div class="nav-container">
       <a th:href="@{'/' + ${lang} + '/'}" class="logo">
-        <img th:if="${site.logo}" th:src="@{${site.logo}}" th:alt="${site.name}" style="height: 40px; vertical-align: middle;">
+        <img th:if="${site != null and site.logo != null and !site.logo.isEmpty()}" th:src="@{${site.logo}}" th:alt="${site.name}" style="height: 40px; vertical-align: middle;">
+        <img th:if="${site == null or site.logo == null or site.logo.isEmpty()}" src="./images/logo.png" th:src="@{/images/logo.png}" alt="logo" style="height: 40px; vertical-align: middle;">
         <span th:unless="${site.logo}" th:text="${site.name}">ManufacturePro</span>
       </a>
       <button class="mobile-menu-toggle">☰</button>
       <ul class="nav-menu">
         <li th:each="menu : ${menus}">
           <a th:href="@{'/' + ${lang} + '/' + ${menu.target_url}}" class="nav-link"
-             th:text="${menu.menu_name}">菜单</a>
+             th:text="${menu.menu_name}">菜單</a>
         </li>
        
       </ul>
     </div>
   </nav>
 
-  <!-- 产品详情 -->
+  <!-- 產品詳情 -->
   <section class="product-detail" style="margin-top: 0;">
     <div class="container" style="margin-top: 6rem;">
-      <!-- 返回按钮 -->
+      <!-- 返回按鈕 -->
       <div style="margin-bottom: 2rem;">
         <a th:href="@{'/' + ${lang} + '/products'}" class="btn btn-outline">
-          <span>← </span><span data-i18n="productDetail.backToProducts">返回产品列表</span>
+          <span>← </span><span data-i18n="productDetail.backToProducts">返回產品列表</span>
         </a>
       </div>
 
-      <!-- 产品主要信息 -->
+      <!-- 產品主要信息 -->
       <div class="product-detail-container">
         <div class="product-detail-image">
           <img th:if="${product.mainImage}" th:src="${product.mainImage}" alt="Product Image" style="width: 100%; height: 100%; object-fit: cover;">
@@ -45,26 +46,26 @@
         </div>
 
         <div class="product-detail-info">
-          <h1 th:text="${product.name}">产品名称</h1>
+          <h1 th:text="${product.name}">產品名稱</h1>
 
-          <!-- 产品属性 -->
+          <!-- 產品屬性 -->
           <div th:if="${product.attributes != null && !product.attributes.isEmpty()}" style="margin: 1.5rem 0; padding: 1.5rem; background: #f8f9fa; border-radius: 8px;">
             <div th:each="attr, iterStat : ${product.attributes}" style="display: flex; padding: 0.5rem 0;" th:style="${!iterStat.last} ? 'display: flex; padding: 0.5rem 0; border-bottom: 1px solid #e9ecef;' : 'display: flex; padding: 0.5rem 0;'">
-              <div style="min-width: 100px; font-weight: 600; color: var(--text-color);" th:text="${attr.name} + '：'">属性名：</div>
-              <div style="flex: 1; color: var(--text-light);" th:text="${attr.value}">属性值</div>
+              <div style="min-width: 100px; font-weight: 600; color: var(--text-color);" th:text="${attr.name} + '：'">屬性名：</div>
+              <div style="flex: 1; color: var(--text-light);" th:text="${attr.value}">屬性值</div>
             </div>
           </div>
 
           <div class="action-buttons">
-            <a th:href="@{'/' + ${lang} + '/#contact'}" class="btn" data-i18n="productDetail.inquire">立即咨询</a>
-            <a th:href="@{'/' + ${lang} + '/products'}" class="btn btn-outline" data-i18n="productDetail.viewMore">查看更多产品</a>
+            <a th:href="@{'/' + ${lang} + '/#contact'}" class="btn" data-i18n="productDetail.inquire">立即諮詢</a>
+            <a th:href="@{'/' + ${lang} + '/products'}" class="btn btn-outline" data-i18n="productDetail.viewMore">查看更多產品</a>
           </div>
         </div>
       </div>
 
-      <!-- 产品图片展示 -->
+      <!-- 產品圖片展示 -->
       <div th:if="${product.images != null && !product.images.isEmpty()}" style="margin-top: 4rem;">
-        <h2 class="section-title" data-i18n="productDetail.gallery">产品展示</h2>
+        <h2 class="section-title" data-i18n="productDetail.gallery">產品展示</h2>
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 2rem;">
           <div th:each="image : ${product.images}" style="height: 300px; border-radius: 12px; overflow: hidden; box-shadow: var(--shadow-lg);">
             <img th:src="${image}" alt="Product Image" style="width: 100%; height: 100%; object-fit: cover;">
@@ -72,11 +73,11 @@
         </div>
       </div>
 
-      <!-- 产品详细描述 -->
+      <!-- 產品詳細描述 -->
       <div th:if="${product.description != null && !#strings.isEmpty(product.description)}" style="margin-top: 4rem;">
-        <h2 class="section-title" data-i18n="productDetail.description">产品详情</h2>
+        <h2 class="section-title" data-i18n="productDetail.description">產品詳情</h2>
         <div class="rich-text-content" style="margin-top: 2rem;" th:utext="${product.description}">
-          产品详细描述内容
+          產品詳細描述內容
         </div>
       </div>
     </div>
@@ -109,46 +110,47 @@
     }
   </style>
 
-  <!-- 页脚 -->
+  <!-- 頁腳 -->
   <footer class="footer">
     <div class="footer-content">
       <div class="footer-section">
-        <h3 th:text="${siteI18n != null ? siteI18n.site_name : site.name}">ManufacturePro</h3>
-        <p th:text="${siteI18n != null ? siteI18n.description : ''}">我们是一家专注于创新产品研发和制造的企业，致力于为全球客户提供高品质的产品和服务。</p>
+        <img th:if="${site != null and site.logo != null and !site.logo.isEmpty()}" th:src="@{${site.logo}}" th:alt="${site.name}" style="height: 40px; vertical-align: middle;margin-bottom: 1rem;">
+        <img th:if="${site == null or site.logo == null or site.logo.isEmpty()}" src="./images/logo.png" th:src="@{/images/logo.png}" alt="logo" style="height: 40px; vertical-align: middle; margin-bottom: 1rem;">
+        <p th:text="${siteI18n != null ? siteI18n.description : ''}">我們是一家專注於創新產品研發和製造的企業，致力於爲全球客戶提供高品質的產品和服務。</p>
       </div>
 
       <div class="footer-section">
-        <h3 data-i18n="products.title">产品中心</h3>
+        <h3 data-i18n="products.title">產品中心</h3>
         <a th:each="category : ${categories}"
            th:href="@{'/' + ${lang} + '/products?category=' + ${category.id}}"
-           th:text="${category.name}">产品分类</a>
+           th:text="${category.name}">產品分類</a>
       </div>
 
       <div class="footer-section">
-        <h3 data-i18n="footer.quickLinks">快速链接</h3>
-        <a th:href="@{'/' + ${lang} + '/about'}"><span data-i18n="nav.about">关于我们</span></a>
-        <a th:href="@{'/' + ${lang} + '/news'}"><span data-i18n="nav.news">新闻资讯</span></a>
-        <a href="#contact"><span data-i18n="nav.contact">联系我们</span></a>
+        <h3 data-i18n="footer.quickLinks">快速鏈接</h3>
+        <a th:href="@{'/' + ${lang} + '/about'}"><span data-i18n="nav.about">關於我們</span></a>
+        <a th:href="@{'/' + ${lang} + '/news'}"><span data-i18n="nav.news">新聞資訊</span></a>
+        <a href="#contact"><span data-i18n="nav.contact">聯繫我們</span></a>
       </div>
 
       <div class="footer-section" th:if="${contact}">
-        <h3 data-i18n="contact.title">联系我们</h3>
-        <p th:if="${contact.address}">📍 <span th:text="${contact.address}">中国广东省深圳市</span></p>
+        <h3 data-i18n="contact.title">聯繫我們</h3>
+        <p th:if="${contact.address}">📍 <span th:text="${contact.address}">中國廣東省深圳市</span></p>
         <p th:if="${contact.phone}">📞 <span th:text="${contact.phone}">+86 755-1234-5678</span></p>
         <p th:if="${contact.email}">✉️ <span th:text="${contact.email}">sales@manufacturepro.com</span></p>
       </div>
     </div>
 
     <div class="footer-bottom">
-      <p>&copy; <span th:text="${#dates.year(#dates.createNow())}">2026</span> <span th:text="${siteI18n != null ? siteI18n.site_name : ''}">ManufacturePro</span>. <span data-i18n="footer.allRightsReserved">保留所有权利</span></p>
+      <p>&copy; <span th:text="${#dates.year(#dates.createNow())}">2026</span> <span th:text="${siteI18n != null ? siteI18n.site_name : ''}">ManufacturePro</span>. <span data-i18n="footer.allRightsReserved">保留所有權利</span></p>
       <p th:if="${site.icpNumber}" th:text="${site.icpNumber}"></p>
     </div>
   </footer>
 
-  <!-- 返回顶部按钮 -->
+  <!-- 返回頂部按鈕 -->
   <div class="back-to-top">↑</div>
 
-  <!-- 脚本 -->
+  <!-- 腳本 -->
   <script th:src="@{'/js/i18n.js'}"></script>
   <script th:src="@{'/js/main.js'}"></script>
 </body>

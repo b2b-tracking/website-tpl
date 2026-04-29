@@ -1,4 +1,4 @@
-// 国际化管理
+// 國際化管理
 class I18n {
   constructor() {
     this.currentLang = localStorage.getItem('language') || 'zh';
@@ -63,15 +63,15 @@ class I18n {
   }
 }
 
-// 创建全局实例
+// 創建全局實例
 const i18n = new I18n();
 
-// 页面加载时初始化
+// 頁面加載時初始化
 document.addEventListener('DOMContentLoaded', () => {
   i18n.init();
 });
 
-// 导出供其他模块使用
+// 導出供其他模塊使用
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = i18n;
 }
