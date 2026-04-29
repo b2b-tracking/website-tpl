@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" th:content="${siteSeo != null ? siteSeo.description : ''}" content="了解我们的公司文化、愿景和使命">
+  <meta name="keywords" th:content="${siteSeo != null ? siteSeo.keywords : ''}" content="">
+  <title th:with="currentMenu=${menus != null ? menus.^[target_url == 'about'] : null}"
+         th:text="${(currentMenu != null ? currentMenu.menu_name + ' - ' : '') + (siteSeo != null ? siteSeo.title : site.name)}">关于我们 - ManufacturePro</title>
+  <link rel="icon" th:if="${site.favicon}" th:href="@{${site.favicon}}" type="image/x-icon">
+  <link rel="stylesheet" th:href="@{'/css/style.css'}">
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    .footer {
+      margin-top: auto;
+    }
+  </style>
+</head>
+<body>
+  <!-- 导航栏 -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a th:href="@{'/' + ${lang} + '/'}" class="logo">
+        <img th:if="${site.logo}" th:src="@{${site.logo}}" th:alt="${site.name}" style="height: 40px; vertical-align: middle;">
+        <span th:unless="${site.logo}" th:text="${site.name}">ManufacturePro</span>
+      </a>
+      <button class="mobile-menu-toggle">☰</button>
+      <ul class="nav-menu">
+        <li th:each="menu : ${menus}">
+          <a th:href="@{'/' + ${lang} + '/' + ${menu.target_url}}" class="nav-link"
+             th:text="${menu.menu_name}">菜单</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- 公司介绍 -->
+  <section class="container" style="margin-top: 6rem;">
+    <div style="max-width: 900px; margin: 0 auto;">
+      <h2 class="section-title" data-i18n="about.title"></h2>
+      <div th:if="${aboutUs}" style="text-align: center; color: var(--text-light); line-height: 1.8; margin-bottom: 3rem;" th:utext="${aboutUs.content}">
+        
+      </div>
+      <div th:unless="${aboutUs}" style="text-align: center; color: var(--text-light); padding: 3rem 0;">
+        <p data-i18n="about.noData"></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 页脚 -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3 th:text="${siteI18n != null ? siteI18n.site_name : site.name}"></h3>
+        <p th:text="${siteI18n != null ? siteI18n.description : ''}"></p>
+      </div>
+
+      <div class="footer-section">
+        <h3 data-i18n="products.title"></h3>
+        <a th:each="category : ${categories}"
+           th:href="@{'/' + ${lang} + '/products?category=' + ${category.id}}"
+           th:text="${category.name}">产品分类</a>
+      </div>
+
+      <div class="footer-section">
+        <h3 data-i18n="footer.quickLinks"></h3>
+        <a th:href="@{'/' + ${lang} + '/about'}"><span data-i18n="nav.about"></span></a>
+        <a th:href="@{'/' + ${lang} + '/news'}"><span data-i18n="nav.news"></span></a>
+        <a href="#contact"><span data-i18n="nav.contact"></span></a>
+      </div>
+
+      <div class="footer-section" th:if="${contact}">
+        <h3 data-i18n="contact.title">联系我们</h3>
+        <p th:if="${contact.address}">📍 <span th:text="${contact.address}">中国广东省深圳市</span></p>
+        <p th:if="${contact.phone}">📞 <span th:text="${contact.phone}">+86 755-1234-5678</span></p>
+        <p th:if="${contact.email}">✉️ <span th:text="${contact.email}">sales@manufacturepro.com</span></p>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; <span th:text="${#dates.year(#dates.createNow())}">2026</span> <span th:text="${siteI18n != null ? siteI18n.site_name : ''}">ManufacturePro</span>. <span data-i18n="footer.allRightsReserved">保留所有权利</span></p>
+      <p th:if="${site.icpNumber}" th:text="${site.icpNumber}"></p>
+    </div>
+  </footer>
+
+  <!-- 返回顶部按钮 -->
+  <div class="back-to-top">↑</div>
+
+  <!-- 脚本 -->
+  <script th:src="@{'/js/i18n.js'}"></script>
+  <script th:src="@{'/js/main.js'}"></script>
+</body>
+</html>

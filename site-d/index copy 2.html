@@ -1,12 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" th:content="${siteSeo != null ? siteSeo['description'] : ''}" >
-<meta name="keywords" th:content="${siteSeo != null ? siteSeo['keywords'] : ''}" >
-<title th:text="${siteSeo != null ? siteSeo['title'] : site['name']}"></title>
-<link rel="icon" th:if="${site['favicon']}" th:href="@{${site['favicon']}}" type="image/x-icon">
+<title>华瑞展示-官方首页</title>
 <style>
 * {
   margin: 0;
@@ -77,31 +74,22 @@ ul {
   display: flex;
   align-items: center;
   gap: 5px;
-}
-.lang-switcher .lang-icon {
-  width: 16px;
-  height: 16px;
-  color: #666;
-}
-.lang-btn {
-  padding: 5px 10px;
+  cursor: pointer;
   font-size: 12px;
   color: #666;
-  background: transparent;
+  padding: 5px 10px;
   border: 1px solid #e0e0e0;
   border-radius: 3px;
-  cursor: pointer;
   transition: all 0.3s;
 }
-.lang-btn:hover {
+.lang-switcher:hover {
   background: #f5f5f5;
   border-color: #E60012;
   color: #E60012;
 }
-.lang-btn.active {
-  background: #E60012;
-  color: #fff;
-  border-color: #E60012;
+.lang-switcher .lang-icon {
+  width: 16px;
+  height: 16px;
 }
 
 /* 入场动画 */
@@ -514,10 +502,10 @@ ul {
   align-items: center;
   justify-content: center;
 }
-.service-icon svg {
+.service-icon img {
   width: 50px;
   height: 50px;
-  color: #fff;
+  filter: invert(1);
 }
 
 /* 底部 */
@@ -565,27 +553,24 @@ ul {
 <header class="header">
   <div class="container">
     <div class="logo">
-      <a th:href="@{'/' + ${lang} + '/'}">
-        <img th:if="${site['logo']}" th:src="@{${site['logo']}}" th:alt="${site['name']}" alt="logo">
-        <img th:unless="${site['logo']}" src="https://p6-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/3b9e0716fa914c42a9bacdaec7adf86e.png" alt="logo">
-      </a>
+      <img src="https://p6-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/3b9e0716fa914c42a9bacdaec7adf86e.png" alt="logo">
     </div>
     <nav class="nav-top">
       <ul>
-        <li th:each="menu, iterStat : ${menus}" th:classappend="${iterStat.first} ? 'active' : ''">
-          <a th:href="@{'/' + ${lang} + '/' + ${menu['target_url']}}"
-             th:text="${lang == 'en' && menu['menu_name_en'] != null ? menu['menu_name_en'] : menu['menu_name']}">菜单</a>
-        </li>
+        <li class="active"><a href="#">HOME<br>首页</a></li>
+        <li><a href="#">ABOUT US<br>关于我们</a></li>
+        <li><a href="#">PRODUCT<br>产品中心</a></li>
+        <li><a href="#">NEWS<br>新闻资讯</a></li>
+        <li><a href="#">CAREER<br>招贤纳士</a></li>
+        <li><a href="#">MESSAGE<br>在线留言</a></li>
+        <li><a href="#">CONTACT<br>联系我们</a></li>
       </ul>
-      <div class="lang-switcher">
+      <div class="lang-switcher" onclick="toggleLanguage()">
         <svg class="lang-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <circle cx="12" cy="12" r="10"></circle>
           <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
         </svg>
-        <button class="lang-btn" data-lang="zh" th:classappend="${lang == 'zh'} ? 'active'"
-                th:onclick="'window.location.href=\'' + @{'/zh/'} + '\''">中文</button>
-        <button class="lang-btn" data-lang="en" th:classappend="${lang == 'en'} ? 'active'"
-                th:onclick="'window.location.href=\'' + @{'/en/'} + '\''">EN</button>
+        <span id="currentLang">中文</span>
       </div>
     </nav>
   </div>
@@ -594,55 +579,72 @@ ul {
 <!-- Banner轮播 -->
 <section class="banner" id="banner">
   <div class="banner-slider">
-    <div th:each="banner, iterStat : ${banners}"
-         class="banner-slide"
-         th:classappend="${iterStat.first} ? 'active' : ''"
-         th:style="${banner['image_url']} ? 'background-image: url(' + @{${banner['image_url']}} + '); background-size: cover; background-position: center;' : 'background: #000;'">
+    <div class="banner-slide">
       <div class="container">
-        <img th:if="${banner['image_url']}" th:src="@{${banner['image_url']}}" class="banner-img" style="display:none;">
-        <img th:unless="${banner['image_url']}" src="https://picsum.photos/280/240?random=100" class="banner-img">
+        <img src="https://picsum.photos/280/240?random=100" class="banner-img">
         <div class="banner-text">
-          <h2 th:text="${banner['subtitle']}">我们的优势</h2>
-          <h1 th:text="${banner['title']}">丰富的展架制作经验</h1>
-          <p th:text="${banner['description']}">大大减少您项目的时间和成本</p>
+          <h2>我们的优势</h2>
+          <h1>丰富的展架制作经验</h1>
+          <p>大大减少您项目的时间和成本</p>
         </div>
-        <img th:if="${banner['image_url']}" th:src="@{${banner['image_url']}}" class="banner-img" style="display:none;">
-        <img th:unless="${banner['image_url']}" src="https://picsum.photos/280/240?random=101" class="banner-img">
+        <img src="https://picsum.photos/280/240?random=101" class="banner-img">
+      </div>
+    </div>
+    <div class="banner-slide">
+      <div class="container">
+        <img src="https://picsum.photos/280/240?random=102" class="banner-img">
+        <div class="banner-text">
+          <h2>15年定制经验</h2>
+          <h1>承接内贸/外贸订单</h1>
+          <p>创意设计 · 快速报价 · 精准打样</p>
+        </div>
+        <img src="https://picsum.photos/280/240?random=103" class="banner-img">
+      </div>
+    </div>
+    <div class="banner-slide">
+      <div class="container">
+        <img src="https://picsum.photos/280/240?random=104" class="banner-img">
+        <div class="banner-text">
+          <h2>实力工厂</h2>
+          <h1>3000㎡生产基地</h1>
+          <p>严选材质 · 精益生产 · 品质无忧</p>
+        </div>
+        <img src="https://picsum.photos/280/240?random=105" class="banner-img">
       </div>
     </div>
   </div>
-  <div class="banner-dots" th:if="${#lists.size(banners) > 1}">
-    <span th:each="banner, iterStat : ${banners}"
-          class="banner-dot"
-          th:classappend="${iterStat.first} ? 'active' : ''"></span>
+  <div class="banner-dots">
+    <span class="active"></span>
+    <span></span>
+    <span></span>
   </div>
 </section>
 
 <!-- 产品中心 -->
 <section class="product container animate-on-scroll fade-in-up">
   <div class="section-title">
-    <div class="title-cn" data-i18n="products.title">产品中心</div>
+    <div class="title-cn">产品中心</div>
     <div class="title-en">Product</div>
   </div>
   <div class="product-grid">
-    <div class="product-item animate-on-scroll scale-in"
-         th:each="product, iterStat : ${products}"
-         th:style="'animation-delay: ' + ${(iterStat.index % 4) * 0.1 + 0.1} + 's;'"
-         th:onclick="'window.location.href=\'' + @{'/' + ${lang} + '/products/' + ${product['id']}} + '\''">
-      <img th:if="${product['mainImage']}" th:src="@{${product['mainImage']}}" th:alt="${product['name']}">
-      <img th:unless="${product['mainImage']}" src="https://picsum.photos/280/220?random=10" alt="产品图片">
-      <p th:text="${product['name']}">产品名称</p>
-    </div>
+    <div class="product-item animate-on-scroll scale-in" style="animation-delay: 0.1s;"><img src="https://picsum.photos/280/220?random=10"><p>Led灯箱</p></div>
+    <div class="product-item animate-on-scroll scale-in" style="animation-delay: 0.2s;"><img src="https://picsum.photos/280/220?random=11"><p>Led展示牌</p></div>
+    <div class="product-item animate-on-scroll scale-in" style="animation-delay: 0.3s;"><img src="https://picsum.photos/280/220?random=12"><p>包装展示盒</p></div>
+    <div class="product-item animate-on-scroll scale-in" style="animation-delay: 0.4s;"><img src="https://picsum.photos/280/220?random=13"><p>数码展架</p></div>
+    <div class="product-item animate-on-scroll scale-in" style="animation-delay: 0.1s;"><img src="https://picsum.photos/280/220?random=14"><p>台卡展示牌</p></div>
+    <div class="product-item animate-on-scroll scale-in" style="animation-delay: 0.2s;"><img src="https://picsum.photos/280/220?random=15"><p>文具展示</p></div>
+    <div class="product-item animate-on-scroll scale-in" style="animation-delay: 0.3s;"><img src="https://picsum.photos/280/220?random=16"><p>烟架展示</p></div>
+    <div class="product-item animate-on-scroll scale-in" style="animation-delay: 0.4s;"><img src="https://picsum.photos/280/220?random=17"><p>相框系列</p></div>
   </div>
-  <a th:href="@{'/' + ${lang} + '/products'}" class="btn-red" data-i18n="products.learnMore">了解更多</a>
+  <button class="btn-red">了解更多</button>
 </section>
 
 <!-- 关于我们 -->
 <section class="about animate-on-scroll fade-in-up">
   <div class="container">
     <div class="section-title">
-      <div class="title-cn" data-i18n="about.title">关于我们</div>
-      <div class="title-en" data-i18n="about.titleEn">About Us</div>
+      <div class="title-cn">关于我们</div>
+      <div class="title-en">About Us</div>
     </div>
     <div class="about-content">
       <div class="about-left animate-on-scroll fade-in-left">
@@ -652,26 +654,27 @@ ul {
         <img src="https://picsum.photos/300/160?random=23" alt="生产设备">
       </div>
       <div class="about-right animate-on-scroll fade-in-right">
-        <div th:if="${aboutInfo != null && aboutInfo['description'] != null}" th:utext="${aboutInfo['description']}"></div>
-        <!-- <div class="about-icons">
+        <p>东莞华瑞展示制品有限公司（简称：华瑞展示）作为国内大型综合性的展示制品公司，在产品与服务同质化的今天，品牌形象及售后服务已成为企业决胜的关键，相信华瑞是您市场战略联盟的优秀合作伙伴。</p>
+        <p>公司拥有厂房占地面积3000多平方米，全职人员60多名，具备目前行业中完善先进的机器设备，拥有大批从事多年展示行业的技术精英及工程开发研究人员，是目前国内设计开发亚克力展示架、亚克力灯箱、LED超薄灯箱、LED导光板、磁吸展示架、亚克力展示盒、防盗展架、亚克力钟表等综合实力强劲的展示制品生产基地。</p>
+        <div class="about-icons">
           <div class="about-icon-item">
             <img src="https://picsum.photos/30/30?random=30" alt="企业文化">
-            <p data-i18n="about.culture">企业文化</p>
+            <p>企业文化</p>
           </div>
           <div class="about-icon-item">
             <img src="https://picsum.photos/30/30?random=31" alt="企业历程">
-            <p data-i18n="about.history">企业历程</p>
+            <p>企业历程</p>
           </div>
           <div class="about-icon-item">
             <img src="https://picsum.photos/30/30?random=32" alt="专业团队">
-            <p data-i18n="about.team">专业团队</p>
+            <p>专业团队</p>
           </div>
           <div class="about-icon-item">
             <img src="https://picsum.photos/30/30?random=33" alt="生产环境">
-            <p data-i18n="about.environment">生产环境</p>
+            <p>生产环境</p>
           </div>
-        </div> -->
-        <a th:href="@{'/' + ${lang} + '/about'}" class="btn-red" style="margin: 20px 0 0; display: inline-block;" data-i18n="about.learnMore">了解更多 +</a>
+        </div>
+        <button class="btn-red" style="margin: 20px 0 0;">了解更多 +</button>
       </div>
     </div>
   </div>
@@ -680,91 +683,80 @@ ul {
 <!-- 新闻资讯 -->
 <section class="news container animate-on-scroll fade-in-up">
   <div class="section-title">
-    <div class="title-cn" data-i18n="news.title">新闻资讯</div>
-    <div class="title-en" data-i18n="news.titleEn">News</div>
+    <div class="title-cn">新闻资讯</div>
+    <div class="title-en">News</div>
   </div>
   <div class="news-top">
-    <div class="news-card"
-         th:each="newsItem, iterStat : ${news}"
-         th:if="${iterStat.index < 2}"
-         th:onclick="'window.location.href=\'' + @{'/' + ${lang} + '/news/' + ${newsItem['id']}} + '\''">
-      <img th:if="${newsItem['cover_image']}" th:src="@{${newsItem['cover_image']}}" th:alt="${newsItem['title']}">
-      <img th:unless="${newsItem['cover_image']}" src="https://picsum.photos/300/120?random=40" alt="新闻图片">
+    <div class="news-card">
+      <img src="https://picsum.photos/300/120?random=40" alt="头条新闻1">
       <div class="news-card-content">
-        <h4 th:text="${newsItem['title']}">新闻标题</h4>
-        <p th:text="${newsItem['summary']}">新闻摘要</p>
-        <a th:href="@{'/' + ${lang} + '/news/' + ${newsItem['id']}}" class="btn-more" data-i18n="news.readMore">MORE >></a>
+        <h4>复工复课如何解决隔离问题？桌面隔离板帮到您！！！</h4>
+        <p>作为相关负责人，您是不是为您的隔离感想方设法呢？在用餐、办公、上课方面如何创造出相对独立的空间头？，包所在的工厂/单位/学校是否已经做好安全有效的控制呢？桌面隔离板可以帮您创造出相对独立的空间哦！！！</p>
+        <a href="#" class="btn-more">MORE >></a>
+      </div>
+    </div>
+    <div class="news-card">
+      <img src="https://picsum.photos/300/120?random=41" alt="头条新闻2">
+      <div class="news-card-content">
+        <h4>2017年4月25-28日第二十五届中国（深圳）国际礼品、工艺品、钟表及家庭用品展览会现场</h4>
+        <p>2017年4月25-28号二十五届中国（深圳）国际礼品及家庭用品展览会于4月28日圆满落幕。谨于此，公司全体同仁，对展会期间莅临我司展位的广大国内外广告人士表示深深的感谢和崇高的敬意！ ..</p>
+        <a href="#" class="btn-more">MORE >></a>
       </div>
     </div>
   </div>
   <div class="news-bottom">
-    <div class="news-item"
-         th:each="newsItem, iterStat : ${news}"
-         th:if="${iterStat.index >= 2 && iterStat.index < 8}"
-         th:onclick="'window.location.href=\'' + @{'/' + ${lang} + '/news/' + ${newsItem['id']}} + '\''">
-      <span class="date" th:text="${#temporals.format(newsItem['publish_time'], 'yyyy-MM')}">2024-09</span>
-      <span th:text="${newsItem['title']}">新闻标题</span>
+    <div class="news-item">
+      <span class="date">2024-09</span>
+      亚克力的特性
+    </div>
+    <div class="news-item">
+      <span class="date">2024-09</span>
+      亚克力产品展示架优势
+    </div>
+    <div class="news-item">
+      <span class="date">2024-09</span>
+      什么是亚克力灯箱？
+    </div>
+    <div class="news-item">
+      <span class="date">2024-09</span>
+      什么是亚克力？
+    </div>
+    <div class="news-item">
+      <span class="date">2015-10</span>
+      2015年10月18-21日(香港-亚洲国际博览馆)国际...
+    </div>
+    <div class="news-item">
+      <span class="date">2015-10</span>
+      2015年10月20-23号二十三届中国（深圳）国际礼...
     </div>
   </div>
-  <a th:href="@{'/' + ${lang} + '/news'}" class="btn-red" data-i18n="news.more">了解更多 +</a>
+  <button class="btn-red">了解更多 +</button>
 </section>
 
 <!-- 一站式服务 -->
 <section class="service animate-on-scroll fade-in-up">
-  <h3 data-i18n="service.title">一站式服务 您信赖的选择</h3>
-  <p data-i18n="service.subtitle">WHY CHOOSE US</p>
+  <h3>一站式服务 您信赖的选择</h3>
+  <p>WHY CHOOSE US</p>
   <div class="service-grid">
     <div class="service-item">
-      <div class="service-icon">
-        <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="8" y="28" width="48" height="28" rx="2" stroke="currentColor" stroke-width="2" fill="none"/>
-          <path d="M16 28V20C16 16 18 14 22 14H42C46 14 48 16 48 20V28" stroke="currentColor" stroke-width="2" fill="none"/>
-          <circle cx="32" cy="42" r="4" fill="currentColor"/>
-          <path d="M32 46V50" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-          <rect x="12" y="32" width="8" height="6" rx="1" fill="currentColor" opacity="0.3"/>
-          <rect x="44" y="32" width="8" height="6" rx="1" fill="currentColor" opacity="0.3"/>
-        </svg>
-      </div>
-      <h4 data-i18n="service.production">实力生产</h4>
-      <p data-i18n="service.productionDesc" style="white-space: pre-line;">提供全方位的资源服务<br>精心推荐适合的产品</p>
+      <div class="service-icon"><img src="https://picsum.photos/50/50?random=50"></div>
+      <h4>实力生产</h4>
+      <p>提供全方位的资源服务<br>精心推荐适合的产品</p>
     </div>
     <div class="service-item">
-      <div class="service-icon">
-        <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="32" cy="20" r="8" stroke="currentColor" stroke-width="2" fill="none"/>
-          <path d="M20 44C20 36 25 32 32 32C39 32 44 36 44 44V52H20V44Z" stroke="currentColor" stroke-width="2" fill="none"/>
-          <path d="M38 40L42 44L50 36" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          <circle cx="32" cy="20" r="3" fill="currentColor" opacity="0.3"/>
-        </svg>
-      </div>
-      <h4 data-i18n="service.professional">专业服务</h4>
-      <p data-i18n="service.professionalDesc" style="white-space: pre-line;">专业解决方案<br>快速响应设计需要</p>
+      <div class="service-icon"><img src="https://picsum.photos/50/50?random=51"></div>
+      <h4>专业服务</h4>
+      <p>专业解决方案<br>快速响应设计需要</p>
     </div>
     <div class="service-item">
-      <div class="service-icon">
-        <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M32 8L38 20L52 22L42 32L44 46L32 40L20 46L22 32L12 22L26 20L32 8Z" stroke="currentColor" stroke-width="2" fill="none"/>
-          <circle cx="32" cy="28" r="8" stroke="currentColor" stroke-width="2" fill="none"/>
-          <path d="M28 28L30 30L36 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M32 36V42" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-        </svg>
-      </div>
-      <h4 data-i18n="service.quality">质量保证</h4>
-      <p data-i18n="service.qualityDesc" style="white-space: pre-line;">严格的质检程序<br>保证产品质量交货及时</p>
+      <div class="service-icon"><img src="https://picsum.photos/50/50?random=52"></div>
+      <h4>质量保证</h4>
+      <p>严格的质检程序<br>保证产品质量交货及时</p>
     </div>
     <div class="service-item">
-      <div class="service-icon">
-        <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="14" y="10" width="36" height="44" rx="4" stroke="currentColor" stroke-width="2" fill="none"/>
-          <rect x="20" y="16" width="24" height="4" rx="1" fill="currentColor" opacity="0.3"/>
-          <circle cx="32" cy="36" r="10" stroke="currentColor" stroke-width="2" fill="none"/>
-          <path d="M28 36L30 38L36 32" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M24 24H40" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-        </svg>
-      </div>
-      <h4 data-i18n="service.hotline">咨询电话</h4>
-      <p th:if="${contact != null && contact['phone'] != null}"><span th:text="${contact['phone']}">0755-29665112</span><br><span data-i18n="service.hotlineDesc">为您提供高质量的产品</span></p>
-      <p th:if="${contact == null || contact['phone'] == null}">0755-29665112<br><span data-i18n="service.hotlineDesc">为您提供高质量的产品</span></p>
+      <div class="service-icon"><img src="https://picsum.photos/50/50?random=53"></div>
+      <h4>咨询电话</h4>
+      <p>0755-29665112<br>为您提供高质量的产品</p>
     </div>
   </div>
 </section>
@@ -773,28 +765,27 @@ ul {
 <footer class="footer">
   <div class="container">
     <div class="footer-content">
-      <div class="footer-col" th:if="${contact}">
-        <h4 data-i18n="footer.contact">联系我们</h4>
-        <p th:text="${siteI18n != null ? siteI18n['site_name'] : site['name']}">东莞华瑞展示制品有限公司</p>
-        <p th:if="${contact['address']}">地址：<span th:text="${contact['address']}">广东省东莞市大岭山镇环莞路36号科创园5号楼5楼（A区）</span></p>
-        <p th:if="${contact['phone']}">联系电话：<span th:text="${contact['phone']}">13823327100</span></p>
-        <p th:if="${contact['email']}">邮箱：<span th:text="${contact['email']}">sales@example.com</span></p>
+      <div class="footer-col">
+        <h4>联系我们</h4>
+        <p>东莞华瑞展示制品有限公司</p>
+        <p>地址：广东省东莞市大岭山镇环莞路36号科创园5号楼5楼（A区）</p>
+        <p>联系人：段小姐：13823327100</p>
+        <p>隆兴：13632596616</p>
       </div>
       <div class="footer-col">
-        <h4 data-i18n="footer.quickLinks">快速导航</h4>
+        <h4>快速导航</h4>
         <ul>
-          <li th:each="menu : ${menus}">
-            <a th:href="@{'/' + ${lang} + '/' + ${menu['target_url']}}"
-               th:text="${lang == 'en' && menu['menu_name_en'] != null ? menu['menu_name_en'] : menu['menu_name']}">菜单</a>
-          </li>
+          <li><a href="#">首页</a></li>
+          <li><a href="#">关于我们</a></li>
+          <li><a href="#">产品中心</a></li>
+          <li><a href="#">新闻资讯</a></li>
+          <li><a href="#">招贤纳士</a></li>
+          <li><a href="#">在线留言</a></li>
+          <li><a href="#">联系我们</a></li>
         </ul>
       </div>
     </div>
-    <div class="copyright">
-      版权所有 © <span th:text="${siteI18n != null ? siteI18n['site_name'] : site['name']}"></span>
-      <span data-i18n="footer.allRightsReserved">All Rights Reserved</span>
-      <span th:if="${site['icpNumber']}" th:text="${site['icpNumber']}"></span>
-    </div>
+    <div class="copyright">版权所有 © 东莞华瑞展示制品有限公司  All Rights Reserved</div>
   </div>
 </footer>
 
@@ -807,31 +798,35 @@ let currentIndex = 0;
 let timer;
 
 function goToSlide(index) {
-  const slides = banner.querySelectorAll('.banner-slide');
-  if (slides.length === 0) return;
-
-  if (index < 0) index = slides.length - 1;
-  if (index >= slides.length) index = 0;
+  if (index < 0) index = dots.length - 1;
+  if (index >= dots.length) index = 0;
   currentIndex = index;
-
-  slider.style.transform = `translateX(-${currentIndex * (100 / slides.length)}%)`;
+  slider.style.transform = `translateX(-${currentIndex * 100 / 3}%)`;
   dots.forEach((d, i) => d.classList.toggle('active', i === currentIndex));
 }
 
 dots.forEach((d, i) => d.onclick = () => goToSlide(i));
 
 function next() { goToSlide(currentIndex + 1); }
-function start() {
-  const slides = banner.querySelectorAll('.banner-slide');
-  if (slides.length > 1) {
-    timer = setInterval(next, 3000);
-  }
-}
+function start() { timer = setInterval(next, 3000); }
 function stop() { clearInterval(timer); }
 
 start();
 banner.onmouseenter = stop;
 banner.onmouseleave = start;
+
+// 语言切换功能
+let currentLanguage = 'zh';
+
+function toggleLanguage() {
+  currentLanguage = currentLanguage === 'zh' ? 'en' : 'zh';
+  document.getElementById('currentLang').textContent = currentLanguage === 'zh' ? '中文' : 'English';
+  document.documentElement.lang = currentLanguage === 'zh' ? 'zh-CN' : 'en';
+
+  // 这里可以添加更多的语言切换逻辑
+  // 例如：切换页面内容、调用翻译API等
+  console.log('当前语言:', currentLanguage);
+}
 
 // 滚动动画触发
 function handleScrollAnimation() {
@@ -864,7 +859,5 @@ function handleScrollAnimation() {
 window.addEventListener('load', handleScrollAnimation);
 window.addEventListener('scroll', handleScrollAnimation);
 </script>
-
-<script th:src="@{'/js/i18n.js'}"></script>
 </body>
 </html>

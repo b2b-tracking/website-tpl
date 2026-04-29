@@ -1,150 +1,110 @@
 {
   "zh": {
     "nav": {
-      "home":    "首页",
-      "about":   "关于我们",
-      "product": "产品中心",
-      "news":    "新闻资讯",
-      "career":  "招贤纳士",
+      "home": "首页",
+      "products": "产品中心",
+      "about": "关于我们",
+      "news": "新闻资讯",
+      "career": "招贤纳士",
       "message": "在线留言",
       "contact": "联系我们"
     },
-    "section": {
-      "products":   "产品中心",
-      "productsEn": "Product",
-      "about":      "关于我们",
-      "aboutEn":    "About Us",
-      "news":       "新闻资讯",
-      "newsEn":     "News"
-    },
-    "service": {
-      "heading":    "一站式服务 您信赖的选择",
-      "subheading": "WHY CHOOSE US"
-    },
-    "btn": {
-      "more":     "了解更多",
-      "morePlus": "了解更多 +",
-      "readMore": "MORE >>"
-    },
-    "footer": {
-      "contactUs":  "联系我们",
-      "quickNav":   "快速导航",
-      "followUs":   "关注我们",
-      "wechat":     "微信扫码关注",
-      "copyright":  "版权所有",
-      "allRights":  "All Rights Reserved"
+    "banner": {
+      "learnMore": "了解更多"
     },
     "products": {
-      "title":      "产品中心",
-      "subtitle":   "精密制造，质量可靠",
-      "viewDetails":"查看详情",
-      "allProducts":"全部产品",
-      "getQuote":   "获取报价",
-      "noProducts": "暂无产品"
-    },
-    "news": {
-      "title":    "新闻资讯",
-      "latest":   "最新动态",
-      "subtitle": "了解公司动态和行业资讯",
-      "more":     "查看更多",
-      "readMore": "阅读全文"
+      "title": "产品中心",
+      "learnMore": "了解更多"
     },
     "about": {
-      "title": "公司简介"
+      "title": "关于我们",
+      "titleEn": "About Us",
+      "culture": "企业文化",
+      "history": "企业历程",
+      "team": "专业团队",
+      "environment": "生产环境",
+      "learnMore": "了解更多 +"
     },
-    "contact": {
-      "title":         "联系我们",
-      "subtitle":      "欢迎咨询报价与合作",
-      "address":       "地址",
-      "phone":         "电话",
-      "email":         "邮箱",
-      "submitMessage": "发送询价",
-      "name":          "姓名",
-      "company":       "公司名称",
-      "message":       "需求说明",
-      "quantity":      "预计数量",
-      "product":       "产品名称",
-      "contactInfo":   "联系方式",
-      "onlineInquiry": "在线询价"
+    "news": {
+      "title": "新闻资讯",
+      "titleEn": "News",
+      "readMore": "MORE >>",
+      "more": "了解更多 +"
     },
-    "error": {
-      "notFound":        "页面未找到",
-      "notFoundMessage": "抱歉，您访问的页面不存在或已被删除。",
-      "backHome":        "返回首页"
+    "service": {
+      "title": "一站式服务 您信赖的选择",
+      "subtitle": "WHY CHOOSE US",
+      "production": "实力生产",
+      "productionDesc": "提供全方位的资源服务\n精心推荐适合的产品",
+      "professional": "专业服务",
+      "professionalDesc": "专业解决方案\n快速响应设计需要",
+      "quality": "质量保证",
+      "qualityDesc": "严格的质检程序\n保证产品质量交货及时",
+      "hotline": "咨询电话",
+      "hotlineDesc": "为您提供高质量的产品"
+    },
+    "footer": {
+      "contact": "联系我们",
+      "quickLinks": "快速导航",
+      "followUs": "关注我们",
+      "address": "地址",
+      "phone": "联系电话",
+      "email": "邮箱",
+      "allRightsReserved": "All Rights Reserved"
     }
   },
   "en": {
     "nav": {
-      "home":    "Home",
-      "about":   "About Us",
-      "product": "Products",
-      "news":    "News",
-      "career":  "Career",
+      "home": "Home",
+      "products": "Products",
+      "about": "About Us",
+      "news": "News",
+      "career": "Career",
       "message": "Message",
       "contact": "Contact"
     },
-    "section": {
-      "products":   "Products",
-      "productsEn": "Product Center",
-      "about":      "About Us",
-      "aboutEn":    "About",
-      "news":       "News",
-      "newsEn":     "Latest News"
-    },
-    "service": {
-      "heading":    "One-Stop Service, Your Trusted Choice",
-      "subheading": "WHY CHOOSE US"
-    },
-    "btn": {
-      "more":     "Learn More",
-      "morePlus": "Learn More +",
-      "readMore": "MORE >>"
-    },
-    "footer": {
-      "contactUs": "Contact Us",
-      "quickNav":  "Quick Links",
-      "followUs":  "Follow Us",
-      "wechat":    "WeChat QR Code",
-      "copyright": "Copyright",
-      "allRights": "All Rights Reserved"
+    "banner": {
+      "learnMore": "Learn More"
     },
     "products": {
-      "title":      "Products",
-      "subtitle":   "Precision Manufacturing, Reliable Quality",
-      "viewDetails":"View Details",
-      "allProducts":"All Products",
-      "getQuote":   "Get Quote",
-      "noProducts": "No products available"
-    },
-    "news": {
-      "title":    "News & Updates",
-      "latest":   "Latest News",
-      "subtitle": "Company News and Industry Information",
-      "more":     "View More",
-      "readMore": "Read More"
+      "title": "Products",
+      "learnMore": "Learn More"
     },
     "about": {
-      "title": "Company Profile"
+      "title": "About Us",
+      "titleEn": "About Us",
+      "culture": "Culture",
+      "history": "History",
+      "team": "Our Team",
+      "environment": "Environment",
+      "learnMore": "Learn More +"
     },
-    "contact": {
-      "title":         "Contact Us",
-      "subtitle":      "Welcome to Inquire for Quotation",
-      "address":       "Address",
-      "phone":         "Phone",
-      "email":         "Email",
-      "submitMessage": "Send Inquiry",
-      "name":          "Name",
-      "company":       "Company",
-      "message":       "Requirements",
-      "quantity":      "Estimated Quantity",
-      "product":       "Product Name",
-      "contactInfo":   "Contact Information",
-      "onlineInquiry": "Online Inquiry"
+    "news": {
+      "title": "News",
+      "titleEn": "News",
+      "readMore": "MORE >>",
+      "more": "View More +"
     },
-    "error": {
-      "notFound":        "Page Not Found",
-      "notFoundMessage": "Sorry, the page you are looking for does not exist or has been removed.",
-      "backHome":        "Back to Home"
+    "service": {
+      "title": "One-Stop Service You Can Trust",
+      "subtitle": "WHY CHOOSE US",
+      "production": "Strong Manufacturing",
+      "productionDesc": "Comprehensive resource services\nRecommend the right products for you",
+      "professional": "Professional Service",
+      "professionalDesc": "Professional solutions\nFast response to design needs",
+      "quality": "Quality Assurance",
+      "qualityDesc": "Strict quality inspection\nEnsure quality and timely delivery",
+      "hotline": "Hotline",
+      "hotlineDesc": "Providing high-quality products for you"
+    },
+    "footer": {
+      "contact": "Contact Us",
+      "quickLinks": "Quick Links",
+      "followUs": "Follow Us",
+      "address": "Address",
+      "phone": "Phone",
+      "email": "Email",
+      "allRightsReserved": "All Rights Reserved"
     }
   }
 }
